@@ -1,0 +1,45 @@
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+body {
+  font-family: 'Josefin Sans', 'Roboto', sans-serif;
+  min-width: 1200px;
+}
+
+h2.topic {
+  display: inline;
+  font-size: 3.2rem;
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 0.2rem;
+}
+
+h2.topic::before {
+  content: '';
+  width: 90%;
+  border-radius: 2px;
+  height: 3px;
+  background: #f24e1e;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
