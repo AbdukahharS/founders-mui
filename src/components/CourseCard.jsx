@@ -1,24 +1,47 @@
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Typography,
+  Grid,
+  Collapse,
+} from '@mui/material'
 import React from 'react'
 
-const CourseCard = ({ setCurrentCourse, course, className }) => {
-  const changeCourse = () => {
-    const modal = document.querySelector('#modal')
+const CourseCard = ({
+  setOpenModal,
+  setCurrentCourse,
+  course,
+  isExpanded,
+  extra,
+}) => {
+  const openModal = () => {
+    setOpenModal(true)
     setCurrentCourse(course)
-    modal.style.opacity = '1'
-    modal.style['z-index'] = '1'
+    console.log('true')
   }
-
   return (
-    <div className={className ? `course-card ${className}` : 'course-card'}>
-      <img src={require(`../images/${course.banner}`).default} alt='' />
-      <div className='card-body'>
-        <h2>{course.name}</h2>
-        <p>{course.description}</p>
-        <button onClick={() => changeCourse()}>
-          Learn more <i className='fa-solid fa-right-long'></i>
-        </button>
-      </div>
-    </div>
+    <Grid item lg={4} sm={6} xs={12} mb={2}>
+      <Collapse in={extra ? isExpanded : true}>
+        <Card sx={{ bgcolor: 'info.main', color: 'primary.contrastText' }}>
+          <CardActionArea onClick={() => openModal()}>
+            <CardMedia
+              component='img'
+              image={require(`../images/${course.banner}`).default}
+            />
+            <CardContent className='card-body'>
+              <Typography variant='h4' color='secondary.main' pb={1}>
+                {course.name}
+              </Typography>
+              <Typography variant='p' fontSize='1.2rem'>
+                {course.description}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      </Collapse>
+    </Grid>
   )
 }
 

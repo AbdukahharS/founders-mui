@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Header from './components/Header'
 import Navbar from './components/Navbar'
@@ -9,6 +9,9 @@ import Teachers from './components/Teachers'
 import Footer from './components/Footer'
 import Modal from './components/Modal'
 
+import { lightTheme, darkTheme } from './muiConfig'
+import { ThemeProvider } from '@mui/material/styles'
+
 function App() {
   const [currentCourse, setCurrentCourse] = useState({
     name: 'General English',
@@ -18,17 +21,41 @@ function App() {
     duration: '3 months',
     requirement: 'Elementary',
   })
+  const [theme, setTheme] = useState(
+    localStorage.getItem('theme') === 'dark' ? darkTheme : lightTheme
+  )
+  const [openModal, setOpenModal] = useState(false)
+
+  useEffect(() => {
+    let themeColor = theme === darkTheme ? 'dark' : 'light'
+    localStorage.setItem('theme', themeColor)
+  })
+
   return (
     <>
       <Router>
-        <Navbar />
-        <Header />
-        <Courses setCurrentCourse={setCurrentCourse} />
-        <Features />
-        <Teachers />
-        <Contacts />
-        <Footer />
-        <Modal currentCourse={currentCourse} />
+        <ThemeProvider theme={theme}>
+          <Navbar
+            theme={theme}
+            setTheme={setTheme}
+            lightTheme={lightTheme}
+            darkTheme={darkTheme}
+          />
+          <Header />
+          <Courses
+            setOpenModal={setOpenModal}
+            setCurrentCourse={setCurrentCourse}
+          />
+          <Features />
+          <Teachers />
+          <Contacts />
+          <Footer />
+          <Modal
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+            currentCourse={currentCourse}
+          />
+        </ThemeProvider>
       </Router>
     </>
   )
