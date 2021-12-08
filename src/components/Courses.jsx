@@ -93,10 +93,14 @@ const Courses = ({ setCurrentCourse, setOpenModal }) => {
         </Grid>
         <Stack alignItems='center' justifyContent='center'>
           <Button variant='contained' onClick={(e) => toggleCourses(e)}>
-            <Typography variant='span'>
+            <Typography variant='span' fontSize='1.4rem'>
               {isExpanded ? 'Collapse' : 'See all courses'}
             </Typography>
-            {isExpanded ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            {isExpanded ? (
+              <KeyboardArrowUpIcon fontSize='large' />
+            ) : (
+              <KeyboardArrowDownIcon fontSize='large' />
+            )}
           </Button>
         </Stack>
       </Container>

@@ -1,31 +1,68 @@
-import React from 'react'
-import '../css/features.css'
+import { Box, Container, Stack, Typography, Grid, Slide } from '@mui/material'
+import React, { useRef, useState } from 'react'
+import PersonIcon from '@mui/icons-material/Person'
+import GroupIcon from '@mui/icons-material/Group'
+import SchoolIcon from '@mui/icons-material/School'
 
 const Features = () => {
+  const containerRef = useRef()
+  const [scrolled, setScrolled] = useState(false)
+  window.addEventListener('scroll', () => {
+    const cont = containerRef.current
+    if (cont && cont.getBoundingClientRect().y <= 0.75 * window.innerHeight) {
+      setScrolled(true)
+    } else {
+      setScrolled(false)
+    }
+  })
   return (
-    <article id='features'>
-      <h2 className='topic'>Features</h2>
-      <div className='container'>
-        <div className='box'>
-          <i className='fas fa-user'></i>
-          <p>
-            Donec accumsan arcu magna, nec lobortis leo lobortis vel. Vivamus
-            quis scelerisque libero.
-          </p>
-        </div>
-        <div className='box'>
-          <i className='fa-solid fa-graduation-cap'></i>
-          <p>
-            Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
-            posuere cubilia curae.
-          </p>
-        </div>
-        <div className='box'>
-          <i className='fas fa-users'></i>
-          <p>Curabitur ut orci ut dolor condimentum finibus vel sed purus.</p>
-        </div>
-      </div>
-    </article>
+    <Box
+      id='features'
+      pt={6}
+      pb={12}
+      bgcolor='primary.main'
+      color='primary.contrastText'
+    >
+      <Container>
+        <Typography variant='h2' color='secondary' fontWeight={500}>
+          Features
+        </Typography>
+        <Grid container pt={4} px={2} spacing={4} ref={containerRef}>
+          <Grid item xs={12} sm={6} lg={4}>
+            <Slide direction='up' in={scrolled}>
+              <Stack alignItems='center' justifyContent='center'>
+                <PersonIcon sx={{ fontSize: '8rem' }} />
+                <Typography fontSize='1.4rem'>
+                  Donec accumsan arcu magna, nec lobortis leo lobortis vel.
+                  Vivamus quis scelerisque libero.
+                </Typography>
+              </Stack>
+            </Slide>
+          </Grid>
+          <Grid item xs={12} sm={6} lg={4}>
+            <Slide direction='up' in={scrolled}>
+              <Stack alignItems='center' justifyContent='center'>
+                <GroupIcon sx={{ fontSize: '8rem' }} />
+                <Typography fontSize='1.4rem'>
+                  Vestibulum ante ipsum primis in faucibus orci luctus et
+                  ultrices posuere cubilia curae.
+                </Typography>
+              </Stack>
+            </Slide>
+          </Grid>
+          <Grid item xs={12} sm={6} lg={4}>
+            <Slide direction='up' in={scrolled}>
+              <Stack alignItems='center' justifyContent='center'>
+                <SchoolIcon sx={{ fontSize: '8rem' }} />
+                <Typography fontSize='1.4rem'>
+                  Curabitur ut orci ut dolor condimentum finibus vel sed purus.
+                </Typography>
+              </Stack>
+            </Slide>
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
   )
 }
 

@@ -1,11 +1,12 @@
 import React from 'react'
 // import '../css/modal.css'
 
-import { Modal as ModalBox, Box, Stack, Typography } from '@mui/material'
+import { Modal as ModalBox, Box, Stack, Typography, Link } from '@mui/material'
 import DescriptionIcon from '@mui/icons-material/Description'
 import DateRangeIcon from '@mui/icons-material/DateRange'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn'
+import LocalPhone from '@mui/icons-material/LocalPhone'
 
 const style = {
   position: 'absolute',
@@ -35,13 +36,19 @@ const Modal = ({ openModal, setOpenModal, currentCourse }) => {
             <Typography variant='h3' component='h2' color='secondary'>
               {currentCourse.name}
             </Typography>
-            <Stack direction='row' alignItems='center' spacing={0.6}>
+            <Stack py={1} direction='row' alignItems='center' spacing={0.6}>
+              <DescriptionIcon fontSize='large' />
+              <Typography fontSize='1.2rem'>
+                {currentCourse.description}
+              </Typography>
+            </Stack>
+            <Stack pb={1} direction='row' alignItems='center' spacing={0.6}>
               <DateRangeIcon fontSize='large' />
               <Typography fontSize='1.2rem'>
                 Course duration: {currentCourse.duration}
               </Typography>
             </Stack>
-            <Stack direction='row' alignItems='center' spacing={0.6}>
+            <Stack pb={1} direction='row' alignItems='center' spacing={0.6}>
               <KeyboardArrowUpIcon fontSize='large' />
               <Typography fontSize='1.2rem'>
                 Minimum requirement: {currentCourse.requirement}
@@ -53,20 +60,29 @@ const Modal = ({ openModal, setOpenModal, currentCourse }) => {
                 Price: {currentCourse.price} sum/month
               </Typography>
             </Stack>
-            <Stack direction='row' alignItems='center' spacing={0.6}>
-              <DescriptionIcon fontSize='large' />
-              <Typography fontSize='1.2rem'>
-                {currentCourse.description}
-              </Typography>
+            <Stack direction='row' alignItems='center' pt={1} spacing={0.6}>
+              <LocalPhone fontSize='large' />
+              <Typography fontSize='1.2rem'>Enroll:</Typography>
             </Stack>
-            <Typography>Enroll:</Typography>
-            <div className='tels'>
-              <i className='fa-solid fa-phone'></i>
-              <div>
-                <a href='tel:+998712055333'>+998 71 205 53 33</a>
-                <a href='tel:+998712050333'>+998 71 205 03 33</a>
-              </div>
-            </div>
+
+            <Stack direction='row' justifyContent='space-evenly'>
+              <Link
+                underline='hover'
+                color='inherit'
+                fontSize='1.3rem'
+                href='tel:+998712055333'
+              >
+                +998 71 205 53 33
+              </Link>
+              <Link
+                underline='hover'
+                fontSize='1.3rem'
+                color='inherit'
+                href='tel:+998712050333'
+              >
+                +998 71 205 03 33
+              </Link>
+            </Stack>
           </Box>
         </Stack>
       </Box>
