@@ -16,6 +16,9 @@ const lightTheme = createTheme({
     info: {
       main: '#fff',
     },
+    error: {
+      main: '#fff',
+    },
   },
 })
 
@@ -34,6 +37,9 @@ const darkTheme = createTheme({
     },
     info: {
       main: '#191919',
+    },
+    error: {
+      main: '#ffdf33',
     },
   },
 })

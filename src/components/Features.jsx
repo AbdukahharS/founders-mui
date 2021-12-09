@@ -9,7 +9,7 @@ const Features = () => {
   const [scrolled, setScrolled] = useState(false)
   window.addEventListener('scroll', () => {
     const cont = containerRef.current
-    if (cont && cont.getBoundingClientRect().y <= 0.75 * window.innerHeight) {
+    if (cont && cont.getBoundingClientRect().y <= 0.67 * window.innerHeight) {
       setScrolled(true)
     } else {
       setScrolled(false)

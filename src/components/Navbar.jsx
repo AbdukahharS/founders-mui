@@ -53,7 +53,7 @@ const Navbar = ({ theme, setTheme, lightTheme, darkTheme }) => {
               Courses
             </Link>
             <Link
-              href='#courses'
+              href='#instructors'
               style={{ fontSize: '1.4rem' }}
               color='inherit'
               underline='hover'
