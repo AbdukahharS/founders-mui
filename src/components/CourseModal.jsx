@@ -18,7 +18,7 @@ const style = {
   p: 4,
 }
 
-const Modal = ({ openModal, setOpenModal, currentCourse }) => {
+const CourseModal = ({ openModal, setOpenModal, currentCourse }) => {
   const closeModal = () => {
     setOpenModal(false)
   }
@@ -90,4 +90,4 @@ const Modal = ({ openModal, setOpenModal, currentCourse }) => {
   )
 }
 
-export default Modal
+export default CourseModal

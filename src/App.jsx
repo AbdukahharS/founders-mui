@@ -7,7 +7,8 @@ import Features from './components/Features'
 import Contacts from './components/Contacts'
 import Teachers from './components/Teachers'
 import Footer from './components/Footer'
-import Modal from './components/Modal'
+import CourseModal from './components/CourseModal'
+import MenuModal from './components/MenuModal'
 
 import { lightTheme, darkTheme } from './muiConfig'
 import { ThemeProvider } from '@mui/material/styles'
@@ -24,6 +25,8 @@ function App() {
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') === 'dark' ? darkTheme : lightTheme
   )
+  const [openMenu, setOpenMenu] = useState(false)
+
   const [openModal, setOpenModal] = useState(false)
 
   useEffect(() => {
@@ -36,6 +39,7 @@ function App() {
       <Router>
         <ThemeProvider theme={theme}>
           <Navbar
+            setOpenMenu={setOpenMenu}
             theme={theme}
             setTheme={setTheme}
             lightTheme={lightTheme}
@@ -50,10 +54,18 @@ function App() {
           <Teachers />
           <Contacts />
           <Footer />
-          <Modal
+          <CourseModal
             openModal={openModal}
             setOpenModal={setOpenModal}
             currentCourse={currentCourse}
+          />
+          <MenuModal
+            openMenu={openMenu}
+            setOpenMenu={setOpenMenu}
+            theme={theme}
+            setTheme={setTheme}
+            lightTheme={lightTheme}
+            darkTheme={darkTheme}
           />
         </ThemeProvider>
       </Router>
