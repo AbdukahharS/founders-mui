@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Grid, Stack, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
-import { lightTheme } from '../muiConfig'
+
 const TeacherBox = ({ teacher }) => {
   return (
     <Grid
@@ -36,7 +36,7 @@ const TeacherBox = ({ teacher }) => {
             backgroundSize: 'cover',
           }}
         >
-          <Typography color='#ffdf33' variant='h4'>
+          <Typography component='span' color='#ffdf33' variant='h4'>
             {teacher.name}
           </Typography>
         </Box>
@@ -51,10 +51,15 @@ const TeacherBox = ({ teacher }) => {
             bgcolor: 'primary.main',
           }}
         >
-          <Typography variant='h5' textAlign='center'>
+          <Typography variant='h5' className='desc' textAlign='center'>
             {teacher.description}
           </Typography>
-          <Box bgcolor='secondary.main' p='0.4rem 1rem' borderRadius='0.4rem'>
+          <Box
+            className='btn'
+            bgcolor='secondary.main'
+            p='0.4rem 1rem'
+            borderRadius='0.4rem'
+          >
             <Link to='/' style={{ fontSize: '1.4rem' }}>
               <Typography fontSize='1.4rem' color='primary'>
                 Learn more

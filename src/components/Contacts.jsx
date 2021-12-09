@@ -1,49 +1,134 @@
 import React from 'react'
+import { Box, Container, Stack, Typography, Link } from '@mui/material'
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone'
+import LocationOnIcon from '@mui/icons-material/LocationOn'
+import TelegramIcon from '@mui/icons-material/Telegram'
+import InstagramIcon from '@mui/icons-material/Instagram'
+import FacebookIcon from '@mui/icons-material/Facebook'
 
 const Contacts = () => {
   return (
-    <article id='contacts'>
-      <h2 className='topic'>Contact Us</h2>
-      <div className='container'>
-        <iframe
-          src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2997.2289769212975!2d69.235748!3d41.3038821!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8ba966c0cdbf%3A0xe69be7522d8208da!2sMilliy%20Bog!5e0!3m2!1sen!2s!4v1637792209114!5m2!1sen!2s'
-          width='60%'
-          min-height='100%'
-          style={{ border: '0' }}
-          allowFullScreen=''
-          loading='lazy'
-          title='Google Maps'
-        ></iframe>
-        <div className='links'>
-          <a href='/' className='location'>
-            <i className='fa-solid fa-location-dot'></i>{' '}
-            <span>
-              Milliy Bog Station, opposite of Legislative Chamber of the Supreme
-              Assembly
-            </span>
-          </a>
-          <div className='tels'>
-            <i className='fa-solid fa-phone'></i>
-            <div>
-              <a href='tel:+998712055333'>+998 71 205 53 33</a>
-              <a href='tel:+998712050333'>+998 71 205 03 33</a>
-            </div>
-          </div>
-          <a href='https://t.me/founders_school_uz'>
-            <i className='fab fa-telegram-plane'></i>
-            t.me/founders_school_uz
-          </a>
-          <a href='https://instagram.com/founders.school.uz'>
-            <i className='fa-brands fa-instagram'></i>
-            instagram.com/founders.school.uz
-          </a>
-          <a href='https://www.facebook.com/Foundersschooluz-109181231588117'>
-            <i className='fa-brands fa-facebook'></i>
-            Foundersschooluz
-          </a>
-        </div>
-      </div>
-    </article>
+    <Box
+      id='contacts'
+      bgcolor='info.light'
+      color='info.contrastText'
+      pt={2}
+      pb={10}
+    >
+      <Container>
+        <Typography
+          variant='h2'
+          mb={6}
+          color='secondary'
+          fontWeight={500}
+          className='topic'
+        >
+          Contact Us
+        </Typography>
+        <Stack direction='row' spacing={4} alignItems='center'>
+          <iframe
+            src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2997.2289769212975!2d69.235748!3d41.3038821!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8ba966c0cdbf%3A0xe69be7522d8208da!2sMilliy%20Bog!5e0!3m2!1sen!2s!4v1637792209114!5m2!1sen!2s'
+            width='100%'
+            height='400px'
+            style={{ border: '0' }}
+            allowFullScreen=''
+            loading='lazy'
+            title='Google Maps'
+          ></iframe>
+          <Stack direction='column'>
+            <Link
+              href='/'
+              underline='hover'
+              color='secondary'
+              sx={{ display: 'flex', alignItems: 'center' }}
+              mb={1}
+              target='_blank'
+            >
+              <LocationOnIcon
+                color='secondary'
+                sx={{
+                  fontSize: '3rem',
+                  display: 'inline',
+                  marginRight: '0.4rem',
+                }}
+              />
+              <Typography color='secondary' fontSize='1.3rem'>
+                Milliy Bog Station, opposite of Legislative Chamber of the
+                Supreme Assembly
+              </Typography>
+            </Link>
+            <Stack direction='row' spacing={0.4} mb={1}>
+              <LocalPhoneIcon color='secondary' sx={{ fontSize: '3rem' }} />
+              <Stack direction='column'>
+                <Link
+                  underline='hover'
+                  fontSize='1.4rem'
+                  color='secondary'
+                  href='tel:+998712055333'
+                  target='_blank'
+                >
+                  +998 71 205 53 33
+                </Link>
+                <Link
+                  underline='hover'
+                  color='secondary'
+                  fontSize='1.4rem'
+                  href='tel:+998712050333'
+                  target='_blank'
+                >
+                  +998 71 205 03 33
+                </Link>
+              </Stack>
+            </Stack>
+            <Link
+              underline='hover'
+              color='secondary'
+              sx={{ display: 'flex', alignItems: 'center' }}
+              href='https://t.me/founders_school_uz'
+              fontSize='1.4rem'
+              mb={1}
+              target='_blank'
+            >
+              <TelegramIcon
+                color='secondary'
+                sx={{ fontSize: '3rem', marginRight: '0.4rem' }}
+              />
+              t.me/founders_school_uz
+            </Link>
+            <Link
+              underline='hover'
+              color='secondary'
+              sx={{ display: 'flex', alignItems: 'center' }}
+              href='https://instagram.com/founders.school.uz'
+              fontSize='1.4rem'
+              mb={1}
+              target='_blank'
+            >
+              <InstagramIcon
+                color='secondary'
+                sx={{ fontSize: '3rem', marginRight: '0.4rem' }}
+              />
+              instagram.com/founders.school.uz
+            </Link>
+            <Link
+              underline='hover'
+              color='secondary'
+              sx={{ display: 'flex', alignItems: 'center' }}
+              href='https://www.facebook.com/Foundersschooluz-109181231588117'
+              fontSize='1.4rem'
+              mb={1}
+              target='_blank'
+            >
+              <FacebookIcon
+                color='secondary'
+                sx={{ fontSize: '3rem', marginRight: '0.4rem' }}
+              />
+              Foundersschooluz
+            </Link>
+          </Stack>
+        </Stack>
+      </Container>
+    </Box>
   )
 }
 
