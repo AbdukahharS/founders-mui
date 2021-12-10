@@ -53,7 +53,7 @@ function App() {
           <Features />
           <Teachers />
           <Contacts />
-          <Footer />
+          <Footer theme={theme} lightTheme={lightTheme} darkTheme={darkTheme} />
           <CourseModal
             openModal={openModal}
             setOpenModal={setOpenModal}

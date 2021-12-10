@@ -3,8 +3,25 @@ import React, { useRef, useState } from 'react'
 import PersonIcon from '@mui/icons-material/Person'
 import GroupIcon from '@mui/icons-material/Group'
 import SchoolIcon from '@mui/icons-material/School'
+import Slider from './Slider'
+
+const items = [
+  {
+    icon: PersonIcon,
+    desc: 'Donec accumsan arcu magna, nec lobortis leo lobortis vel. Vivamus quis scelerisque libero.',
+  },
+  {
+    icon: GroupIcon,
+    desc: 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
+  },
+  {
+    icon: SchoolIcon,
+    desc: 'Curabitur ut orci ut dolor condimentum finibus vel sed purus.',
+  },
+]
 
 const Features = () => {
+  const isMobile = window.innerWidth < 600
   const containerRef = useRef()
   const [scrolled, setScrolled] = useState(false)
   window.addEventListener('scroll', () => {
@@ -27,40 +44,47 @@ const Features = () => {
         <Typography variant='h2' color='secondary' fontWeight={500}>
           Features
         </Typography>
-        <Grid container pt={4} px={2} spacing={4} ref={containerRef}>
-          <Grid item xs={12} sm={6} lg={4}>
-            <Slide direction='up' in={scrolled}>
-              <Stack alignItems='center' justifyContent='center'>
-                <PersonIcon sx={{ fontSize: '8rem' }} />
-                <Typography fontSize='1.4rem'>
-                  Donec accumsan arcu magna, nec lobortis leo lobortis vel.
-                  Vivamus quis scelerisque libero.
-                </Typography>
-              </Stack>
-            </Slide>
+        {!isMobile ? (
+          <Grid container pt={4} px={2} spacing={4} ref={containerRef}>
+            <Grid item xs={12} sm={6} lg={4}>
+              <Slide direction='up' in={scrolled}>
+                <Stack alignItems='center' justifyContent='center'>
+                  <PersonIcon sx={{ fontSize: '8rem' }} />
+                  <Typography fontSize='1.4rem'>
+                    Donec accumsan arcu magna, nec lobortis leo lobortis vel.
+                    Vivamus quis scelerisque libero.
+                  </Typography>
+                </Stack>
+              </Slide>
+            </Grid>
+            <Grid item xs={12} sm={6} lg={4}>
+              <Slide direction='up' in={scrolled}>
+                <Stack alignItems='center' justifyContent='center'>
+                  <GroupIcon sx={{ fontSize: '8rem' }} />
+                  <Typography fontSize='1.4rem'>
+                    Vestibulum ante ipsum primis in faucibus orci luctus et
+                    ultrices posuere cubilia curae.
+                  </Typography>
+                </Stack>
+              </Slide>
+            </Grid>
+            <Grid item xs={12} sm={6} lg={4}>
+              <Slide direction='up' in={scrolled}>
+                <Stack alignItems='center' justifyContent='center'>
+                  <SchoolIcon sx={{ fontSize: '8rem' }} />
+                  <Typography fontSize='1.4rem'>
+                    Curabitur ut orci ut dolor condimentum finibus vel sed
+                    purus.
+                  </Typography>
+                </Stack>
+              </Slide>
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6} lg={4}>
-            <Slide direction='up' in={scrolled}>
-              <Stack alignItems='center' justifyContent='center'>
-                <GroupIcon sx={{ fontSize: '8rem' }} />
-                <Typography fontSize='1.4rem'>
-                  Vestibulum ante ipsum primis in faucibus orci luctus et
-                  ultrices posuere cubilia curae.
-                </Typography>
-              </Stack>
-            </Slide>
-          </Grid>
-          <Grid item xs={12} sm={6} lg={4}>
-            <Slide direction='up' in={scrolled}>
-              <Stack alignItems='center' justifyContent='center'>
-                <SchoolIcon sx={{ fontSize: '8rem' }} />
-                <Typography fontSize='1.4rem'>
-                  Curabitur ut orci ut dolor condimentum finibus vel sed purus.
-                </Typography>
-              </Stack>
-            </Slide>
-          </Grid>
-        </Grid>
+        ) : (
+          <Stack>
+            <Slider items={items} />
+          </Stack>
+        )}
       </Container>
     </Box>
   )

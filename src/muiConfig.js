@@ -19,6 +19,9 @@ const lightTheme = createTheme({
     error: {
       main: '#fff',
     },
+    success: {
+      main: '#ffe55b88',
+    },
   },
 })
 
@@ -40,6 +43,9 @@ const darkTheme = createTheme({
     },
     error: {
       main: '#ffdf33',
+    },
+    success: {
+      main: '#19191988',
     },
   },
 })

@@ -22,6 +22,7 @@ button {
 
 body {
   font-family: 'Josefin Sans', 'Roboto', sans-serif;
+  overflow-x: hidden;
 }
 
 .card:hover .inner-box {

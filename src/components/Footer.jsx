@@ -1,8 +1,9 @@
 import { Box, Container, Stack, Typography } from '@mui/material'
 import React from 'react'
 import logo from './../images/logo.png'
+import logoDark from './../images/logo-dark.png'
 
-const Footer = () => {
+const Footer = ({ theme, lightTheme, darkTheme }) => {
   return (
     <Box bgcolor='primary.main' color='primary.contrastText' py={4}>
       <Container>
@@ -12,7 +13,11 @@ const Footer = () => {
           justifyContent='space-between'
         >
           <Stack direction='row' alignItems='center'>
-            <img src={logo} alt='Founders Logo' width='80px' />
+            <img
+              src={theme === lightTheme ? logoDark : logo}
+              width='65'
+              alt='Founders Logo'
+            />
             <Stack
               direction='column'
               justifyContent='space-between'
