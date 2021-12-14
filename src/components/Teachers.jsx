@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import TeacherBox from './TeacherBox'
 import { Box, Container, Typography } from '@mui/material'
 
@@ -42,6 +42,8 @@ const teachers = [
 ]
 
 const Teachers = () => {
+  const [isHover, setIsHover] = useState(false)
+
   return (
     <Box
       id='instructors'
@@ -60,12 +62,12 @@ const Teachers = () => {
           draggable={true}
           showDots={true}
           infinite={true}
-          autoPlay={true}
+          autoPlay={!isHover}
           keyBoardControl={true}
           autoPlaySpeed={2000}
         >
           {teachers.map((teacher, ind) => (
-            <TeacherBox teacher={teacher} key={ind} />
+            <TeacherBox setIsHover={setIsHover} teacher={teacher} key={ind} />
           ))}
         </Carousel>
       </Container>

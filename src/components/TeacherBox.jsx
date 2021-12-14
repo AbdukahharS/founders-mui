@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, Stack, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 
-const TeacherBox = ({ teacher }) => {
+const TeacherBox = ({ teacher, setIsHover }) => {
   return (
     <Box
       width='90%'
@@ -13,6 +13,8 @@ const TeacherBox = ({ teacher }) => {
         py: '1rem',
       }}
       className='card'
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
     >
       <Box
         className='inner-box'
