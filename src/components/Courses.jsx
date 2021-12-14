@@ -59,8 +59,7 @@ const courses = [
   },
 ]
 
-const Courses = ({ setCurrentCourse, setOpenModal }) => {
-  const isMobile = window.innerWidth < 600
+const Courses = ({ setCurrentCourse, setOpenModal, isMobile }) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const toggleCourses = () => {
     setIsExpanded(!isExpanded)
@@ -78,7 +77,7 @@ const Courses = ({ setCurrentCourse, setOpenModal }) => {
           className='container'
         >
           {courses.map((course, ind) =>
-            ind <= 2 ? (
+            ind <= (isMobile ? 1 : 2) ? (
               <CourseCard
                 setOpenModal={setOpenModal}
                 setCurrentCourse={setCurrentCourse}

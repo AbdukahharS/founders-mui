@@ -2,8 +2,7 @@ import React from 'react'
 // import banner from '../images/header.png'
 import { Box, Typography } from '@mui/material'
 
-const Header = () => {
-  const isMobile = window.innerWidth < 600
+const Header = ({ isMobile }) => {
   return (
     <Box
       color='primary.contrastText'
@@ -28,6 +27,7 @@ const Header = () => {
         position='absolute'
         top='50%'
         left='50%'
+        color='#fff'
         sx={{
           transform: 'translate(-50%, -50%)',
           textShadow: '2px 2px 10px #000',

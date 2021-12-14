@@ -22,7 +22,11 @@ const Navbar = ({
     setOpenMenu(true)
   }
   return (
-    <Box bgcolor='primary.main' color='primary.contrastText' py='1rem'>
+    <Box
+      bgcolor='primary.main'
+      color='primary.contrastText'
+      py={isMobile ? '0.2rem' : '1rem'}
+    >
       <Container>
         <Stack
           direction='row'
@@ -33,26 +37,28 @@ const Navbar = ({
             <Stack direction='row' alignItems='center'>
               <img
                 src={theme === lightTheme ? logoDark : logo}
-                width='65'
+                style={{ width: '4rem' }}
                 alt='Founders Logo'
               />
-              <Stack>
-                <Typography
-                  sx={{
-                    fontWeight: '500',
-                    lineHeight: 'normal',
-                    fontSize: '1.1rem',
-                  }}
-                >
-                  FOUNDERS
-                </Typography>
-                <Typography fontSize='0.9rem' lineHeight='normal'>
-                  LANGUAGE
-                </Typography>
-                <Typography fontSize='0.9rem' lineHeight='normal'>
-                  SCHOOL
-                </Typography>
-              </Stack>
+              {!isMobile && (
+                <Stack>
+                  <Typography
+                    sx={{
+                      fontWeight: '500',
+                      lineHeight: 'normal',
+                      fontSize: '1.1rem',
+                    }}
+                  >
+                    FOUNDERS
+                  </Typography>
+                  <Typography fontSize='0.9rem' lineHeight='normal'>
+                    LANGUAGE
+                  </Typography>
+                  <Typography fontSize='0.9rem' lineHeight='normal'>
+                    SCHOOL
+                  </Typography>
+                </Stack>
+              )}
             </Stack>
             {!isMobile && (
               <>

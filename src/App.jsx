@@ -51,8 +51,9 @@ function App() {
             darkTheme={darkTheme}
             isMobile={isMobile}
           />
-          <Header />
+          <Header isMobile={isMobile} />
           <Courses
+            isMobile={isMobile}
             setOpenModal={setOpenModal}
             setCurrentCourse={setCurrentCourse}
           />
