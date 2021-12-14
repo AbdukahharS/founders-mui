@@ -6,8 +6,10 @@ import {
   Typography,
   Grid,
   Collapse,
+  Stack,
 } from '@mui/material'
 import React from 'react'
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
 
 const CourseCard = ({
   setOpenModal,
@@ -37,6 +39,23 @@ const CourseCard = ({
               <Typography variant='p' fontSize='1.2rem'>
                 {course.description}
               </Typography>
+              <Stack
+                sx={{
+                  bgcolor: 'secondary.main',
+                  color: 'info.main',
+                  width: 'fit-content',
+                  p: '0 0.8rem',
+                  my: '1rem',
+                  mx: 'auto',
+                  borderRadius: '0.2rem',
+                }}
+                direction='row'
+                justifyContent='center'
+                alignItems='center'
+              >
+                <Typography fontSize='1.4rem'>Learn more</Typography>
+                <ArrowRightAltIcon />
+              </Stack>
             </CardContent>
           </CardActionArea>
         </Card>

@@ -60,6 +60,7 @@ const courses = [
 ]
 
 const Courses = ({ setCurrentCourse, setOpenModal }) => {
+  const isMobile = window.innerWidth < 600
   const [isExpanded, setIsExpanded] = useState(false)
   const toggleCourses = () => {
     setIsExpanded(!isExpanded)
@@ -70,7 +71,12 @@ const Courses = ({ setCurrentCourse, setOpenModal }) => {
         <Typography py={4} variant='h2' color='secondary' fontWeight={500}>
           Our Courses
         </Typography>
-        <Grid m='auto' container spacing={6} className='container'>
+        <Grid
+          m='auto'
+          container
+          spacing={isMobile ? 0 : 6}
+          className='container'
+        >
           {courses.map((course, ind) =>
             ind <= 2 ? (
               <CourseCard

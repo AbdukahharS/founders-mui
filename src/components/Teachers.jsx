@@ -1,7 +1,27 @@
 import React from 'react'
-// import '../css/teachers.css'
 import TeacherBox from './TeacherBox'
-import { Box, Container, Grid, Typography } from '@mui/material'
+import { Box, Container, Typography } from '@mui/material'
+
+import Carousel from 'react-multi-carousel'
+import 'react-multi-carousel/lib/styles.css'
+const responsive = {
+  superLargeDesktop: {
+    breakpoint: { max: 4000, min: 3000 },
+    items: 5,
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 3,
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 600 },
+    items: 2,
+  },
+  mobile: {
+    breakpoint: { max: 600, min: 0 },
+    items: 1,
+  },
+}
 
 const teachers = [
   {
@@ -23,16 +43,31 @@ const teachers = [
 
 const Teachers = () => {
   return (
-    <Box id='instructors' bgcolor='info.light' color='info.contrastText' pb={8}>
+    <Box
+      id='instructors'
+      bgcolor='info.light'
+      color='info.contrastText'
+      pb={8}
+      position='relative'
+    >
       <Container>
         <Typography py={4} variant='h2' color='secondary' fontWeight={500}>
           Our Instructors
         </Typography>
-        <Grid container spacing={6}>
+        <Carousel
+          responsive={responsive}
+          swipeable={true}
+          draggable={true}
+          showDots={true}
+          infinite={true}
+          autoPlay={true}
+          keyBoardControl={true}
+          autoPlaySpeed={2000}
+        >
           {teachers.map((teacher, ind) => (
             <TeacherBox teacher={teacher} key={ind} />
           ))}
-        </Grid>
+        </Carousel>
       </Container>
     </Box>
   )

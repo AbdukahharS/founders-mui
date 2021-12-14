@@ -20,8 +20,7 @@ const items = [
   },
 ]
 
-const Features = () => {
-  const isMobile = window.innerWidth < 600
+const Features = ({ isMobile }) => {
   const containerRef = useRef()
   const [scrolled, setScrolled] = useState(false)
   window.addEventListener('scroll', () => {

@@ -1,5 +1,9 @@
+// Dependencies
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { lightTheme, darkTheme } from './muiConfig'
+import { ThemeProvider } from '@mui/material/styles'
+// Components
 import Header from './components/Header'
 import Navbar from './components/Navbar'
 import Courses from './components/Courses'
@@ -9,9 +13,6 @@ import Teachers from './components/Teachers'
 import Footer from './components/Footer'
 import CourseModal from './components/CourseModal'
 import MenuModal from './components/MenuModal'
-
-import { lightTheme, darkTheme } from './muiConfig'
-import { ThemeProvider } from '@mui/material/styles'
 
 function App() {
   const [currentCourse, setCurrentCourse] = useState({
@@ -26,8 +27,12 @@ function App() {
     localStorage.getItem('theme') === 'dark' ? darkTheme : lightTheme
   )
   const [openMenu, setOpenMenu] = useState(false)
-
   const [openModal, setOpenModal] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  window.addEventListener('resize', () => {
+    setIsMobile(window.innerWidth <= 600 ? true : false)
+  })
 
   useEffect(() => {
     let themeColor = theme === darkTheme ? 'dark' : 'light'
@@ -44,13 +49,14 @@ function App() {
             setTheme={setTheme}
             lightTheme={lightTheme}
             darkTheme={darkTheme}
+            isMobile={isMobile}
           />
           <Header />
           <Courses
             setOpenModal={setOpenModal}
             setCurrentCourse={setCurrentCourse}
           />
-          <Features />
+          <Features isMobile={isMobile} />
           <Teachers />
           <Contacts />
           <Footer theme={theme} lightTheme={lightTheme} darkTheme={darkTheme} />

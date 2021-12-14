@@ -74,7 +74,6 @@ const Slider = ({ items }) => {
             >
               <item.icon style={{ fontSize: '6rem' }} />
               <Typography>{item.desc}</Typography>
-              {console.log(item.icon)}
             </Stack>
           </Fade>
         ))}

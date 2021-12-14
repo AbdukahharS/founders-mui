@@ -1,15 +1,17 @@
 import React from 'react'
-import { Box, Grid, Stack, Typography } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 
 const TeacherBox = ({ teacher }) => {
   return (
-    <Grid
-      item
-      xs={12}
-      sm={6}
-      md={4}
-      sx={{ perspective: '1000px', height: '50vh' }}
+    <Box
+      width='90%'
+      sx={{
+        perspective: '1000px',
+        height: '50vh',
+        marginX: 'auto',
+        py: '1rem',
+      }}
       className='card'
     >
       <Box
@@ -21,7 +23,7 @@ const TeacherBox = ({ teacher }) => {
           transformOrigin: 'center',
           width: '100%',
           height: '100%',
-          borderRadius: '1rem',
+          borderRadius: '2rem',
         }}
       >
         <Box
@@ -68,7 +70,7 @@ const TeacherBox = ({ teacher }) => {
           </Box>
         </Stack>
       </Box>
-    </Grid>
+    </Box>
   )
 }
 

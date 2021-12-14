@@ -7,8 +7,14 @@ import Brightness7Icon from '@mui/icons-material/Brightness7'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import MenuIcon from '@mui/icons-material/Menu'
 
-const Navbar = ({ setOpenMenu, theme, setTheme, lightTheme, darkTheme }) => {
-  const isMobile = window.innerWidth < 600
+const Navbar = ({
+  setOpenMenu,
+  theme,
+  setTheme,
+  lightTheme,
+  darkTheme,
+  isMobile,
+}) => {
   const clickHandler = () => {
     setTheme(theme === lightTheme ? darkTheme : lightTheme)
   }
