@@ -28,7 +28,9 @@ function App() {
   )
   const [openMenu, setOpenMenu] = useState(false)
   const [openModal, setOpenModal] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(
+    window.innerWidth <= 600 ? true : false
+  )
 
   window.addEventListener('resize', () => {
     setIsMobile(window.innerWidth <= 600 ? true : false)
