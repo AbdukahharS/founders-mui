@@ -69,3 +69,9 @@ body {
     font-size: 12px;
   }
 }
+
+@media only screen and (min-width: 601px) and (max-width: 1200px) {
+  html {
+    font-size: 14px;
+  }
+}

@@ -24,7 +24,7 @@ const CourseCard = ({
     console.log('true')
   }
   return (
-    <Grid item lg={4} sm={6} xs={12} mb={2}>
+    <Grid item lg={4} sm={5} xs={9} mx='auto' mb={2}>
       <Collapse in={extra ? isExpanded : true}>
         <Card sx={{ bgcolor: 'info.main', color: 'primary.contrastText' }}>
           <CardActionArea onClick={() => openModal()}>

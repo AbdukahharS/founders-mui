@@ -14,6 +14,7 @@ const Navbar = ({
   lightTheme,
   darkTheme,
   isMobile,
+  isTablet,
 }) => {
   const clickHandler = () => {
     setTheme(theme === lightTheme ? darkTheme : lightTheme)

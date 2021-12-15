@@ -31,9 +31,15 @@ function App() {
   const [isMobile, setIsMobile] = useState(
     window.innerWidth <= 600 ? true : false
   )
+  const [isTablet, setIsTablet] = useState(
+    window.innerWidth > 600 && window.innerWidth <= 1200 ? true : false
+  )
 
   window.addEventListener('resize', () => {
     setIsMobile(window.innerWidth <= 600 ? true : false)
+    setIsTablet(
+      window.innerWidth > 600 && window.innerWidth <= 1024 ? true : false
+    )
   })
 
   useEffect(() => {
@@ -52,9 +58,11 @@ function App() {
             lightTheme={lightTheme}
             darkTheme={darkTheme}
             isMobile={isMobile}
+            isTablet={isTablet}
           />
-          <Header isMobile={isMobile} />
+          <Header isMobile={isMobile} isTablet={isTablet} />
           <Courses
+            isTablet={isTablet}
             isMobile={isMobile}
             setOpenModal={setOpenModal}
             setCurrentCourse={setCurrentCourse}
