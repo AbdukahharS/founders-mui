@@ -14,7 +14,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 
 const style = {
-  position: 'absolute',
+  position: 'fixed',
   top: '0',
   left: '0',
   width: '100vw',

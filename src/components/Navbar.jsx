@@ -21,11 +21,22 @@ const Navbar = ({
   const toggleMenu = () => {
     setOpenMenu(true)
   }
+  const [bg, setBg] = React.useState(null)
+
+  React.useEffect(() => {
+    setBg(
+      `linear-gradient(${theme.palette.primary.main}, ${theme.palette.primary.main}bb, ${theme.palette.primary.main}11)`
+    )
+  }, [theme])
+
   return (
     <Box
-      bgcolor='primary.main'
+      sx={{ backgroundImage: bg }}
       color='primary.contrastText'
       py={isMobile ? '0.2rem' : '1rem'}
+      position='absolute'
+      zIndex={1}
+      width='100%'
     >
       <Container>
         <Stack

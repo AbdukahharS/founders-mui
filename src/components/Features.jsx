@@ -49,7 +49,7 @@ const Features = ({ isMobile }) => {
               <Slide direction='up' in={scrolled}>
                 <Stack alignItems='center' justifyContent='center'>
                   <PersonIcon sx={{ fontSize: '8rem' }} />
-                  <Typography fontSize='1.4rem'>
+                  <Typography fontSize='1.4rem' textAlign='center'>
                     Donec accumsan arcu magna, nec lobortis leo lobortis vel.
                     Vivamus quis scelerisque libero.
                   </Typography>
@@ -60,7 +60,7 @@ const Features = ({ isMobile }) => {
               <Slide direction='up' in={scrolled}>
                 <Stack alignItems='center' justifyContent='center'>
                   <GroupIcon sx={{ fontSize: '8rem' }} />
-                  <Typography fontSize='1.4rem'>
+                  <Typography fontSize='1.4rem' textAlign='center'>
                     Vestibulum ante ipsum primis in faucibus orci luctus et
                     ultrices posuere cubilia curae.
                   </Typography>
@@ -71,7 +71,7 @@ const Features = ({ isMobile }) => {
               <Slide direction='up' in={scrolled}>
                 <Stack alignItems='center' justifyContent='center'>
                   <SchoolIcon sx={{ fontSize: '8rem' }} />
-                  <Typography fontSize='1.4rem'>
+                  <Typography fontSize='1.4rem' textAlign='center'>
                     Curabitur ut orci ut dolor condimentum finibus vel sed
                     purus.
                   </Typography>

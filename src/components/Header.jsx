@@ -16,21 +16,18 @@ const Header = ({ isMobile }) => {
         zindex={-1}
         style={{ height: '100%', width: '100%' }}
       >
-        <source
-          src={require('./../videos/background.mp4').default}
-          type='video/mp4'
-        />
+        <source src={require('./../videos/bg.mp4').default} type='video/mp4' />
       </video>
       <Typography
         variant={isMobile ? 'h5' : 'h1'}
         fontWeight={700}
         position='absolute'
-        top='50%'
-        left='50%'
+        bottom='15%'
+        left='5%'
         color='#fff'
         sx={{
-          transform: 'translate(-50%, -50%)',
-          textShadow: '2px 2px 10px #000',
+          // transform: 'translate(-50%, -50%)',
+          textShadow: '4px 4px 20px #000',
           fontFamily: 'Dancing Script',
         }}
         zIndex={1}
