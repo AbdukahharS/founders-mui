@@ -1,6 +1,14 @@
-import { Box, Container, Stack, Typography, Grid, Slide } from '@mui/material'
+import {
+  Box,
+  Container,
+  Stack,
+  Typography,
+  Grid,
+  Slide,
+  Link,
+} from '@mui/material'
 import React, { useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+// import {} from 'react-router-dom'
 import BookIcon from '@mui/icons-material/Book'
 import GroupIcon from '@mui/icons-material/Group'
 import SchoolIcon from '@mui/icons-material/School'
@@ -53,12 +61,15 @@ const Features = ({ isMobile }) => {
                   <Typography fontSize='1.4rem' textAlign='center'>
                     We have our own library for everyone!
                   </Typography>
-                  <Link to='/library'>
-                    <Typography
-                      sx={{ textDecoration: 'underline', fontSize: '1.4rem' }}
-                    >
-                      Go to the library
-                    </Typography>
+                  <Link
+                    href='/library'
+                    sx={{
+                      textDecoration: 'underline',
+                      fontSize: '1.4rem',
+                      color: 'secondary.main',
+                    }}
+                  >
+                    Go to the library
                   </Link>
                 </Stack>
               </Slide>
