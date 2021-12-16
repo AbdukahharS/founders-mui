@@ -11,8 +11,10 @@ import Features from './components/Features'
 import Contacts from './components/Contacts'
 import Teachers from './components/Teachers'
 import Footer from './components/Footer'
+// Modals
 import CourseModal from './components/CourseModal'
 import MenuModal from './components/MenuModal'
+import InstructorModal from './components/InstructorModal'
 
 function App() {
   const [currentCourse, setCurrentCourse] = useState({
@@ -23,6 +25,8 @@ function App() {
     duration: '3 months',
     requirement: 'Elementary',
   })
+  const [curVideo, setCurVideo] = useState('teacher1.mp4')
+  const [isVideoOpen, setIsVideoOpen] = useState(false)
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') === 'dark' ? darkTheme : lightTheme
   )
@@ -68,7 +72,7 @@ function App() {
             setCurrentCourse={setCurrentCourse}
           />
           <Features isMobile={isMobile} />
-          <Teachers />
+          <Teachers setCurVideo={setCurVideo} setIsVideoOpen={setIsVideoOpen} />
           <Contacts />
           <Footer theme={theme} lightTheme={lightTheme} darkTheme={darkTheme} />
           <CourseModal
@@ -83,6 +87,11 @@ function App() {
             setTheme={setTheme}
             lightTheme={lightTheme}
             darkTheme={darkTheme}
+          />
+          <InstructorModal
+            isVideoOpen={isVideoOpen}
+            setIsVideoOpen={setIsVideoOpen}
+            curVideo={curVideo}
           />
         </ThemeProvider>
       </Router>

@@ -28,20 +28,23 @@ const teachers = [
     name: 'John Doe',
     description: 'Instructor of IELTS 7+ course and 8.5 score holder',
     banner: 'teacher1.png',
+    video: 'teacher1.mp4',
   },
   {
     name: 'Edward Snowden',
     description: 'Instructor of General English course and 8.0 holder',
     banner: 'teacher2.png',
+    video: 'teacher2.mp4',
   },
   {
     name: 'Jane Doe',
     description: 'Instructor of IELTS speed-up course and 8.0 holder',
     banner: 'teacher3.png',
+    video: 'teacher3.mp4',
   },
 ]
 
-const Teachers = () => {
+const Teachers = ({ setCurVideo, setIsVideoOpen }) => {
   const [isHover, setIsHover] = useState(false)
 
   return (
@@ -67,7 +70,13 @@ const Teachers = () => {
           autoPlaySpeed={2000}
         >
           {teachers.map((teacher, ind) => (
-            <TeacherBox setIsHover={setIsHover} teacher={teacher} key={ind} />
+            <TeacherBox
+              setCurVideo={setCurVideo}
+              setIsVideoOpen={setIsVideoOpen}
+              setIsHover={setIsHover}
+              teacher={teacher}
+              key={ind}
+            />
           ))}
         </Carousel>
       </Container>

@@ -1,8 +1,7 @@
 import React from 'react'
 import { Box, Stack, Typography } from '@mui/material'
-import { Link } from 'react-router-dom'
 
-const TeacherBox = ({ teacher, setIsHover }) => {
+const TeacherBox = ({ teacher, setIsHover, setCurVideo, setIsVideoOpen }) => {
   return (
     <Box
       width='90%'
@@ -63,12 +62,15 @@ const TeacherBox = ({ teacher, setIsHover }) => {
             bgcolor='secondary.main'
             p='0.4rem 1rem'
             borderRadius='0.4rem'
+            sx={{ cursor: 'pointer' }}
+            onClick={() => {
+              setCurVideo(teacher.video)
+              setIsVideoOpen(true)
+            }}
           >
-            <Link to='/' style={{ fontSize: '1.4rem' }}>
-              <Typography fontSize='1.4rem' color='primary'>
-                Learn more
-              </Typography>
-            </Link>
+            <Typography fontSize='1.4rem' color='primary'>
+              Learn more
+            </Typography>
           </Box>
         </Stack>
       </Box>
