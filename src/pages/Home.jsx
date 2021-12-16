@@ -12,23 +12,23 @@ import MenuModal from '../components/MenuModal'
 import InstructorModal from '../components/InstructorModal'
 import CourseModal from '../components/CourseModal'
 // MUI
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
-import { Stack } from '@mui/material'
+// import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
+// import { Stack } from '@mui/material'
 // Config
 import { lightTheme, darkTheme } from '../muiConfig'
 
-const style = {
-  position: 'fixed',
-  bottom: '2%',
-  right: '2%',
-  width: '3.6rem',
-  height: '3.6rem',
-  alignItems: 'center',
-  justifyContent: 'center',
-  borderRadius: '50%',
-  border: '2px solid #fff',
-  cursor: 'pointer',
-}
+// const style = {
+//   position: 'fixed',
+//   bottom: '2%',
+//   right: '2%',
+//   width: '3.6rem',
+//   height: '3.6rem',
+//   alignItems: 'center',
+//   justifyContent: 'center',
+//   borderRadius: '50%',
+//   border: '2px solid #fff',
+//   cursor: 'pointer',
+// }
 
 const Home = ({ theme, setTheme }) => {
   const [currentCourse, setCurrentCourse] = useState({
