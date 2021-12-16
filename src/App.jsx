@@ -18,8 +18,15 @@ function App() {
       <Router>
         <ThemeProvider theme={theme}>
           <Routes>
-            <Route exact path='/' element={<Home />} />
-            <Route path='/library' element={<Library />} />
+            <Route
+              exact
+              path='/'
+              element={<Home theme={theme} setTheme={setTheme} />}
+            />
+            <Route
+              path='/library'
+              element={<Library theme={theme} setTheme={setTheme} />}
+            />
           </Routes>
         </ThemeProvider>
       </Router>

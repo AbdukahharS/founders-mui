@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import CourseCard from './CourseCard'
-// import '../css/courses.css'
 import { Button, Container, Grid, Typography, Box, Stack } from '@mui/material'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'

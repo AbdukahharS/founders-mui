@@ -30,10 +30,7 @@ const style = {
   cursor: 'pointer',
 }
 
-const Home = () => {
-  const [theme, setTheme] = useState(
-    localStorage.getItem('theme') === 'dark' ? darkTheme : lightTheme
-  )
+const Home = ({ theme, setTheme }) => {
   const [currentCourse, setCurrentCourse] = useState({
     name: 'General English',
     description:
