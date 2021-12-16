@@ -16,15 +16,6 @@ const courses = [
     price: '400 000',
   },
   {
-    name: 'IELTS turbo',
-    description:
-      'Fusce auctor magna quis dolor sodales porttitor. Quisque a pellentesque ex.',
-    banner: 'ielts-turbo.gif',
-    duration: '2 months',
-    requirement: 'Pre-intermediate',
-    price: '450 000',
-  },
-  {
     name: 'IELTS up',
     description:
       'Aliquam erat volutpat. Nullam molestie magna interdum mattis posuere. Ut porttitor pellentesque elit eget auctor.',
@@ -32,6 +23,15 @@ const courses = [
     duration: '3 months',
     requirement: 'Intermediate',
     price: '600 000',
+  },
+  {
+    name: 'IELTS turbo',
+    description:
+      'Fusce auctor magna quis dolor sodales porttitor. Quisque a pellentesque ex.',
+    banner: 'ielts-turbo.gif',
+    duration: '2 months',
+    requirement: 'Pre-intermediate',
+    price: '450 000',
   },
 ]
 
