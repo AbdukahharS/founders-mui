@@ -1,13 +1,14 @@
 import { Box, Container, Stack, Typography, Grid, Slide } from '@mui/material'
 import React, { useRef, useState } from 'react'
-import PersonIcon from '@mui/icons-material/Person'
+import { Link } from 'react-router-dom'
+import BookIcon from '@mui/icons-material/Book'
 import GroupIcon from '@mui/icons-material/Group'
 import SchoolIcon from '@mui/icons-material/School'
 import Slider from './Slider'
 
 const items = [
   {
-    icon: PersonIcon,
+    icon: BookIcon,
     desc: 'Donec accumsan arcu magna, nec lobortis leo lobortis vel. Vivamus quis scelerisque libero.',
   },
   {
@@ -48,11 +49,17 @@ const Features = ({ isMobile }) => {
             <Grid item xs={12} sm={6} lg={4}>
               <Slide direction='up' in={scrolled}>
                 <Stack alignItems='center' justifyContent='center'>
-                  <PersonIcon sx={{ fontSize: '8rem' }} />
+                  <BookIcon sx={{ fontSize: '8rem' }} />
                   <Typography fontSize='1.4rem' textAlign='center'>
-                    Donec accumsan arcu magna, nec lobortis leo lobortis vel.
-                    Vivamus quis scelerisque libero.
+                    We have our own library for everyone!
                   </Typography>
+                  <Link to='/library'>
+                    <Typography
+                      sx={{ textDecoration: 'underline', fontSize: '1.4rem' }}
+                    >
+                      Go to the library
+                    </Typography>
+                  </Link>
                 </Stack>
               </Slide>
             </Grid>
