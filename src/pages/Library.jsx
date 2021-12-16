@@ -80,6 +80,7 @@ const Library = ({ theme, setTheme }) => {
                   <img
                     style={{ height: '8rem' }}
                     src={require('../images/reading1.jpg').default}
+                    alt='blah'
                   />
                   <Typography>
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit.
@@ -103,6 +104,7 @@ const Library = ({ theme, setTheme }) => {
                   <img
                     style={{ height: '8rem' }}
                     src={require('../images/reading2.jpg').default}
+                    alt='blah'
                   />
                   <Typography>
                     Eveniet quia nihil quas sequi fugiat mollitia quod
@@ -147,6 +149,7 @@ const Library = ({ theme, setTheme }) => {
                     <img
                       style={{ height: '8rem' }}
                       src={require('../images/reading1.jpg').default}
+                      alt='blah'
                     />
                     <Typography>
                       Lorem ipsum dolor, sit amet consectetur adipisicing elit.
@@ -170,6 +173,7 @@ const Library = ({ theme, setTheme }) => {
                     <img
                       style={{ height: '8rem' }}
                       src={require('../images/writing2.jpg').default}
+                      alt='blah'
                     />
                     <Typography>
                       Eveniet quia nihil quas sequi fugiat mollitia quod
