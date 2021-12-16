@@ -102,14 +102,14 @@ const Home = ({ theme, setTheme }) => {
         setIsVideoOpen={setIsVideoOpen}
         curVideo={curVideo}
       />
-      <Stack style={style} backgroundColor='primary.main'>
+      {/* <Stack style={style} backgroundColor='primary.main'>
         <QuestionMarkIcon
           sx={{
             color: 'primary.contrastText',
             fontSize: '2rem',
           }}
         />
-      </Stack>
+      </Stack> */}
     </>
   )
 }
