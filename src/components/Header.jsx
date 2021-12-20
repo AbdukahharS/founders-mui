@@ -22,11 +22,10 @@ const Header = ({ isMobile, isTablet }) => {
         variant={isMobile ? 'h4' : isTablet ? 'h2' : 'h1'}
         fontWeight={700}
         position='absolute'
-        bottom='13%'
+        bottom={isMobile ? '5%' : isTablet ? '10%' : '15%'}
         left='5%'
         color='#fff'
         sx={{
-          // transform: 'translate(-50%, -50%)',
           textShadow: '4px 4px 20px #000',
           fontFamily: 'Dancing Script',
         }}

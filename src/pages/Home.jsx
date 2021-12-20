@@ -30,7 +30,7 @@ import { lightTheme, darkTheme } from '../muiConfig'
 //   cursor: 'pointer',
 // }
 
-const Home = ({ theme, setTheme }) => {
+const Home = ({ theme, setTheme, isMobile, isTablet }) => {
   const [currentCourse, setCurrentCourse] = useState({
     name: 'General English',
     description:
@@ -43,19 +43,6 @@ const Home = ({ theme, setTheme }) => {
   const [isVideoOpen, setIsVideoOpen] = useState(false)
   const [openMenu, setOpenMenu] = useState(false)
   const [openModal, setOpenModal] = useState(false)
-  const [isMobile, setIsMobile] = useState(
-    window.innerWidth <= 600 ? true : false
-  )
-  const [isTablet, setIsTablet] = useState(
-    window.innerWidth > 600 && window.innerWidth <= 1200 ? true : false
-  )
-
-  window.addEventListener('resize', () => {
-    setIsMobile(window.innerWidth <= 600 ? true : false)
-    setIsTablet(
-      window.innerWidth > 600 && window.innerWidth <= 1024 ? true : false
-    )
-  })
 
   useEffect(() => {
     let themeColor = theme === darkTheme ? 'dark' : 'light'

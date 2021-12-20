@@ -1,30 +1,49 @@
-import React from 'react'
-import {
-  Typography,
-  Box,
-  Container,
-  Stack,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Button,
-  Divider,
-  Link,
-} from '@mui/material'
+import React, { useState, useEffect } from 'react'
+import { Typography, Box, Container, Stack, Button, Link } from '@mui/material'
 import logo from './../images/logo.png'
 import logoDark from './../images/logo-dark.png'
 import { lightTheme, darkTheme } from '../muiConfig'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import DownloadIcon from '@mui/icons-material/Download'
+import books from '../db/books'
 
-const Library = ({ theme, setTheme }) => {
+const disable = {
+  backgroundColor: 'primary.main',
+  color: 'primary.contrastText',
+}
+
+const enable = {
+  color: 'secondary.main',
+  borderBottomWidth: '4px',
+  borderBottomStyle: 'solid',
+  borderBottomColor: 'secondary.main',
+  borderBottomLeftRadius: '0',
+  borderBottomRightRadius: '0',
+}
+
+const Library = ({ theme, setTheme, isMobile, isTablet }) => {
   const clickHandler = () => {
     setTheme(theme === lightTheme ? darkTheme : lightTheme)
   }
+  const [curCategory, setCurCategory] = useState('all')
+  const [curBooks, setCurBooks] = useState([])
+  // const [isLoading, setIsLoading] = useState(true)
+  useEffect(() => {
+    if (curCategory === 'all') {
+      setCurBooks(books)
+    } else {
+      setCurBooks(books.filter((book) => book.category === curCategory))
+    }
+  }, [curCategory])
   return (
-    <>
+    <Stack
+      direction='column'
+      alignItems='stretch'
+      minHeight='100vh'
+      justifyContent='stretch'
+      bgcolor='info.light'
+    >
       <Box bgcolor='primary.main' color='primary.contrastText' py='1rem'>
         <Container>
           <Stack
@@ -50,149 +69,71 @@ const Library = ({ theme, setTheme }) => {
           </Stack>
         </Container>
       </Box>
-      <Box /*bgcolor='info.light' color='info.contrastText'*/ py={4}>
+      <Box
+        bgcolor='primary.main'
+        color='primary.contrastText'
+        className='categories'
+      >
         <Container>
-          <Accordion
-            sx={{
-              backgroundColor: 'primary.main',
-              color: 'primary.contrastText',
-            }}
+          <Button
+            onClick={() => setCurCategory('all')}
+            sx={curCategory !== 'all' ? disable : enable}
           >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon sx={{ color: 'secondary.main' }} />}
-              aria-controls='panel1a-content'
-              id='panel1a-header'
-            >
-              <Typography fontSize='1.6rem'>
-                Books related to reading skill
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Stack>
-                <Divider sx={{ backgroundColor: 'secondary.main' }} />
-                <Stack
-                  direction='row'
-                  alignItems='center'
-                  justifyContent='space-between'
-                  py={1}
-                  px={4}
-                >
-                  <img
-                    style={{ height: '8rem' }}
-                    src={require('../images/reading1.jpg').default}
-                    alt='blah'
-                  />
-                  <Typography>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Officia, temporibus.
-                  </Typography>
-                  <Link
-                    href={require('../books/reading2.pdf').default}
-                    download
-                  >
-                    <DownloadIcon sx={{ color: 'secondary.main' }} />
-                  </Link>
-                </Stack>
-                <Divider sx={{ backgroundColor: 'secondary.main' }} />
-                <Stack
-                  direction='row'
-                  alignItems='center'
-                  justifyContent='space-between'
-                  py={1}
-                  px={4}
-                >
-                  <img
-                    style={{ height: '8rem' }}
-                    src={require('../images/reading2.jpg').default}
-                    alt='blah'
-                  />
-                  <Typography>
-                    Eveniet quia nihil quas sequi fugiat mollitia quod
-                    cupiditate laborum consequatur!
-                  </Typography>
-                  <Link
-                    href={require('../books/reading2.pdf').default}
-                    download
-                  >
-                    <DownloadIcon sx={{ color: 'secondary.main' }} />
-                  </Link>
-                </Stack>
-              </Stack>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion
-            sx={{
-              backgroundColor: 'primary.main',
-              color: 'primary.contrastText',
-            }}
+            All
+          </Button>
+          <Button
+            onClick={() => setCurCategory('writing')}
+            sx={curCategory !== 'writing' ? disable : enable}
           >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon sx={{ color: 'secondary.main' }} />}
-              aria-controls='panel2a-content'
-              id='panel2a-header'
-            >
-              <Typography fontSize='1.6rem'>
-                Books related to Writing
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                <Stack>
-                  <Divider sx={{ backgroundColor: 'secondary.main' }} />
-                  <Stack
-                    direction='row'
-                    alignItems='center'
-                    justifyContent='space-between'
-                    py={1}
-                    px={4}
-                  >
-                    <img
-                      style={{ height: '8rem' }}
-                      src={require('../images/reading1.jpg').default}
-                      alt='blah'
-                    />
-                    <Typography>
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                      Officia, temporibus.
-                    </Typography>
-                    <Link
-                      href={require('../books/reading2.pdf').default}
-                      download
-                    >
-                      <DownloadIcon sx={{ color: 'secondary.main' }} />
-                    </Link>
-                  </Stack>
-                  <Divider sx={{ backgroundColor: 'secondary.main' }} />
-                  <Stack
-                    direction='row'
-                    alignItems='center'
-                    justifyContent='space-between'
-                    py={1}
-                    px={4}
-                  >
-                    <img
-                      style={{ height: '8rem' }}
-                      src={require('../images/writing2.jpg').default}
-                      alt='blah'
-                    />
-                    <Typography>
-                      Eveniet quia nihil quas sequi fugiat mollitia quod
-                      cupiditate laborum consequatur!
-                    </Typography>
-                    <Link
-                      href={require('../books/reading2.pdf').default}
-                      download
-                    >
-                      <DownloadIcon sx={{ color: 'secondary.main' }} />
-                    </Link>
-                  </Stack>
-                </Stack>
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
+            Writing
+          </Button>
+          <Button
+            onClick={() => setCurCategory('reading')}
+            sx={curCategory !== 'reading' ? disable : enable}
+          >
+            Reading
+          </Button>
         </Container>
       </Box>
-    </>
+      <Box minHeight='100%'>
+        <Container>
+          <Stack>
+            {curBooks.map((book, i) => (
+              <Stack
+                key={i}
+                direction='row'
+                alignItems='center'
+                justifyContent='space-between'
+                py={1}
+                px={isMobile ? 0 : 4}
+                spacing={isMobile ? 1 : 4}
+              >
+                <Stack direction='row' alignItems='center' spacing={2}>
+                  <img
+                    style={{ height: '8rem' }}
+                    src={require(`../images/${book.banner}`).default}
+                    alt='blah'
+                  />
+                  <Stack>
+                    <Typography fontSize='1.4rem' color='secondary'>
+                      {book.name}
+                    </Typography>
+                    {!isMobile && (
+                      <Typography color='primary.contrastText'>
+                        {book.description}
+                      </Typography>
+                    )}
+                  </Stack>
+                </Stack>
+                <Link href={require(`../books/${book.file}`).default} download>
+                  <DownloadIcon sx={{ color: 'secondary.main' }} />
+                </Link>
+              </Stack>
+            ))}
+          </Stack>
+        </Container>
+      </Box>
+    </Stack>
   )
 }
 

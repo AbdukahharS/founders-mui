@@ -13,6 +13,20 @@ function App() {
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') === 'dark' ? darkTheme : lightTheme
   )
+  const [isMobile, setIsMobile] = useState(
+    window.innerWidth <= 600 ? true : false
+  )
+  const [isTablet, setIsTablet] = useState(
+    window.innerWidth > 600 && window.innerWidth <= 1200 ? true : false
+  )
+
+  window.addEventListener('resize', () => {
+    setIsMobile(window.innerWidth <= 600 ? true : false)
+    setIsTablet(
+      window.innerWidth > 600 && window.innerWidth <= 1024 ? true : false
+    )
+  })
+
   return (
     <>
       <Router>
@@ -21,11 +35,25 @@ function App() {
             <Route
               exact
               path='/'
-              element={<Home theme={theme} setTheme={setTheme} />}
+              element={
+                <Home
+                  theme={theme}
+                  setTheme={setTheme}
+                  isTablet={isTablet}
+                  isMobile={isMobile}
+                />
+              }
             />
             <Route
               path='/library'
-              element={<Library theme={theme} setTheme={setTheme} />}
+              element={
+                <Library
+                  theme={theme}
+                  setTheme={setTheme}
+                  isTablet={isTablet}
+                  isMobile={isMobile}
+                />
+              }
             />
           </Routes>
         </ThemeProvider>
