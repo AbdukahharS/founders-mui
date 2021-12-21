@@ -5,8 +5,9 @@ import {
   Typography,
   Grid,
   Slide,
-  Link,
+  // Link,
 } from '@mui/material'
+import { Link } from 'react-router-dom'
 import React, { useRef, useState } from 'react'
 import BookIcon from '@mui/icons-material/Book'
 import GroupIcon from '@mui/icons-material/Group'
@@ -32,11 +33,13 @@ const Features = ({ isMobile }) => {
   const containerRef = useRef()
   const [scrolled, setScrolled] = useState(false)
   window.addEventListener('scroll', () => {
-    const cont = containerRef.current
-    if (cont && cont.getBoundingClientRect().y <= 0.67 * window.innerHeight) {
-      setScrolled(true)
-    } else {
-      setScrolled(false)
+    if (window.location.pathname === '/') {
+      const cont = containerRef.current
+      if (cont && cont.getBoundingClientRect().y <= 0.67 * window.innerHeight) {
+        setScrolled(true)
+      } else {
+        setScrolled(false)
+      }
     }
   })
   return (
@@ -61,8 +64,8 @@ const Features = ({ isMobile }) => {
                     We have our own library for everyone!
                   </Typography>
                   <Link
-                    href='/library'
-                    sx={{
+                    to='/library'
+                    style={{
                       textDecoration: 'underline',
                       fontSize: '1.4rem',
                       color: 'secondary.main',

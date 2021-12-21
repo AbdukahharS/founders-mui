@@ -25,6 +25,7 @@ const enable = {
 }
 
 const Library = ({ theme, setTheme, isMobile, isTablet }) => {
+  window.addEventListener('scroll', () => {})
   const clickHandler = () => {
     setTheme(theme === lightTheme ? darkTheme : lightTheme)
   }

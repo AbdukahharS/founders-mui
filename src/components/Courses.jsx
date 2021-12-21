@@ -45,12 +45,7 @@ const Courses = ({ setCurrentCourse, setOpenModal, isMobile, isTablet }) => {
         <Typography py={4} variant='h2' color='secondary' fontWeight={500}>
           Our Courses
         </Typography>
-        <Grid
-          m='auto'
-          container
-          spacing={isMobile ? 0 : isTablet ? 0 : 4}
-          rowSpacing={6}
-        >
+        <Grid m='auto' container spacing={isMobile ? 0 : isTablet ? 0 : 4}>
           {courses.map((course, ind) =>
             ind <= (isMobile ? 1 : 2) ? (
               <CourseCard
