@@ -1,7 +1,13 @@
 import React from 'react'
 import { Box, Stack, Typography } from '@mui/material'
 
-const TeacherBox = ({ teacher, setIsHover, setCurVideo, setIsVideoOpen }) => {
+const TeacherBox = ({
+  teacher,
+  setIsHover,
+  setCurVideo,
+  setIsVideoOpen,
+  theme,
+}) => {
   return (
     <Box
       width='90%'
@@ -49,10 +55,17 @@ const TeacherBox = ({ teacher, setIsHover, setCurVideo, setIsVideoOpen }) => {
           spacing={2}
           className='back-box'
           position='absolute'
-          sx={{
-            transform: 'rotateY(180deg)',
-            bgcolor: 'primary.main',
-          }}
+          sx={
+            theme.palette.mode === 'dark'
+              ? {
+                  backgroundColor: 'primary.main',
+                  transform: 'rotateY(180deg)',
+                }
+              : {
+                  backgroundImage: theme.palette.background,
+                  transform: 'rotateY(180deg)',
+                }
+          }
         >
           <Typography variant='h5' className='desc' textAlign='center'>
             {teacher.description}

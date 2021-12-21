@@ -51,10 +51,14 @@ const Home = ({ theme, setTheme, isMobile, isTablet }) => {
         setOpenModal={setOpenModal}
         setCurrentCourse={setCurrentCourse}
       />
-      <Features isMobile={isMobile} />
-      <Teachers setCurVideo={setCurVideo} setIsVideoOpen={setIsVideoOpen} />
+      <Features isMobile={isMobile} theme={theme} />
+      <Teachers
+        setCurVideo={setCurVideo}
+        setIsVideoOpen={setIsVideoOpen}
+        theme={theme}
+      />
       <Contacts />
-      <Footer theme={theme} lightTheme={lightTheme} darkTheme={darkTheme} />
+      <Footer theme={theme} lightTheme={lightTheme} />
       <CourseModal
         openModal={openModal}
         setOpenModal={setOpenModal}

@@ -44,7 +44,7 @@ const teachers = [
   },
 ]
 
-const Teachers = ({ setCurVideo, setIsVideoOpen }) => {
+const Teachers = ({ setCurVideo, setIsVideoOpen, theme }) => {
   const [isHover, setIsHover] = useState(false)
 
   return (
@@ -76,6 +76,7 @@ const Teachers = ({ setCurVideo, setIsVideoOpen }) => {
               setIsHover={setIsHover}
               teacher={teacher}
               key={ind}
+              theme={theme}
             />
           ))}
         </Carousel>

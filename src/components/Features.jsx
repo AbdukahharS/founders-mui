@@ -29,7 +29,7 @@ const items = [
   },
 ]
 
-const Features = ({ isMobile }) => {
+const Features = ({ isMobile, theme }) => {
   const containerRef = useRef()
   const [scrolled, setScrolled] = useState(false)
   window.addEventListener('scroll', () => {
@@ -47,7 +47,12 @@ const Features = ({ isMobile }) => {
       id='features'
       pt={6}
       pb={isMobile ? 6 : 12}
-      bgcolor='primary.main'
+      bgcolor={theme.palette.mode === 'dark' && 'primary.main'}
+      sx={
+        theme.palette.mode === 'dark'
+          ? { backgroundColor: 'primary.main' }
+          : { backgroundImage: theme.palette.background }
+      }
       color='primary.contrastText'
     >
       <Container>

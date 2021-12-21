@@ -22,7 +22,7 @@ const Header = ({ isMobile, isTablet }) => {
         variant={isMobile ? 'h4' : isTablet ? 'h2' : 'h1'}
         fontWeight={700}
         position='absolute'
-        bottom={isMobile ? '5%' : isTablet ? '10%' : '15%'}
+        bottom={isMobile ? '5%' : isTablet ? '7%' : '22%'}
         left='5%'
         color='#fff'
         sx={{

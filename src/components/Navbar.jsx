@@ -30,12 +30,18 @@ const Navbar = ({
     )
   }, [theme])
 
+  console.log(theme.palette.background)
+
   return (
     <Box
-      sx={{ backgroundImage: bg }}
+      sx={
+        theme.palette.mode === 'dark'
+          ? { backgroundColor: theme.palette.background }
+          : { backgroundImage: theme.palette.background }
+      }
       color='primary.contrastText'
-      py={isMobile ? '0.2rem' : '1rem'}
-      position='absolute'
+      py={isMobile ? '0.2rem' : '0.6rem'}
+      // position='absolute'
       zIndex={1}
       width='100%'
     >
