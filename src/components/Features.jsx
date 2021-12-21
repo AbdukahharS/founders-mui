@@ -8,7 +8,6 @@ import {
   Link,
 } from '@mui/material'
 import React, { useRef, useState } from 'react'
-// import { Link } from 'react-router-dom'
 import BookIcon from '@mui/icons-material/Book'
 import GroupIcon from '@mui/icons-material/Group'
 import SchoolIcon from '@mui/icons-material/School'
@@ -44,7 +43,7 @@ const Features = ({ isMobile }) => {
     <Box
       id='features'
       pt={6}
-      pb={12}
+      pb={isMobile ? 6 : 12}
       bgcolor='primary.main'
       color='primary.contrastText'
     >

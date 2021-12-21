@@ -7,7 +7,7 @@ const Slider = ({ items }) => {
   const containerRef = useRef()
   const [current, setCurrent] = useState(0)
   return (
-    <Box px={8} py={4} position='relative'>
+    <Box px={6} py={4} position='relative'>
       <Stack ref={containerRef} direction='row'>
         <Stack
           sx={{
@@ -69,8 +69,8 @@ const Slider = ({ items }) => {
               bgcolor='info.light'
               minWidth='100%'
               borderRadius={2}
-              px={4}
-              py={6}
+              px={2}
+              py={4}
             >
               <item.icon style={{ fontSize: '6rem' }} />
               <Typography>{item.desc}</Typography>
