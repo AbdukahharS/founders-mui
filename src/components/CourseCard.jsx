@@ -21,7 +21,6 @@ const CourseCard = ({
   const openModal = () => {
     setOpenModal(true)
     setCurrentCourse(course)
-    console.log('true')
   }
   return (
     <Grid item lg={4} sm={5} xs={9} mx='auto' mb={2}>

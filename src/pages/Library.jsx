@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { Typography, Box, Container, Stack, Button, Link } from '@mui/material'
+import { Link } from 'react-router-dom'
+import { Typography, Box, Container, Stack, Button } from '@mui/material'
 import logo from './../images/logo.png'
 import logoDark from './../images/logo-dark.png'
 import { lightTheme, darkTheme } from '../muiConfig'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import DownloadIcon from '@mui/icons-material/Download'
+// DB Books
 import books from '../db/books'
 
 const disable = {
@@ -52,11 +54,13 @@ const Library = ({ theme, setTheme, isMobile, isTablet }) => {
             justifyContent='space-between'
           >
             <Stack direction='row' alignItems='center' spacing={2}>
-              <img
-                src={theme === lightTheme ? logoDark : logo}
-                style={{ width: '4rem' }}
-                alt='Founders Logo'
-              />
+              <Link to='/'>
+                <img
+                  src={theme === lightTheme ? logoDark : logo}
+                  style={{ width: '4rem' }}
+                  alt='Founders Logo'
+                />
+              </Link>
               <Typography variant='h2'>Library</Typography>
             </Stack>
             <Button onClick={() => clickHandler()}>
@@ -95,7 +99,7 @@ const Library = ({ theme, setTheme, isMobile, isTablet }) => {
           </Button>
         </Container>
       </Box>
-      <Box minHeight='100%'>
+      <Box py={4}>
         <Container>
           <Stack>
             {curBooks.map((book, i) => (
@@ -125,9 +129,9 @@ const Library = ({ theme, setTheme, isMobile, isTablet }) => {
                     )}
                   </Stack>
                 </Stack>
-                <Link href={require(`../books/${book.file}`).default} download>
+                <a href={require(`../books/${book.file}`).default} download>
                   <DownloadIcon sx={{ color: 'secondary.main' }} />
-                </Link>
+                </a>
               </Stack>
             ))}
           </Stack>

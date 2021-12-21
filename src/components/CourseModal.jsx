@@ -1,14 +1,25 @@
 import React from 'react'
-// import '../css/modal.css'
 
 import { Modal as ModalBox, Box, Stack, Typography, Link } from '@mui/material'
+// MUI Icons
 import DescriptionIcon from '@mui/icons-material/Description'
 import DateRangeIcon from '@mui/icons-material/DateRange'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn'
 import LocalPhone from '@mui/icons-material/LocalPhone'
+import CancelIcon from '@mui/icons-material/Cancel'
 
-const style = {
+const mStyle = {
+  position: 'fixed',
+  top: '0',
+  left: '0',
+  width: '100vw',
+  height: '100vh',
+  bgcolor: 'info.light',
+  color: 'primary.contrastText',
+}
+
+const notMStyle = {
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -18,21 +29,31 @@ const style = {
   p: 4,
 }
 
-const CourseModal = ({ openModal, setOpenModal, currentCourse }) => {
+const CourseModal = ({ openModal, setOpenModal, currentCourse, isMobile }) => {
   const closeModal = () => {
     setOpenModal(false)
   }
 
   return (
     <ModalBox open={openModal} onClose={() => closeModal()}>
-      <Box sx={style}>
-        <Stack direction='row' spacing={4}>
+      <Box sx={isMobile ? mStyle : notMStyle}>
+        <CancelIcon
+          onClick={() => closeModal()}
+          sx={{
+            position: 'fixed',
+            top: '1%',
+            left: '5%',
+            fontSize: '3rem',
+            color: 'red',
+          }}
+        />
+        <Stack direction={isMobile ? 'column' : 'row'} spacing={4}>
           <img
             src={require(`../images/${currentCourse.banner}`).default}
             alt='Banner of the course'
-            width='50%'
+            width={isMobile ? '100%' : '50%'}
           />
-          <Box>
+          <Box sx={isMobile ? { px: 2 } : {}}>
             <Typography variant='h3' component='h2' color='secondary'>
               {currentCourse.name}
             </Typography>

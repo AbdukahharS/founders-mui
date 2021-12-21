@@ -37,7 +37,7 @@ const Contacts = () => {
               title='Google Maps'
             ></iframe>
           </Grid>
-          <Grid item xs={12} lg={4}>
+          <Grid item xs={12} lg={4} fontFamily='Josefin Slab'>
             <Link
               href='/'
               underline='hover'
@@ -54,7 +54,11 @@ const Contacts = () => {
                   marginRight: '0.4rem',
                 }}
               />
-              <Typography color='secondary' fontSize='1.3rem'>
+              <Typography
+                color='secondary'
+                fontSize='1.3rem'
+                fontFamily='Josefin Slab'
+              >
                 Milliy Bog Station, opposite of Legislative Chamber
               </Typography>
             </Link>
