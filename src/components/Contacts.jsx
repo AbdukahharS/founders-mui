@@ -20,7 +20,7 @@ const Contacts = () => {
           variant='h2'
           mb={6}
           color='secondary'
-          fontWeight={500}
+          fontWeight={700}
           className='topic'
         >
           Contact Us

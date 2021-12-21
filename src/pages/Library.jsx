@@ -11,7 +11,6 @@ import DownloadIcon from '@mui/icons-material/Download'
 import books from '../db/books'
 
 const disable = {
-  backgroundColor: 'primary.main',
   color: 'primary.contrastText',
 }
 
@@ -47,58 +46,66 @@ const Library = ({ theme, setTheme, isMobile, isTablet }) => {
       justifyContent='stretch'
       bgcolor='info.light'
     >
-      <Box bgcolor='primary.main' color='primary.contrastText' py='1rem'>
-        <Container>
-          <Stack
-            direction='row'
-            alignItems='center'
-            justifyContent='space-between'
-          >
-            <Stack direction='row' alignItems='center' spacing={2}>
-              <Link to='/'>
-                <img
-                  src={theme === lightTheme ? logoDark : logo}
-                  style={{ width: '4rem' }}
-                  alt='Founders Logo'
-                />
-              </Link>
-              <Typography variant='h2'>Library</Typography>
-            </Stack>
-            <Button onClick={() => clickHandler()}>
-              {theme === lightTheme ? (
-                <Brightness7Icon sx={{ color: 'primary.contrastText' }} />
-              ) : (
-                <Brightness4Icon sx={{ color: 'primary.contrastText' }} />
-              )}
-            </Button>
-          </Stack>
-        </Container>
-      </Box>
       <Box
-        bgcolor='primary.main'
-        color='primary.contrastText'
-        className='categories'
+        sx={
+          theme.palette.mode === 'dark'
+            ? { backgroundColor: 'primary.main' }
+            : { backgroundImage: theme.palette.background }
+        }
       >
-        <Container>
-          <Button
-            onClick={() => setCurCategory('all')}
-            sx={curCategory !== 'all' ? disable : enable}
-          >
-            All
-          </Button>
-          <Button
-            onClick={() => setCurCategory('writing')}
-            sx={curCategory !== 'writing' ? disable : enable}
-          >
-            Writing
-          </Button>
-          <Button
-            onClick={() => setCurCategory('reading')}
-            sx={curCategory !== 'reading' ? disable : enable}
-          >
-            Reading
-          </Button>
-        </Container>
+        <Box color='primary.contrastText' py='1rem'>
+          <Container>
+            <Stack
+              direction='row'
+              alignItems='center'
+              justifyContent='space-between'
+            >
+              <Stack direction='row' alignItems='center' spacing={2}>
+                <Link to='/'>
+                  <img
+                    src={theme === lightTheme ? logoDark : logo}
+                    style={{ width: '4rem' }}
+                    alt='Founders Logo'
+                  />
+                </Link>
+                <Typography variant='h2'>Library</Typography>
+              </Stack>
+              <Button onClick={() => clickHandler()}>
+                {theme === lightTheme ? (
+                  <Brightness7Icon sx={{ color: 'primary.contrastText' }} />
+                ) : (
+                  <Brightness4Icon sx={{ color: 'primary.contrastText' }} />
+                )}
+              </Button>
+            </Stack>
+          </Container>
+        </Box>
+        <Box
+          // bgcolor='primary.main'
+          color='primary.contrastText'
+          className='categories'
+        >
+          <Container>
+            <Button
+              onClick={() => setCurCategory('all')}
+              sx={curCategory !== 'all' ? disable : enable}
+            >
+              All
+            </Button>
+            <Button
+              onClick={() => setCurCategory('writing')}
+              sx={curCategory !== 'writing' ? disable : enable}
+            >
+              Writing
+            </Button>
+            <Button
+              onClick={() => setCurCategory('reading')}
+              sx={curCategory !== 'reading' ? disable : enable}
+            >
+              Reading
+            </Button>
+          </Container>
+        </Box>
       </Box>
       <Box py={4}>
         <Container>

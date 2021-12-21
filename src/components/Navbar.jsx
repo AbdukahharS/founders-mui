@@ -22,15 +22,13 @@ const Navbar = ({
   const toggleMenu = () => {
     setOpenMenu(true)
   }
-  const [bg, setBg] = React.useState(null)
+  // const [bg, setBg] = React.useState(null)
 
-  React.useEffect(() => {
-    setBg(
-      `linear-gradient(${theme.palette.primary.main}, ${theme.palette.primary.main}bb, ${theme.palette.primary.main}11)`
-    )
-  }, [theme])
-
-  console.log(theme.palette.background)
+  // React.useEffect(() => {
+  //   setBg(
+  //     `linear-gradient(${theme.palette.primary.main}, ${theme.palette.primary.main}bb, ${theme.palette.primary.main}11)`
+  //   )
+  // }, [theme])
 
   return (
     <Box
@@ -65,20 +63,29 @@ const Navbar = ({
                       fontWeight: '500',
                       lineHeight: 'normal',
                       fontSize: '1.1rem',
+                      fontFamily: 'Roboto',
                     }}
                   >
                     FOUNDERS
                   </Typography>
-                  <Typography fontSize='0.9rem' lineHeight='normal'>
+                  <Typography
+                    fontSize='0.9rem'
+                    lineHeight='normal'
+                    fontFamily='Roboto'
+                  >
                     LANGUAGE
                   </Typography>
-                  <Typography fontSize='0.9rem' lineHeight='normal'>
+                  <Typography
+                    fontSize='0.9rem'
+                    lineHeight='normal'
+                    fontFamily='Roboto'
+                  >
                     SCHOOL
                   </Typography>
                 </Stack>
               )}
             </Stack>
-            {!isMobile && (
+            {!isMobile && !isTablet && (
               <>
                 <Link
                   href='#courses'
@@ -87,6 +94,14 @@ const Navbar = ({
                   underline='hover'
                 >
                   Courses
+                </Link>
+                <Link
+                  href='#features'
+                  style={{ fontSize: '1.4rem' }}
+                  color='inherit'
+                  underline='hover'
+                >
+                  Features
                 </Link>
                 <Link
                   href='#instructors'
@@ -113,7 +128,7 @@ const Navbar = ({
             alignItems='row'
             spacing={2}
           >
-            {isMobile && (
+            {(isMobile || isTablet) && (
               <>
                 <Button
                   sx={{
@@ -130,7 +145,7 @@ const Navbar = ({
                 </Button>
               </>
             )}
-            {!isMobile && (
+            {!isMobile && !isTablet && (
               <>
                 <Link
                   href='tel:+998712055333'

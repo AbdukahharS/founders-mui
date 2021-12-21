@@ -42,7 +42,7 @@ const Courses = ({ setCurrentCourse, setOpenModal, isMobile, isTablet }) => {
   return (
     <Box id='courses' bgcolor='info.light' color='info.contrastText' pb={8}>
       <Container>
-        <Typography py={4} variant='h2' color='secondary' fontWeight={500}>
+        <Typography py={4} variant='h2' color='secondary' fontWeight={700}>
           Our Courses
         </Typography>
         <Grid m='auto' container spacing={isMobile ? 0 : isTablet ? 0 : 4}>

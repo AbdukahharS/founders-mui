@@ -32,7 +32,12 @@ const CourseCard = ({
               image={require(`../images/${course.banner}`).default}
             />
             <CardContent className='card-body'>
-              <Typography variant='h4' color='secondary.main' pb={1}>
+              <Typography
+                variant='h4'
+                color='secondary.main'
+                pb={1}
+                fontWeight={600}
+              >
                 {course.name}
               </Typography>
               <Typography variant='p' fontSize='1.2rem'>

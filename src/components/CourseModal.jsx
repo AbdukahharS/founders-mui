@@ -10,7 +10,7 @@ import LocalPhone from '@mui/icons-material/LocalPhone'
 import CancelIcon from '@mui/icons-material/Cancel'
 
 const mStyle = {
-  position: 'fixed',
+  position: 'absolute',
   top: '0',
   left: '0',
   width: '100vw',
@@ -40,7 +40,7 @@ const CourseModal = ({ openModal, setOpenModal, currentCourse, isMobile }) => {
         <CancelIcon
           onClick={() => closeModal()}
           sx={{
-            position: 'fixed',
+            position: 'absolute',
             top: '1%',
             left: '5%',
             fontSize: '3rem',

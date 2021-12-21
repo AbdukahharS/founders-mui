@@ -56,7 +56,7 @@ const Features = ({ isMobile, theme }) => {
       color='primary.contrastText'
     >
       <Container>
-        <Typography variant='h2' color='secondary' fontWeight={500}>
+        <Typography variant='h2' color='secondary' fontWeight={700}>
           Features
         </Typography>
         {!isMobile ? (
