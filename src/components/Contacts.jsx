@@ -46,25 +46,45 @@ const Contacts = () => {
               mb={1}
               target='_blank'
             >
-              <LocationOnIcon
-                color='secondary'
-                sx={{
-                  fontSize: '3rem',
-                  display: 'inline',
-                  marginRight: '0.4rem',
-                }}
-              />
+              <Stack
+                bgcolor='secondary.main'
+                borderRadius='50%'
+                alignItems='center'
+                justifyContent='center'
+                p={0.6}
+              >
+                <LocationOnIcon
+                  sx={{
+                    fontSize: '2.4rem',
+                    color: 'secondary.contrastText',
+                  }}
+                />
+              </Stack>
               <Typography
                 color='secondary'
                 fontSize='1.3rem'
                 fontFamily='Josefin Slab'
+                ml={1}
               >
                 Milliy Bog Station, opposite of Legislative Chamber
               </Typography>
             </Link>
             <Stack direction='row' spacing={0.4} mb={1}>
-              <LocalPhoneIcon color='secondary' sx={{ fontSize: '3rem' }} />
-              <Stack direction='column'>
+              <Stack
+                bgcolor='secondary.main'
+                borderRadius='50%'
+                alignItems='center'
+                justifyContent='center'
+                p={0.6}
+              >
+                <LocalPhoneIcon
+                  sx={{
+                    fontSize: '2.4rem',
+                    color: 'secondary.contrastText',
+                  }}
+                />
+              </Stack>
+              <Stack direction='column' ml={1}>
                 <Link
                   underline='hover'
                   fontSize='1.4rem'
@@ -94,10 +114,21 @@ const Contacts = () => {
               mb={1}
               target='_blank'
             >
-              <TelegramIcon
-                color='secondary'
-                sx={{ fontSize: '3rem', marginRight: '0.4rem' }}
-              />
+              <Stack
+                bgcolor='secondary.main'
+                borderRadius='50%'
+                alignItems='center'
+                justifyContent='center'
+                p={0.6}
+                mr={1}
+              >
+                <TelegramIcon
+                  sx={{
+                    fontSize: '2.4rem',
+                    color: 'secondary.contrastText',
+                  }}
+                />
+              </Stack>
               t.me/founders_school_uz
             </Link>
             <Link
@@ -109,10 +140,21 @@ const Contacts = () => {
               mb={1}
               target='_blank'
             >
-              <InstagramIcon
-                color='secondary'
-                sx={{ fontSize: '3rem', marginRight: '0.4rem' }}
-              />
+              <Stack
+                bgcolor='secondary.main'
+                borderRadius='50%'
+                alignItems='center'
+                justifyContent='center'
+                p={0.6}
+                mr={1}
+              >
+                <InstagramIcon
+                  sx={{
+                    fontSize: '2.4rem',
+                    color: 'secondary.contrastText',
+                  }}
+                />
+              </Stack>
               instagram.com/founders.school.uz
             </Link>
             <Link
@@ -124,10 +166,21 @@ const Contacts = () => {
               mb={1}
               target='_blank'
             >
-              <FacebookIcon
-                color='secondary'
-                sx={{ fontSize: '3rem', marginRight: '0.4rem' }}
-              />
+              <Stack
+                bgcolor='secondary.main'
+                borderRadius='50%'
+                alignItems='center'
+                justifyContent='center'
+                p={0.6}
+                mr={1}
+              >
+                <FacebookIcon
+                  sx={{
+                    fontSize: '2.4rem',
+                    color: 'secondary.contrastText',
+                  }}
+                />
+              </Stack>
               Foundersschooluz
             </Link>
           </Grid>

@@ -53,7 +53,7 @@ const Library = ({ theme, setTheme, isMobile, isTablet }) => {
             : { backgroundImage: theme.palette.background }
         }
       >
-        <Box color='primary.contrastText' py='1rem'>
+        <Box color='primary.contrastText' py='0.6rem'>
           <Container>
             <Stack
               direction='row'
