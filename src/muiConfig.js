@@ -5,7 +5,7 @@ const lightTheme = createTheme({
     mode: 'light',
     background: 'linear-gradient(#f4d40d, #feac14)',
     primary: {
-      main: '#ffe55b',
+      main: '#f4d40d',
       //   contrastText: '#191919',
     },
     secondary: {
@@ -22,7 +22,7 @@ const lightTheme = createTheme({
       main: '#fff',
     },
     success: {
-      main: '#ffe55b88',
+      main: '#f4d40d88',
     },
   },
   typography: {
@@ -39,7 +39,7 @@ const darkTheme = createTheme({
       //   contrastText: '#fff',
     },
     secondary: {
-      main: '#ffdf33',
+      main: '#f4d40d',
       //   contrastText: '#191919',
     },
     light: {
@@ -49,7 +49,7 @@ const darkTheme = createTheme({
       main: '#191919',
     },
     error: {
-      main: '#ffdf33',
+      main: '#f4d40d',
     },
     success: {
       main: '#19191988',
