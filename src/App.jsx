@@ -9,17 +9,24 @@ import Events from './pages/Events'
 import { ThemeProvider } from '@mui/material/styles'
 // Config
 import { lightTheme, darkTheme } from './muiConfig'
+// DB
+import { uzbek, english, russian } from './db/languages'
 
 function App() {
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') === 'dark' ? darkTheme : lightTheme
   )
+  const [language, setLanguage] = useState(english)
   const [isMobile, setIsMobile] = useState(
     window.innerWidth <= 600 ? true : false
   )
   const [isTablet, setIsTablet] = useState(
     window.innerWidth > 600 && window.innerWidth < 1024 ? true : false
   )
+
+  const changeLang = (lang) => {
+    setLanguage(lang === 'eng' ? english : lang === 'uz' ? uzbek : russian)
+  }
 
   window.addEventListener('resize', () => {
     setIsMobile(window.innerWidth <= 600 ? true : false)
@@ -42,6 +49,8 @@ function App() {
                   setTheme={setTheme}
                   isTablet={isTablet}
                   isMobile={isMobile}
+                  language={language}
+                  changeLang={changeLang}
                 />
               }
             />

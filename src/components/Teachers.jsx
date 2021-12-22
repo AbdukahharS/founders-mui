@@ -44,7 +44,7 @@ const teachers = [
   },
 ]
 
-const Teachers = ({ setCurVideo, setIsVideoOpen, theme }) => {
+const Teachers = ({ setCurVideo, setIsVideoOpen, theme, language }) => {
   const [isHover, setIsHover] = useState(false)
 
   return (
@@ -57,7 +57,7 @@ const Teachers = ({ setCurVideo, setIsVideoOpen, theme }) => {
     >
       <Container>
         <Typography py={4} variant='h2' color='secondary' fontWeight={700}>
-          Our Instructors
+          {language.instructors.heading}
         </Typography>
         <Carousel
           responsive={responsive}

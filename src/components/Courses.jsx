@@ -34,7 +34,13 @@ const courses = [
   },
 ]
 
-const Courses = ({ setCurrentCourse, setOpenModal, isMobile, isTablet }) => {
+const Courses = ({
+  setCurrentCourse,
+  setOpenModal,
+  isMobile,
+  isTablet,
+  language,
+}) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const toggleCourses = () => {
     setIsExpanded(!isExpanded)
@@ -43,7 +49,7 @@ const Courses = ({ setCurrentCourse, setOpenModal, isMobile, isTablet }) => {
     <Box id='courses' bgcolor='info.light' color='info.contrastText' pb={8}>
       <Container>
         <Typography py={4} variant='h2' color='secondary' fontWeight={700}>
-          Our Courses
+          {language.courses.heading}
         </Typography>
         <Grid m='auto' container spacing={isMobile ? 0 : isTablet ? 0 : 4}>
           {courses.map((course, ind) =>
@@ -70,7 +76,9 @@ const Courses = ({ setCurrentCourse, setOpenModal, isMobile, isTablet }) => {
           <Stack alignItems='center' justifyContent='center'>
             <Button variant='contained' onClick={(e) => toggleCourses(e)}>
               <Typography variant='span' fontSize='1.4rem'>
-                {isExpanded ? 'Collapse' : 'See all courses'}
+                {isExpanded
+                  ? language.courses.btn.collapse
+                  : language.courses.btn.expand}
               </Typography>
               {isExpanded ? (
                 <KeyboardArrowUpIcon fontSize='large' />

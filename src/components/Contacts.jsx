@@ -6,7 +6,7 @@ import TelegramIcon from '@mui/icons-material/Telegram'
 import InstagramIcon from '@mui/icons-material/Instagram'
 import FacebookIcon from '@mui/icons-material/Facebook'
 
-const Contacts = () => {
+const Contacts = ({ language }) => {
   return (
     <Box
       id='contacts'
@@ -23,7 +23,7 @@ const Contacts = () => {
           fontWeight={700}
           className='topic'
         >
-          Contact Us
+          {language.contact.heading}
         </Typography>
         <Grid container spacing={4}>
           <Grid item xs={12} lg={8}>
@@ -66,7 +66,7 @@ const Contacts = () => {
                 fontFamily='Josefin Slab'
                 ml={1}
               >
-                Milliy Bog Station, opposite of Legislative Chamber
+                {language.contact.address}
               </Typography>
             </Link>
             <Stack direction='row' spacing={0.4} mb={1}>
