@@ -1,4 +1,7 @@
+// Dependencies
 import React, { useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
+// MUI
 import { Box, Stack, Fade, Typography } from '@mui/material'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
@@ -73,7 +76,19 @@ const Slider = ({ items }) => {
               py={4}
             >
               <item.icon style={{ fontSize: '6rem' }} />
-              <Typography>{item.desc}</Typography>
+              <Typography>{item.description}</Typography>
+              {item.link && (
+                <Link
+                  to={item.link.path}
+                  style={{
+                    textDecoration: 'underline',
+                    fontSize: '1.4rem',
+                    color: 'secondary.main',
+                  }}
+                >
+                  {item.link.name}
+                </Link>
+              )}
             </Stack>
           </Fade>
         ))}

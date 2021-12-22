@@ -27,7 +27,6 @@ const notMStyle = {
   bgcolor: 'info.light',
   color: 'primary.contrastText',
   width: '75vw',
-  // height: '75vh',
   p: 4,
 }
 

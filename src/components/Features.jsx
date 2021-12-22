@@ -1,33 +1,9 @@
-import {
-  Box,
-  Container,
-  Stack,
-  Typography,
-  Grid,
-  Slide,
-  // Link,
-} from '@mui/material'
+import { Box, Container, Stack, Typography, Grid, Slide } from '@mui/material'
 import { Link } from 'react-router-dom'
 import React, { useRef, useState } from 'react'
-import BookIcon from '@mui/icons-material/Book'
-import GroupIcon from '@mui/icons-material/Group'
-import SchoolIcon from '@mui/icons-material/School'
 import Slider from './Slider'
-
-const items = [
-  {
-    icon: BookIcon,
-    desc: 'Donec accumsan arcu magna, nec lobortis leo lobortis vel. Vivamus quis scelerisque libero.',
-  },
-  {
-    icon: GroupIcon,
-    desc: 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
-  },
-  {
-    icon: SchoolIcon,
-    desc: 'Curabitur ut orci ut dolor condimentum finibus vel sed purus.',
-  },
-]
+// DB
+import features from '../db/features'
 
 const Features = ({ isMobile, theme }) => {
   const containerRef = useRef()
@@ -61,52 +37,34 @@ const Features = ({ isMobile, theme }) => {
         </Typography>
         {!isMobile ? (
           <Grid container pt={4} px={2} spacing={4} ref={containerRef}>
-            <Grid item xs={12} sm={6} lg={4}>
-              <Slide direction='up' in={scrolled}>
-                <Stack alignItems='center' justifyContent='center'>
-                  <BookIcon sx={{ fontSize: '8rem' }} />
-                  <Typography fontSize='1.4rem' textAlign='center'>
-                    We have our own library for everyone!
-                  </Typography>
-                  <Link
-                    to='/library'
-                    style={{
-                      textDecoration: 'underline',
-                      fontSize: '1.4rem',
-                      color: 'secondary.main',
-                    }}
-                  >
-                    Go to the library
-                  </Link>
-                </Stack>
-              </Slide>
-            </Grid>
-            <Grid item xs={12} sm={6} lg={4}>
-              <Slide direction='up' in={scrolled}>
-                <Stack alignItems='center' justifyContent='center'>
-                  <GroupIcon sx={{ fontSize: '8rem' }} />
-                  <Typography fontSize='1.4rem' textAlign='center'>
-                    Vestibulum ante ipsum primis in faucibus orci luctus et
-                    ultrices posuere cubilia curae.
-                  </Typography>
-                </Stack>
-              </Slide>
-            </Grid>
-            <Grid item xs={12} sm={6} lg={4}>
-              <Slide direction='up' in={scrolled}>
-                <Stack alignItems='center' justifyContent='center'>
-                  <SchoolIcon sx={{ fontSize: '8rem' }} />
-                  <Typography fontSize='1.4rem' textAlign='center'>
-                    Curabitur ut orci ut dolor condimentum finibus vel sed
-                    purus.
-                  </Typography>
-                </Stack>
-              </Slide>
-            </Grid>
+            {features.map((feature, i) => (
+              <Grid item xs={12} sm={6} lg={4} key={i}>
+                <Slide direction='up' in={scrolled}>
+                  <Stack alignItems='center' justifyContent='center'>
+                    <feature.icon sx={{ fontSize: '8rem' }} />
+                    <Typography fontSize='1.4rem' textAlign='center'>
+                      {feature.description}
+                    </Typography>
+                    {feature.link && (
+                      <Link
+                        to={feature.link.path}
+                        style={{
+                          textDecoration: 'underline',
+                          fontSize: '1.4rem',
+                          color: 'secondary.main',
+                        }}
+                      >
+                        {feature.link.name}
+                      </Link>
+                    )}
+                  </Stack>
+                </Slide>
+              </Grid>
+            ))}
           </Grid>
         ) : (
           <Stack>
-            <Slider items={items} />
+            <Slider items={features} />
           </Stack>
         )}
       </Container>
