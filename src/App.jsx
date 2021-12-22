@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 // Pages
 import Home from './pages/Home'
 import Library from './pages/Library'
+import Events from './pages/Events'
 // MUI
 import { ThemeProvider } from '@mui/material/styles'
 // Config
@@ -48,6 +49,18 @@ function App() {
               path='/library'
               element={
                 <Library
+                  theme={theme}
+                  setTheme={setTheme}
+                  isTablet={isTablet}
+                  isMobile={isMobile}
+                />
+              }
+            />
+
+            <Route
+              path='/events'
+              element={
+                <Events
                   theme={theme}
                   setTheme={setTheme}
                   isTablet={isTablet}

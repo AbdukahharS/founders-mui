@@ -12,6 +12,7 @@ const features = [
     icon: GroupIcon,
     description:
       'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.',
+    link: { name: 'Go to events', path: '/events' },
   },
   {
     icon: SchoolIcon,
