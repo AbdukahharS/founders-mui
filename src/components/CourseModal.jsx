@@ -26,6 +26,8 @@ const notMStyle = {
   transform: 'translate(-50%, -50%)',
   bgcolor: 'info.light',
   color: 'primary.contrastText',
+  width: '75vw',
+  // height: '75vh',
   p: 4,
 }
 
@@ -37,21 +39,16 @@ const CourseModal = ({ openModal, setOpenModal, currentCourse, isMobile }) => {
   return (
     <ModalBox open={openModal} onClose={() => closeModal()}>
       <Box sx={isMobile ? mStyle : notMStyle}>
-        <CancelIcon
-          onClick={() => closeModal()}
-          sx={{
-            position: 'absolute',
-            top: '1%',
-            left: '5%',
-            fontSize: '3rem',
-            color: 'red',
-          }}
-        />
-        <Stack direction={isMobile ? 'column' : 'row'} spacing={4}>
+        <Stack
+          direction={isMobile ? 'column' : 'row'}
+          spacing={4}
+          height='100%'
+        >
           <img
             src={require(`../images/${currentCourse.banner}`).default}
             alt='Banner of the course'
-            width={isMobile ? '100%' : '50%'}
+            width={isMobile ? '100%' : ''}
+            height={!isMobile ? '100%' : ''}
           />
           <Box sx={isMobile ? { px: 2 } : {}}>
             <Typography variant='h3' component='h2' color='secondary'>
@@ -106,6 +103,16 @@ const CourseModal = ({ openModal, setOpenModal, currentCourse, isMobile }) => {
             </Stack>
           </Box>
         </Stack>
+        <CancelIcon
+          onClick={() => closeModal()}
+          sx={{
+            position: 'absolute !important',
+            top: '1%',
+            left: '1%',
+            fontSize: '3rem',
+            color: 'red',
+          }}
+        />
       </Box>
     </ModalBox>
   )

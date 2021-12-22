@@ -39,7 +39,7 @@ const Navbar = ({
       }
       color='primary.contrastText'
       py={isMobile ? '0.2rem' : '0.6rem'}
-      // position='absolute'
+      position='absolute'
       zIndex={1}
       width='100%'
     >

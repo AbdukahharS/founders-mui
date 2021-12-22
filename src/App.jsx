@@ -17,7 +17,7 @@ function App() {
     window.innerWidth <= 600 ? true : false
   )
   const [isTablet, setIsTablet] = useState(
-    window.innerWidth > 600 && window.innerWidth <= 1200 ? true : false
+    window.innerWidth > 600 && window.innerWidth < 1024 ? true : false
   )
 
   window.addEventListener('resize', () => {
