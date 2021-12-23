@@ -1,9 +1,30 @@
-import { Box, Container, Stack, Typography, Grid } from '@mui/material'
+import { Box, Container, Stack, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 import React from 'react'
-import Slider from './Slider'
 // DB
 import features from '../db/features'
+
+import Carousel from 'react-multi-carousel'
+import 'react-multi-carousel/lib/styles.css'
+
+const responsive = {
+  superLargeDesktop: {
+    breakpoint: { max: 4000, min: 3000 },
+    items: 5,
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 3,
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 600 },
+    items: 2,
+  },
+  mobile: {
+    breakpoint: { max: 600, min: 0 },
+    items: 1,
+  },
+}
 
 const Features = ({ isMobile, theme, language }) => {
   return (
@@ -23,36 +44,46 @@ const Features = ({ isMobile, theme, language }) => {
         <Typography variant='h2' color='secondary' fontWeight={700}>
           {language.features.heading}
         </Typography>
-        {!isMobile ? (
-          <Grid container pt={4} px={2} spacing={4}>
-            {features.map((feature, i) => (
-              <Grid item xs={12} sm={6} lg={4} key={i}>
-                <Stack alignItems='center' justifyContent='center'>
-                  <feature.icon sx={{ fontSize: '8rem' }} />
-                  <Typography fontSize='1.4rem' textAlign='center'>
-                    {feature.description}
-                  </Typography>
-                  {feature.link && (
-                    <Link
-                      to={feature.link.path}
-                      style={{
-                        textDecoration: 'underline',
-                        fontSize: '1.4rem',
-                        color: 'secondary.main',
-                      }}
-                    >
-                      {feature.link.name}
-                    </Link>
-                  )}
-                </Stack>
-              </Grid>
-            ))}
-          </Grid>
-        ) : (
-          <Stack>
-            <Slider items={features} />
-          </Stack>
-        )}
+        <Carousel
+          responsive={responsive}
+          swipeable={true}
+          draggable={true}
+          showDots={true}
+          infinite={true}
+          autoPlay={false}
+          keyBoardControl={true}
+          autoPlaySpeed={2000}
+        >
+          {features.map((feature, i) => (
+            <Stack
+              alignItems='center'
+              justifyContent='center'
+              key={i}
+              padding={2}
+              paddingBottom={4}
+            >
+              <feature.icon sx={{ fontSize: '8rem' }} />
+              <Typography fontSize='1.8rem' fontWeight={700}>
+                {feature.name}
+              </Typography>
+              <Typography fontSize='1.4rem' textAlign='center'>
+                {feature.description}
+              </Typography>
+              {feature.link && (
+                <Link
+                  to={feature.link.path}
+                  style={{
+                    textDecoration: 'underline',
+                    fontSize: '1.4rem',
+                    color: 'secondary.main',
+                  }}
+                >
+                  {feature.link.name}
+                </Link>
+              )}
+            </Stack>
+          ))}
+        </Carousel>
       </Container>
     </Box>
   )

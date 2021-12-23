@@ -3,36 +3,8 @@ import CourseCard from './CourseCard'
 import { Button, Container, Grid, Typography, Box, Stack } from '@mui/material'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-
-const courses = [
-  {
-    name: 'General English',
-    description:
-      'Lorem ipsum dolor sit amet, cons ectetur adipiscing elit. Phasellus molestie enim.',
-    banner: 'general-english.gif',
-    duration: '3 months',
-    requirement: 'Elementary',
-    price: '400 000',
-  },
-  {
-    name: 'IELTS up',
-    description:
-      'Aliquam erat volutpat. Nullam molestie magna interdum mattis posuere. Ut porttitor pellentesque elit eget auctor.',
-    banner: 'ielts-up.gif',
-    duration: '3 months',
-    requirement: 'Intermediate',
-    price: '600 000',
-  },
-  {
-    name: 'IELTS turbo',
-    description:
-      'Fusce auctor magna quis dolor sodales porttitor. Quisque a pellentesque ex.',
-    banner: 'ielts-turbo.gif',
-    duration: '2 months',
-    requirement: 'Pre-intermediate',
-    price: '450 000',
-  },
-]
+// DB
+import courses from '../db/courses'
 
 const Courses = ({
   setCurrentCourse,

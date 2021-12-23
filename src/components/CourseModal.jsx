@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { Modal as ModalBox, Box, Stack, Typography, Link } from '@mui/material'
 // MUI Icons
 import DescriptionIcon from '@mui/icons-material/Description'
@@ -26,7 +25,6 @@ const notMStyle = {
   transform: 'translate(-50%, -50%)',
   bgcolor: 'info.light',
   color: 'primary.contrastText',
-  width: '75vw',
   p: 4,
 }
 
@@ -102,16 +100,18 @@ const CourseModal = ({ openModal, setOpenModal, currentCourse, isMobile }) => {
             </Stack>
           </Box>
         </Stack>
-        <CancelIcon
-          onClick={() => closeModal()}
-          sx={{
-            position: 'absolute !important',
-            top: '1%',
-            left: '1%',
-            fontSize: '3rem',
-            color: 'red',
-          }}
-        />
+        {isMobile && (
+          <CancelIcon
+            onClick={() => closeModal()}
+            sx={{
+              position: 'absolute !important',
+              top: '1%',
+              left: '1%',
+              fontSize: '3rem',
+              color: 'red',
+            }}
+          />
+        )}
       </Box>
     </ModalBox>
   )
