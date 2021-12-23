@@ -16,7 +16,13 @@ function App() {
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') === 'dark' ? darkTheme : lightTheme
   )
-  const [language, setLanguage] = useState(english)
+  const [language, setLanguage] = useState(
+    localStorage.getItem('language') === 'uz'
+      ? uzbek
+      : localStorage.getItem('language') === 'ru'
+      ? russian
+      : english
+  )
   const [isMobile, setIsMobile] = useState(
     window.innerWidth <= 600 ? true : false
   )
@@ -26,6 +32,7 @@ function App() {
 
   const changeLang = (lang) => {
     setLanguage(lang === 'eng' ? english : lang === 'uz' ? uzbek : russian)
+    localStorage.setItem('language', lang)
   }
 
   window.addEventListener('resize', () => {

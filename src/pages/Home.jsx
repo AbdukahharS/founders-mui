@@ -38,7 +38,7 @@ const Home = ({
   useEffect(() => {
     let themeColor = theme === darkTheme ? 'dark' : 'light'
     localStorage.setItem('theme', themeColor)
-  })
+  }, [theme])
 
   return (
     <>
