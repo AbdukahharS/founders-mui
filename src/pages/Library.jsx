@@ -23,14 +23,12 @@ const enable = {
   borderBottomRightRadius: '0',
 }
 
-const Library = ({ theme, setTheme, isMobile, isTablet }) => {
-  window.addEventListener('scroll', () => {})
+const Library = ({ theme, setTheme, isMobile }) => {
   const clickHandler = () => {
     setTheme(theme === lightTheme ? darkTheme : lightTheme)
   }
   const [curCategory, setCurCategory] = useState('all')
   const [curBooks, setCurBooks] = useState([])
-  // const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
     if (curCategory === 'all') {
       setCurBooks(books)
