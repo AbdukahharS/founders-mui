@@ -48,7 +48,7 @@ const Navbar = ({
       }
       color='primary.contrastText'
       py={isMobile ? '0.2rem' : '0.6rem'}
-      position='absolute'
+      position={!isMobile && !isTablet ? 'absolute' : 'unset'}
       zIndex={1}
       width='100%'
     >
@@ -58,7 +58,12 @@ const Navbar = ({
           alignItems='center'
           justifyContent='space-between'
         >
-          <Stack direction='row' alignItems='center' spacing={3}>
+          <Stack
+            direction='row'
+            alignItems='center'
+            spacing={1.6}
+            fontWeight={language.lang === 'ru' ? 300 : 500}
+          >
             <Stack direction='row' alignItems='center'>
               <img
                 src={theme === lightTheme ? logoDark : logo}
@@ -135,7 +140,7 @@ const Navbar = ({
             direction='row'
             justifyContent='space-between'
             alignItems='center'
-            spacing={2}
+            // spacing={1}
           >
             {(isMobile || isTablet) && (
               <>
@@ -162,6 +167,7 @@ const Navbar = ({
                     display: 'flex',
                     alignItems: 'center',
                     color: 'inherit',
+                    fontSize: '1.2rem',
                   }}
                 >
                   <Stack
@@ -174,9 +180,7 @@ const Navbar = ({
                   >
                     <LocalPhoneIcon color='primary' />
                   </Stack>
-                  <Typography component='span' fontSize='1.2rem'>
-                    +998 71 205 53 33
-                  </Typography>
+                  +998 71 205 53 33
                 </Link>
                 <Button onClick={() => clickHandler()}>
                   {theme === lightTheme ? (
