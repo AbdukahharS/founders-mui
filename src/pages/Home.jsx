@@ -26,7 +26,7 @@ const Home = ({
     name: 'General English',
     description:
       'Lorem ipsum dolor sit amet, cons ectetur adipiscing elit. Phasellus molestie enim.',
-    banner: 'general-english.png',
+    banner: 'general-english.mp4',
     duration: '3 months',
     requirement: 'Elementary',
   })
@@ -75,6 +75,7 @@ const Home = ({
         setOpenModal={setOpenModal}
         currentCourse={currentCourse}
         isMobile={isMobile}
+        lang={language.lang}
       />
       <MenuModal
         openMenu={openMenu}

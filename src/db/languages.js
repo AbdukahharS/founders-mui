@@ -47,6 +47,9 @@ const uzbek = {
   courses: {
     heading: 'Kurslar',
     btn: { expand: "Barcha kurslarni ko'rish", collapse: 'Kamaytirish' },
+    card: {
+      learn: 'Batafsil',
+    },
   },
   features: {
     heading: 'Qulayliklar',
@@ -66,7 +69,7 @@ const russian = {
     courses: 'Курсы',
     features: 'Функции',
     instructors: 'Инструкторы',
-    contact: 'Связаться с нами',
+    contact: 'Свяжитесь с нами',
     button: {
       img: 'ru.png',
       otherBtns: [
@@ -78,6 +81,9 @@ const russian = {
   courses: {
     heading: 'Курсы',
     btn: { expand: 'Посмотреть все курсы', collapse: 'Крах' },
+    card: {
+      learn: 'Выучить больше.',
+    },
   },
   features: {
     heading: 'Функции',

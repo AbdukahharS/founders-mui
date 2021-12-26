@@ -28,7 +28,13 @@ const notMStyle = {
   p: 4,
 }
 
-const CourseModal = ({ openModal, setOpenModal, currentCourse, isMobile }) => {
+const CourseModal = ({
+  openModal,
+  setOpenModal,
+  currentCourse,
+  isMobile,
+  lang,
+}) => {
   const closeModal = () => {
     setOpenModal(false)
   }
@@ -41,12 +47,12 @@ const CourseModal = ({ openModal, setOpenModal, currentCourse, isMobile }) => {
           spacing={4}
           height='100%'
         >
-          <img
-            src={require(`../images/${currentCourse.banner}`).default}
-            alt='Banner of the course'
-            width={isMobile ? '100%' : ''}
-            height={!isMobile ? '100%' : ''}
-          />
+          <video width='100%' autoPlay muted loop>
+            <source
+              src={require(`../videos/${currentCourse.banner}`).default}
+              type='video/webm'
+            />
+          </video>
           <Box sx={isMobile ? { px: 2 } : {}}>
             <Typography variant='h3' component='h2' color='secondary'>
               {currentCourse.name}
@@ -54,7 +60,7 @@ const CourseModal = ({ openModal, setOpenModal, currentCourse, isMobile }) => {
             <Stack py={1} direction='row' alignItems='center' spacing={0.6}>
               <DescriptionIcon fontSize='large' />
               <Typography fontSize='1.2rem'>
-                {currentCourse.description}
+                {currentCourse.description[lang]}
               </Typography>
             </Stack>
             <Stack pb={1} direction='row' alignItems='center' spacing={0.6}>

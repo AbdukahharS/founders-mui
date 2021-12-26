@@ -17,6 +17,7 @@ const Courses = ({
   const toggleCourses = () => {
     setIsExpanded(!isExpanded)
   }
+
   return (
     <Box id='courses' bgcolor='info.light' color='info.contrastText' pb={8}>
       <Container>
@@ -25,7 +26,7 @@ const Courses = ({
         </Typography>
         <Grid m='auto' container spacing={isMobile ? 0 : isTablet ? 0 : 4}>
           {courses.map((course, ind) =>
-            ind <= (isMobile ? 1 : 2) ? (
+            ind <= (isMobile || isTablet ? 1 : 2) ? (
               <CourseCard
                 setOpenModal={setOpenModal}
                 setCurrentCourse={setCurrentCourse}
@@ -40,6 +41,7 @@ const Courses = ({
                 key={ind}
                 isExpanded={isExpanded}
                 extra={true}
+                lang={language.lang}
               />
             )
           )}
