@@ -14,12 +14,12 @@ const CourseCard = ({
     setOpenModal(true)
     setCurrentCourse(course)
   }
-  // console.log(course.description, lang)
+  let lan = localStorage.getItem('language')
 
   const [lang, setLang] = React.useState(localStorage.getItem('language'))
   React.useEffect(() => {
     setLang(localStorage.getItem('language'))
-  }, [localStorage.getItem('language')])
+  }, [lan])
 
   return (
     <Grid item lg={4} sm={5} xs={9} mx='auto' mb={2}>
