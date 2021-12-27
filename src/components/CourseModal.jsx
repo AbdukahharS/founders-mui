@@ -25,6 +25,8 @@ const notMStyle = {
   transform: 'translate(-50%, -50%)',
   bgcolor: 'info.light',
   color: 'primary.contrastText',
+  width: '90vw',
+  maxWidth: '1080px',
   p: 4,
 }
 
@@ -33,6 +35,7 @@ const CourseModal = ({
   setOpenModal,
   currentCourse,
   isMobile,
+  isTablet,
   lang,
 }) => {
   const closeModal = () => {
@@ -41,13 +44,22 @@ const CourseModal = ({
 
   return (
     <ModalBox open={openModal} onClose={() => closeModal()}>
-      <Box sx={isMobile ? mStyle : notMStyle}>
+      <Box
+        sx={isMobile ? mStyle : notMStyle}
+        width={isTablet ? '90vw' : 'unset'}
+        overflow='auto'
+      >
         <Stack
           direction={isMobile ? 'column' : 'row'}
           spacing={4}
           height='100%'
         >
-          <video width='100%' autoPlay muted loop>
+          <video
+            style={!isMobile ? { width: '30rem' } : {}}
+            autoPlay
+            muted
+            loop
+          >
             <source
               src={require(`../videos/${currentCourse.banner}`).default}
               type='video/webm'
