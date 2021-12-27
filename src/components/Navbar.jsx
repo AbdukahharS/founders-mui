@@ -103,7 +103,11 @@ const Navbar = ({
               <>
                 <Link
                   href='#courses'
-                  style={{ fontSize: '1.4rem' }}
+                  style={
+                    language.lang === 'ru'
+                      ? { fontSize: '1.2rem' }
+                      : { fontSize: '1.4rem' }
+                  }
                   color='inherit'
                   underline='hover'
                 >
@@ -111,7 +115,11 @@ const Navbar = ({
                 </Link>
                 <Link
                   href='#features'
-                  style={{ fontSize: '1.4rem' }}
+                  style={
+                    language.lang === 'ru'
+                      ? { fontSize: '1.2rem' }
+                      : { fontSize: '1.4rem' }
+                  }
                   color='inherit'
                   underline='hover'
                 >
@@ -119,7 +127,11 @@ const Navbar = ({
                 </Link>
                 <Link
                   href='#instructors'
-                  style={{ fontSize: '1.4rem' }}
+                  style={
+                    language.lang === 'ru'
+                      ? { fontSize: '1.2rem' }
+                      : { fontSize: '1.4rem' }
+                  }
                   color='inherit'
                   underline='hover'
                 >
@@ -127,7 +139,11 @@ const Navbar = ({
                 </Link>
                 <Link
                   href='#contacts'
-                  style={{ fontSize: '1.4rem' }}
+                  style={
+                    language.lang === 'ru'
+                      ? { fontSize: '1.2rem' }
+                      : { fontSize: '1.4rem' }
+                  }
                   color='inherit'
                   underline='hover'
                 >
