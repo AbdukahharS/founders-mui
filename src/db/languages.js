@@ -27,6 +27,14 @@ const english = {
     heading: 'Contact Us',
     address: 'Milliy Bog Station, opposite of Legislative Chamber',
   },
+  courseModal: {
+    duration: 'Course duration',
+    month: 'months',
+    requirement: 'Minimum requirement',
+    price: 'Price',
+    soum: 'soum/month',
+    enroll: 'Enroll',
+  },
 }
 
 const uzbek = {
@@ -61,6 +69,14 @@ const uzbek = {
     heading: "Biz bilan bog'laning",
     address: "Milliy Bog' bekati, Oliy majlis qarshisida",
   },
+  courseModal: {
+    duration: 'Kurs davomiyligi',
+    month: 'oy',
+    requirement: 'Minimal bosqich',
+    price: 'Narx',
+    soum: "so'm/oy",
+    enroll: 'Kursga yozilish',
+  },
 }
 
 const russian = {
@@ -82,7 +98,7 @@ const russian = {
     heading: 'Курсы',
     btn: { expand: 'Посмотреть все курсы', collapse: 'Крах' },
     card: {
-      learn: 'Выучить больше.',
+      learn: 'Выучить больше',
     },
   },
   features: {
@@ -93,7 +109,15 @@ const russian = {
   },
   contact: {
     heading: 'Связаться с нами',
-    address: 'Milliy Bog Station, opposite of Legislative Chamber',
+    address: 'Станция Миллий Бог, напротив Законодательной палаты',
+  },
+  courseModal: {
+    duration: 'Продолжительность курса',
+    month: 'месяца',
+    requirement: 'Минимальное требование',
+    price: 'Цена',
+    soum: 'сум/месяца',
+    enroll: 'Записываться',
   },
 }
 

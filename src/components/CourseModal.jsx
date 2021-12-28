@@ -48,7 +48,7 @@ const CourseModal = ({
   currentCourse,
   isMobile,
   isTablet,
-  lang,
+  language,
 }) => {
   const closeModal = () => {
     setOpenModal(false)
@@ -86,30 +86,44 @@ const CourseModal = ({
               <Stack py={1} direction='row' alignItems='center' spacing={0.6}>
                 <DescriptionIcon fontSize='large' />
                 <Typography fontSize='1.2rem'>
-                  {currentCourse.description[lang]}
+                  {currentCourse.description[language.lang]}
                 </Typography>
               </Stack>
               <Stack pb={1} direction='row' alignItems='center' spacing={0.6}>
                 <DateRangeIcon fontSize='large' />
                 <Typography fontSize='1.2rem'>
-                  Course duration: {currentCourse.duration}
+                  {language.courseModal.duration +
+                    ': ' +
+                    currentCourse.duration +
+                    ' ' +
+                    language.courseModal.month}
                 </Typography>
               </Stack>
               <Stack pb={1} direction='row' alignItems='center' spacing={0.6}>
                 <KeyboardArrowUpIcon fontSize='large' />
                 <Typography fontSize='1.2rem'>
-                  Minimum requirement: {currentCourse.requirement}
+                  {language.courseModal.requirement +
+                    ': ' +
+                    currentCourse.requirement +
+                    ' ' +
+                    language.courseModal.month}
                 </Typography>
               </Stack>
               <Stack direction='row' alignItems='center' spacing={0.6}>
                 <MonetizationOnIcon fontSize='large' />
                 <Typography fontSize='1.2rem'>
-                  Price: {currentCourse.price} sum/month
+                  {language.courseModal.price +
+                    ': ' +
+                    currentCourse.price +
+                    ' ' +
+                    language.courseModal.soum}
                 </Typography>
               </Stack>
               <Stack direction='row' alignItems='center' pt={1} spacing={0.6}>
                 <LocalPhone fontSize='large' />
-                <Typography fontSize='1.2rem'>Enroll:</Typography>
+                <Typography fontSize='1.2rem'>
+                  {language.courseModal.enroll}:
+                </Typography>
               </Stack>
 
               <Stack direction='row' justifyContent='space-evenly'>
@@ -175,7 +189,7 @@ const CourseModal = ({
                       >
                         <DescriptionIcon fontSize='large' />
                         <Typography fontSize='1.2rem'>
-                          {item.description[lang]}
+                          {item.description[language.lang]}
                         </Typography>
                       </Stack>
                       <Stack
@@ -186,7 +200,11 @@ const CourseModal = ({
                       >
                         <DateRangeIcon fontSize='large' />
                         <Typography fontSize='1.2rem'>
-                          Course duration: {item.duration}
+                          {language.courseModal.duration +
+                            ': ' +
+                            item.duration +
+                            ' ' +
+                            language.courseModal.month}
                         </Typography>
                       </Stack>
                       <Stack
@@ -197,13 +215,19 @@ const CourseModal = ({
                       >
                         <KeyboardArrowUpIcon fontSize='large' />
                         <Typography fontSize='1.2rem'>
-                          Minimum requirement: {item.requirement}
+                          {language.courseModal.requirement +
+                            ': ' +
+                            item.requirement}
                         </Typography>
                       </Stack>
                       <Stack direction='row' alignItems='center' spacing={0.6}>
                         <MonetizationOnIcon fontSize='large' />
                         <Typography fontSize='1.2rem'>
-                          Price: {item.price} sum/month
+                          {language.courseModal.price +
+                            ': ' +
+                            item.price +
+                            ' ' +
+                            language.courseModal.soum}
                         </Typography>
                       </Stack>
                       <Stack
@@ -213,7 +237,9 @@ const CourseModal = ({
                         spacing={0.6}
                       >
                         <LocalPhone fontSize='large' />
-                        <Typography fontSize='1.2rem'>Enroll:</Typography>
+                        <Typography fontSize='1.2rem'>
+                          {language.courseModal.enroll}:
+                        </Typography>
                       </Stack>
 
                       <Stack direction='row' justifyContent='space-evenly'>

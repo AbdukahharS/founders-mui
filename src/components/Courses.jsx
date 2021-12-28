@@ -41,7 +41,6 @@ const Courses = ({
                 key={ind}
                 isExpanded={isExpanded}
                 extra={true}
-                lang={language.lang}
               />
             )
           )}

@@ -8,7 +8,6 @@ const CourseCard = ({
   course,
   isExpanded,
   extra,
-  // lang,
 }) => {
   const openModal = () => {
     setOpenModal(true)
@@ -75,7 +74,13 @@ const CourseCard = ({
               justifyContent='center'
               alignItems='center'
             >
-              <Typography fontSize='1.4rem'>Learn more</Typography>
+              <Typography fontSize='1.4rem'>
+                {lang === 'eng'
+                  ? 'Learn more'
+                  : lang === 'uz'
+                  ? 'Batafsil'
+                  : 'Выучить больше'}
+              </Typography>
               <ArrowRightAltIcon />
             </Stack>
           </Box>

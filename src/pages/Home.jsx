@@ -76,7 +76,7 @@ const Home = ({
         currentCourse={currentCourse}
         isMobile={isMobile}
         isTablet={isTablet}
-        lang={language.lang}
+        language={language}
       />
       <MenuModal
         openMenu={openMenu}
