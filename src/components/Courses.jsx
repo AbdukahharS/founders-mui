@@ -21,7 +21,7 @@ const Courses = ({
   return (
     <Box id='courses' bgcolor='info.light' color='info.contrastText' pb={8}>
       <Container>
-        <Typography py={4} variant='h2' color='secondary' fontWeight={700}>
+        <Typography py={4} fontSize='3rem' color='secondary' fontWeight={700}>
           {language.courses.heading}
         </Typography>
         <Grid m='auto' container spacing={isMobile ? 0 : isTablet ? 0 : 4}>
@@ -46,7 +46,7 @@ const Courses = ({
             )
           )}
         </Grid>
-        {courses.length > (isMobile ? 2 : 3) && (
+        {courses.length > (isMobile || isTablet ? 2 : 3) && (
           <Stack alignItems='center' justifyContent='center'>
             <Button variant='contained' onClick={(e) => toggleCourses(e)}>
               <Typography variant='span' fontSize='1.4rem'>

@@ -24,10 +24,10 @@ function App() {
       : english
   )
   const [isMobile, setIsMobile] = useState(
-    window.innerWidth <= 600 ? true : false
+    window.innerWidth <= 768 ? true : false
   )
   const [isTablet, setIsTablet] = useState(
-    window.innerWidth > 600 && window.innerWidth < 1024 ? true : false
+    window.innerWidth > 768 && window.innerWidth <= 1024 ? true : false
   )
 
   const changeLang = (lang) => {

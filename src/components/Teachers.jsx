@@ -56,7 +56,7 @@ const Teachers = ({ setCurVideo, setIsVideoOpen, theme, language }) => {
       position='relative'
     >
       <Container>
-        <Typography py={4} variant='h2' color='secondary' fontWeight={700}>
+        <Typography py={4} fontSize='3rem' color='secondary' fontWeight={700}>
           {language.instructors.heading}
         </Typography>
         <Carousel

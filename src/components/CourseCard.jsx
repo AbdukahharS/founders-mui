@@ -30,6 +30,7 @@ const CourseCard = ({
             bgcolor: 'info.main',
             color: 'primary.contrastText',
             borderRadius: '0.8rem',
+            cursor: 'pointer',
           }}
         >
           <video

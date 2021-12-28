@@ -41,7 +41,7 @@ const Features = ({ isMobile, theme, language }) => {
       color='primary.contrastText'
     >
       <Container>
-        <Typography variant='h2' color='secondary' fontWeight={700}>
+        <Typography fontSize='3rem' color='secondary' fontWeight={700}>
           {language.features.heading}
         </Typography>
         <Carousel

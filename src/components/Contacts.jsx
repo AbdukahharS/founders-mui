@@ -17,7 +17,7 @@ const Contacts = ({ language }) => {
     >
       <Container>
         <Typography
-          variant='h2'
+          fontSize='3rem'
           mb={6}
           color='secondary'
           fontWeight={700}
