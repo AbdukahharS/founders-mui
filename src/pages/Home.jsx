@@ -85,6 +85,8 @@ const Home = ({
         setTheme={setTheme}
         lightTheme={lightTheme}
         darkTheme={darkTheme}
+        language={language}
+        changeLang={changeLang}
       />
       <InstructorModal
         isVideoOpen={isVideoOpen}
