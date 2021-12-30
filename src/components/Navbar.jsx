@@ -27,9 +27,14 @@ const Intro = ({ intro, isMobile }) => {
         right: '0',
       }}
     >
-      <video autoPlay controls width='100%'>
-        <source src={require('../videos/intro.mp4').default} type='video/mp4' />
-      </video>
+      <video
+        autoPlay={'autoplay'}
+        controls
+        width='100%'
+        src={require('../videos/intro.mp4').default}
+        preLoad='auto'
+        muted
+      ></video>
     </Box>
   )
 }
