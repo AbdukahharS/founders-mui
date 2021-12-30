@@ -6,13 +6,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 // DB
 import courses from '../db/courses'
 
-const Courses = ({
-  setCurrentCourse,
-  setOpenModal,
-  isMobile,
-  isTablet,
-  language,
-}) => {
+const Courses = ({ setCurrentCourse, setOpenModal, device, language }) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const toggleCourses = () => {
     setIsExpanded(!isExpanded)
@@ -24,9 +18,15 @@ const Courses = ({
         <Typography py={4} fontSize='3rem' color='secondary' fontWeight={700}>
           {language.courses.heading}
         </Typography>
-        <Grid m='auto' container spacing={isMobile ? 0 : isTablet ? 0 : 4}>
+        <Grid
+          m='auto'
+          container
+          spacing={
+            device === 'xs' || device === 'sm' ? 0 : device === 'md' ? 2 : 4
+          }
+        >
           {courses.map((course, ind) =>
-            ind <= (isMobile || isTablet ? 1 : 2) ? (
+            ind <= (device === 'xs' || device === 'sm' ? 1 : 2) ? (
               <CourseCard
                 setOpenModal={setOpenModal}
                 setCurrentCourse={setCurrentCourse}
@@ -45,7 +45,7 @@ const Courses = ({
             )
           )}
         </Grid>
-        {courses.length > (isMobile || isTablet ? 2 : 3) && (
+        {courses.length > (device === 'xs' || device === 'sm' ? 2 : 3) && (
           <Stack alignItems='center' justifyContent='center'>
             <Button variant='contained' onClick={(e) => toggleCourses(e)}>
               <Typography variant='span' fontSize='1.4rem'>

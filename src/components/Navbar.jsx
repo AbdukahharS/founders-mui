@@ -16,23 +16,23 @@ import Brightness4Icon from '@mui/icons-material/Brightness4'
 import MenuIcon from '@mui/icons-material/Menu'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
-const Intro = ({ intro, isMobile }) => {
+const Intro = ({ intro, device }) => {
   return (
     <Box
       ref={intro}
       sx={{
         position: 'fixed',
         zIndex: 1001,
-        width: isMobile ? '40vw' : '30vw',
+        width: device === 'xs' ? '40vw' : '30vw',
         right: '0',
       }}
     >
       <video
         autoPlay={'autoplay'}
         controls
+        loop
         width='100%'
         src={require('../videos/intro.mp4').default}
-        preLoad='auto'
         muted
       ></video>
     </Box>
@@ -45,8 +45,7 @@ const Navbar = ({
   setTheme,
   lightTheme,
   darkTheme,
-  isMobile,
-  isTablet,
+  device,
   language,
   changeLang,
 }) => {
@@ -87,8 +86,7 @@ const Navbar = ({
             : { backgroundImage: theme.palette.background }
         }
         color='primary.contrastText'
-        py={isMobile ? '0.2rem' : '0.6rem'}
-        // position={!isMobile && !isTablet ? 'absolute' : 'unset'}
+        py={device === 'xs' ? '0.2rem' : '0.6rem'}
         zIndex={1}
         width='100%'
       >
@@ -101,16 +99,23 @@ const Navbar = ({
             <Stack
               direction='row'
               alignItems='center'
-              spacing={1.6}
+              spacing={device === 'lg' ? 2.6 : device === 'xl' ? 3.2 : 0.8}
               fontWeight={language.lang === 'ru' ? 300 : 500}
             >
               <Stack direction='row' alignItems='center'>
                 <img
                   src={theme === lightTheme ? logoDark : logo}
-                  style={{ width: '4rem' }}
+                  style={{
+                    width:
+                      device === 'lg'
+                        ? '4.4rem'
+                        : device === 'xl'
+                        ? '5rem'
+                        : '3.4rem',
+                  }}
                   alt='Founders Logo'
                 />
-                {!isMobile && (
+                {(device === 'xl' || device === 'lg') && (
                   <Stack>
                     <Typography
                       sx={{
@@ -139,7 +144,7 @@ const Navbar = ({
                   </Stack>
                 )}
               </Stack>
-              {!isMobile && !isTablet && (
+              {device !== 'xs' && device !== 'sm' && (
                 <>
                   <Link
                     href='#courses'
@@ -196,9 +201,9 @@ const Navbar = ({
               direction='row'
               justifyContent='space-between'
               alignItems='center'
-              // spacing={1}
+              spacing={device === 'md' ? 0.3 : 1}
             >
-              {(isMobile || isTablet) && (
+              {(device === 'xs' || device === 'sm') && (
                 <>
                   <Button
                     sx={{
@@ -215,7 +220,7 @@ const Navbar = ({
                   </Button>
                 </>
               )}
-              {!isMobile && !isTablet && (
+              {device !== 'xs' && device !== 'sm' && (
                 <>
                   <Link
                     href='tel:+998712055333'
@@ -231,14 +236,20 @@ const Navbar = ({
                       justifyContent='center'
                       borderRadius='50%'
                       bgcolor='secondary.main'
-                      p={1}
+                      p={device === 'md' ? 0.4 : 1}
                       mr={1}
                     >
                       <LocalPhoneIcon color='primary' />
                     </Stack>
                     +998 71 205 53 33
                   </Link>
-                  <Button onClick={() => clickHandler()}>
+                  <Button
+                    onClick={() => clickHandler()}
+                    sx={{
+                      padding: device === 'md' ? '0.1rem' : '0.4rem',
+                      minWidth: 'unset',
+                    }}
+                  >
                     {theme === lightTheme ? (
                       <Brightness7Icon sx={{ color: 'primary.contrastText' }} />
                     ) : (
@@ -246,7 +257,13 @@ const Navbar = ({
                     )}
                   </Button>
                   <Box>
-                    <Button onClick={() => setOpenLan(true)}>
+                    <Button
+                      onClick={() => setOpenLan(true)}
+                      sx={{
+                        padding: device === 'md' ? '0.1rem' : '0.4rem',
+                        minWidth: 'unset',
+                      }}
+                    >
                       <img
                         src={
                           language.navbar.button &&
@@ -256,7 +273,11 @@ const Navbar = ({
                         alt='Country Flag'
                         style={{ width: '2.2rem' }}
                       />
-                      <KeyboardArrowDownIcon sx={{ color: 'secondary.main' }} />
+                      {device !== 'md' && (
+                        <KeyboardArrowDownIcon
+                          sx={{ color: 'secondary.main' }}
+                        />
+                      )}
                     </Button>
                     <Grow in={openLan}>
                       <Stack
@@ -271,7 +292,12 @@ const Navbar = ({
                             <Box
                               onClick={() => handleChange(btn.lang)}
                               key={i}
-                              sx={{ cursor: 'pointer', py: 1, px: 2 }}
+                              sx={{
+                                cursor: 'pointer',
+                                py: 1,
+                                px: 2,
+                                zIndex: 1002,
+                              }}
                             >
                               <img
                                 src={require(`../images/${btn.img}`).default}
@@ -289,7 +315,7 @@ const Navbar = ({
           </Stack>
         </Container>
       </Box>
-      <Intro intro={intro} isMobile={isMobile} />
+      <Intro intro={intro} device={device} />
     </>
   )
 }

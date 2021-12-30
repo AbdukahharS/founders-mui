@@ -57,12 +57,12 @@ const CustomDot = ({ theme, onClick, ...rest }) => {
   )
 }
 
-const Features = ({ isMobile, theme, language }) => {
+const Features = ({ device, theme, language }) => {
   return (
     <Box
       id='features'
       pt={6}
-      pb={isMobile ? 6 : 12}
+      pb={device === 'xs' ? 6 : 12}
       bgcolor={theme.palette.mode === 'dark' && 'primary.main'}
       sx={
         theme.palette.mode === 'dark'

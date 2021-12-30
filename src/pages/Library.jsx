@@ -23,7 +23,7 @@ const enable = {
   borderBottomRightRadius: '0',
 }
 
-const Library = ({ theme, setTheme, isMobile }) => {
+const Library = ({ theme, setTheme, device }) => {
   const clickHandler = () => {
     setTheme(theme === lightTheme ? darkTheme : lightTheme)
   }
@@ -115,8 +115,8 @@ const Library = ({ theme, setTheme, isMobile }) => {
                 alignItems='center'
                 justifyContent='space-between'
                 py={1}
-                px={isMobile ? 0 : 4}
-                spacing={isMobile ? 1 : 4}
+                px={device === 'xs' || device === 'sm' ? 0 : 4}
+                spacing={device === 'xs' || device === 'sm' ? 1 : 4}
               >
                 <Stack direction='row' alignItems='center' spacing={2}>
                   <img
@@ -128,7 +128,7 @@ const Library = ({ theme, setTheme, isMobile }) => {
                     <Typography fontSize='1.4rem' color='secondary'>
                       {book.name}
                     </Typography>
-                    {!isMobile && (
+                    {device !== 'xs' && (
                       <Typography color='primary.contrastText'>
                         {book.description}
                       </Typography>

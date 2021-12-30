@@ -1,12 +1,11 @@
 import React from 'react'
-// import banner from '../images/header.png'
 import { Box, Typography } from '@mui/material'
 
-const Header = ({ isMobile, isTablet }) => {
+const Header = ({ device }) => {
   return (
     <Box
       color='primary.contrastText'
-      position='relative'
+      position={device === 'xl' ? 'unset' : 'relative'}
       bgcolor='primary.main'
     >
       <video
@@ -19,10 +18,10 @@ const Header = ({ isMobile, isTablet }) => {
         <source src={require('./../videos/bg.mp4').default} type='video/mp4' />
       </video>
       <Typography
-        variant={isMobile ? 'h4' : isTablet ? 'h2' : 'h1'}
+        variant={device === 'xs' ? 'h4' : device === 'sm' ? 'h2' : 'h1'}
         fontWeight={700}
         position='absolute'
-        bottom={isMobile ? '5%' : isTablet ? '7%' : '17%'}
+        bottom={device === 'lg' ? '10%' : device === 'md' ? '8%' : '5%'}
         left='5%'
         color='#fff'
         sx={{

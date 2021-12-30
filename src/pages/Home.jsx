@@ -14,14 +14,7 @@ import CourseModal from '../components/CourseModal'
 // MUI
 import { lightTheme, darkTheme } from '../muiConfig'
 
-const Home = ({
-  theme,
-  setTheme,
-  isMobile,
-  isTablet,
-  language,
-  changeLang,
-}) => {
+const Home = ({ theme, setTheme, device, language, changeLang }) => {
   const [currentCourse, setCurrentCourse] = useState({
     name: 'General English',
     description:
@@ -48,20 +41,18 @@ const Home = ({
         setTheme={setTheme}
         lightTheme={lightTheme}
         darkTheme={darkTheme}
-        isMobile={isMobile}
-        isTablet={isTablet}
+        device={device}
         language={language}
         changeLang={changeLang}
       />
-      <Header isMobile={isMobile} isTablet={isTablet} />
+      <Header device={device} />
       <Courses
-        isTablet={isTablet}
-        isMobile={isMobile}
+        device={device}
         setOpenModal={setOpenModal}
         setCurrentCourse={setCurrentCourse}
         language={language}
       />
-      <Features isMobile={isMobile} theme={theme} language={language} />
+      <Features device={device} theme={theme} language={language} />
       <Teachers
         setCurVideo={setCurVideo}
         setIsVideoOpen={setIsVideoOpen}
@@ -74,8 +65,7 @@ const Home = ({
         openModal={openModal}
         setOpenModal={setOpenModal}
         currentCourse={currentCourse}
-        isMobile={isMobile}
-        isTablet={isTablet}
+        device={device}
         language={language}
       />
       <MenuModal

@@ -23,11 +23,16 @@ function App() {
       ? russian
       : english
   )
-  const [isMobile, setIsMobile] = useState(
-    window.innerWidth <= 768 ? true : false
-  )
-  const [isTablet, setIsTablet] = useState(
-    window.innerWidth > 768 && window.innerWidth <= 1024 ? true : false
+  const [device, setDevice] = useState(
+    window.innerWidth <= 480
+      ? 'xs'
+      : window.innerWidth <= 768
+      ? 'sm'
+      : window.innerWidth <= 1280
+      ? 'md'
+      : window.innerWidth <= 1680
+      ? 'lg'
+      : 'xl'
   )
 
   const changeLang = (lang) => {
@@ -36,9 +41,16 @@ function App() {
   }
 
   window.addEventListener('resize', () => {
-    setIsMobile(window.innerWidth <= 600 ? true : false)
-    setIsTablet(
-      window.innerWidth > 600 && window.innerWidth <= 1024 ? true : false
+    setDevice(
+      window.innerWidth <= 480
+        ? 'xs'
+        : window.innerWidth <= 768
+        ? 'sm'
+        : window.innerWidth <= 1280
+        ? 'md'
+        : window.innerWidth <= 1680
+        ? 'lg'
+        : 'xl'
     )
   })
 
@@ -54,8 +66,7 @@ function App() {
                 <Home
                   theme={theme}
                   setTheme={setTheme}
-                  isTablet={isTablet}
-                  isMobile={isMobile}
+                  device={device}
                   language={language}
                   changeLang={changeLang}
                 />
@@ -64,24 +75,14 @@ function App() {
             <Route
               path='/library'
               element={
-                <Library
-                  theme={theme}
-                  setTheme={setTheme}
-                  isTablet={isTablet}
-                  isMobile={isMobile}
-                />
+                <Library theme={theme} setTheme={setTheme} device={device} />
               }
             />
 
             <Route
               path='/events'
               element={
-                <Events
-                  theme={theme}
-                  setTheme={setTheme}
-                  isTablet={isTablet}
-                  isMobile={isMobile}
-                />
+                <Events theme={theme} setTheme={setTheme} device={device} />
               }
             />
           </Routes>

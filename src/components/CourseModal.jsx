@@ -38,7 +38,7 @@ const notMStyle = {
   color: 'primary.contrastText',
   width: '90vw',
   maxWidth: '1080px',
-  p: 4,
+  p: 3,
   overflowY: 'auto',
 }
 
@@ -46,8 +46,7 @@ const CourseModal = ({
   openModal,
   setOpenModal,
   currentCourse,
-  isMobile,
-  isTablet,
+  device,
   language,
 }) => {
   const closeModal = () => {
@@ -59,17 +58,17 @@ const CourseModal = ({
   return (
     <ModalBox open={openModal} onClose={() => closeModal()}>
       <Box
-        sx={isMobile ? mStyle : notMStyle}
-        width={isTablet ? '90vw' : 'unset'}
+        sx={device === 'xs' ? mStyle : notMStyle}
+        width={device === 'sm' ? '90vw' : 'unset'}
       >
         {currentCourse.type === 'course' ? (
           <Stack
-            direction={isMobile ? 'column' : 'row'}
+            direction={device === 'xs' ? 'column' : 'row'}
             spacing={4}
             height='100%'
           >
             <video
-              style={!isMobile ? { width: '30rem' } : { width: '100vw' }}
+              style={device !== 'xs' ? { width: '30rem' } : { width: '100vw' }}
               autoPlay
               muted
               loop
@@ -79,7 +78,7 @@ const CourseModal = ({
                 type='video/webm'
               />
             </video>
-            <Box sx={isMobile ? { px: 2 } : {}}>
+            <Box sx={device === 'xs' ? { px: 2 } : {}}>
               <Typography variant='h3' component='h2' color='secondary'>
                 {currentCourse.name}
               </Typography>
@@ -148,24 +147,36 @@ const CourseModal = ({
           </Stack>
         ) : (
           <Stack
-            direction={isTablet ? 'column' : 'row'}
-            spacing={isMobile ? 0 : 3}
+            direction={device === 'sm' ? 'column' : 'row'}
+            spacing={
+              device === 'xs'
+                ? 0
+                : device === 'sm'
+                ? 1
+                : device === 'md'
+                ? 2
+                : 3
+            }
             sx={{ overflowY: 'auto' }}
           >
             {currentCourse.items &&
               currentCourse.items.map((item, i) => (
-                <Grow key={i} in={(!isMobile || courseNum === i) && true}>
+                <Grow key={i} in={(device !== 'xs' || courseNum === i) && true}>
                   <Stack
-                    direction={isTablet ? 'row' : 'column'}
-                    spacing={4}
-                    height={isTablet ? '50%' : '100%'}
-                    width={isMobile ? '100vw' : 'unset'}
-                    position={isMobile ? 'absolute' : 'unset'}
+                    direction={device === 'sm' ? 'row' : 'column'}
+                    spacing={device === 'md' ? 0.4 : 4}
+                    height={device === 'sm' ? '50%' : '100%'}
+                    width={device === 'xs' ? '100vw' : 'unset'}
+                    position={device === 'xs' ? 'absolute' : 'unset'}
                   >
                     <video
                       style={
-                        !isMobile
-                          ? { minWidth: '13rem', width: '65%', margin: 'auto' }
+                        device !== 'xs'
+                          ? {
+                              minWidth: '10rem',
+                              width: device === 'xl' ? '80%' : '55%',
+                              margin: 'auto',
+                            }
                           : { width: '100vw' }
                       }
                       autoPlay
@@ -177,7 +188,7 @@ const CourseModal = ({
                         type='video/webm'
                       />
                     </video>
-                    <Box sx={isMobile ? { px: 2 } : {}}>
+                    <Box sx={device === 'xs' ? { px: 2 } : {}}>
                       <Typography fontSize='2.2rem' color='secondary' key={i}>
                         {item.name}
                       </Typography>
@@ -266,7 +277,7 @@ const CourseModal = ({
               ))}
           </Stack>
         )}
-        {isMobile && (
+        {device === 'xs' && (
           <>
             <CancelIcon
               onClick={() => closeModal()}
