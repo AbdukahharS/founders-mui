@@ -1,4 +1,4 @@
-import { Box, Container, Stack, Typography } from '@mui/material'
+import { Box, Container, Stack, Typography, Button } from '@mui/material'
 import { Link } from 'react-router-dom'
 import React from 'react'
 // DB
@@ -6,6 +6,18 @@ import features from '../db/features'
 
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
+
+const base = {
+  borderStyle: 'solid',
+  borderWidth: '0.2rem',
+  borderRadius: '50%',
+  borderColor: 'secondary.main',
+  minWidth: '1rem',
+  padding: '0',
+  height: '1rem',
+  display: 'block',
+  mx: '0.1rem',
+}
 
 const responsive = {
   superLargeDesktop: {
@@ -24,6 +36,25 @@ const responsive = {
     breakpoint: { max: 600, min: 0 },
     items: 1,
   },
+}
+
+const CustomDot = ({ theme, onClick, ...rest }) => {
+  const {
+    onMove,
+    index,
+    active,
+    carouselState: { currentSlide, deviceType },
+  } = rest
+  const carouselItems = features
+  // onMove means if dragging or swiping in progress.
+  // active is provided by this lib for checking if the item is active or not.
+  return (
+    <Button
+      // className={active ? 'active' : 'inactive'}
+      onClick={() => onClick()}
+      sx={active ? { ...base, backgroundColor: 'secondary.main' } : base}
+    ></Button>
+  )
 }
 
 const Features = ({ isMobile, theme, language }) => {
@@ -45,6 +76,7 @@ const Features = ({ isMobile, theme, language }) => {
           {language.features.heading}
         </Typography>
         <Carousel
+          customDot={<CustomDot theme={theme} />}
           responsive={responsive}
           swipeable={true}
           draggable={true}
