@@ -25,7 +25,7 @@ const english = {
   },
   contact: {
     heading: 'Contact Us',
-    address: 'Milliy Bog Station, opposite of Legislative Chamber',
+    address: ' Milliy Bog metro station, opposite to Oliy Majlis',
   },
   courseModal: {
     duration: 'Course duration',

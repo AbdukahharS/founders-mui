@@ -47,7 +47,7 @@ const MenuModal = ({
   }
   return (
     <Slide direction='down' in={openMenu}>
-      <Box sx={style} zIndex={2}>
+      <Box sx={style} zIndex={1002}>
         <Stack direction='column'>
           <Stack
             direction='row'

@@ -40,12 +40,12 @@ const responsive = {
 
 const CustomDot = ({ theme, onClick, ...rest }) => {
   const {
-    onMove,
-    index,
+    // onMove,
+    // index,
     active,
-    carouselState: { currentSlide, deviceType },
+    // carouselState: { currentSlide, deviceType },
   } = rest
-  const carouselItems = features
+  // const carouselItems = features
   // onMove means if dragging or swiping in progress.
   // active is provided by this lib for checking if the item is active or not.
   return (
