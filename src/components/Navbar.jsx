@@ -22,7 +22,7 @@ import FullscreenExitIcon from '@mui/icons-material/FullscreenExit'
 
 const Intro = ({ intro, device }) => {
   const notCover = {
-    width: device === 'xs' ? '25vw' : '15vw',
+    width: device === 'xs' ? '30vw' : '15vw',
     top: 'unset',
     left: 'unset',
     right: '0',
@@ -57,7 +57,7 @@ const Intro = ({ intro, device }) => {
     const video = intro.current.querySelector('div video')
     if (video) {
       video.style.borderRadius = '50%'
-      video.style.width = device === 'xs' ? '25vw' : '15vw'
+      video.style.width = device === 'xs' ? '30vw' : '15vw'
       video.style.height = 'unset'
     }
   }
@@ -73,7 +73,7 @@ const Intro = ({ intro, device }) => {
     setIsCover(false)
     const video = box.querySelector('div video')
     if (box && video) {
-      video.style.width = device === 'xs' ? '25vw' : '15vw'
+      video.style.width = device === 'xs' ? '30vw' : '15vw'
       video.style.animation = ''
       video.play()
       video.addEventListener('ended', () => {
@@ -87,7 +87,7 @@ const Intro = ({ intro, device }) => {
     const video = box.querySelector('div video')
 
     video.style.animation = 'attract 0.8s infinite'
-    video.style.width = device === 'xs' ? '35vw' : '20vw'
+    video.style.width = device === 'xs' ? '40vw' : '20vw'
   })
   return (
     <Stack
@@ -156,9 +156,8 @@ const Intro = ({ intro, device }) => {
           onClick={collapse}
           sx={{
             position: 'absolute',
-            bottom: '5%',
-            left: '5%',
-            transform: 'translate(-50%, 50%)',
+            bottom: '0',
+            left: '0',
             backgroundColor: isPlay && isCover ? 'rgba(0,0,0,0.3)' : '',
           }}
         >
