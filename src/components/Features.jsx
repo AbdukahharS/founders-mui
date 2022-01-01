@@ -99,7 +99,7 @@ const Features = ({ device, theme, language }) => {
                 {feature.name}
               </Typography>
               <Typography fontSize='1.4rem' textAlign='center'>
-                {feature.description}
+                {feature.description[language.lang]}
               </Typography>
               {feature.link && (
                 <Link

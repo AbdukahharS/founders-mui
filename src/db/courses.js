@@ -3,9 +3,9 @@ const courses = [
     name: 'General English',
     type: 'course',
     description: {
-      eng: 'In this course you can improve your English language Grammar and conversation skills.',
-      ru: 'В этом курсы вы сможете улучшить свою грамматика английского языка и разговорные навыки.',
-      uz: "Bu kursda siz Ingliz tili grammatikangizni va so'zlashuv mahoratingizni oshira olasiz.",
+      eng: 'In this course, you can improve your English language Grammar.',
+      ru: 'В этом курсы вы сможете улучшить свою грамматика английского языка .',
+      uz: 'Bu kursda siz Ingliz tili grammatikangizni oshira olasiz.',
     },
     banner: 'general-english.mp4',
     duration: '6',

@@ -15,27 +15,177 @@ import Brightness7Icon from '@mui/icons-material/Brightness7'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import MenuIcon from '@mui/icons-material/Menu'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import PlayArrowIcon from '@mui/icons-material/PlayArrow'
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
+import FullscreenIcon from '@mui/icons-material/Fullscreen'
+import FullscreenExitIcon from '@mui/icons-material/FullscreenExit'
 
 const Intro = ({ intro, device }) => {
+  const notCover = {
+    width: device === 'xs' ? '25vw' : '15vw',
+    top: 'unset',
+    left: 'unset',
+    right: '0',
+    backgroundColor: 'transparent',
+    height: 'unset',
+  }
+  const cover = {
+    width: '100vw',
+    height: '100vh',
+    top: '0',
+    left: '0',
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    position: 'fixed',
+  }
+
+  const [isPlay, setIsPlay] = useState(false)
+  const [isEnd, setIsEnd] = useState(false)
+  const [isCover, setIsCover] = useState(true)
+
+  const expand = () => {
+    setIsCover(true)
+    const video = intro.current.querySelector('div video')
+    if (video) {
+      video.style.borderRadius = '0'
+      video.style.width = device === 'xs' || device === 'sm' ? '90vw' : 'unset'
+      video.style.height = device !== 'xs' && device !== 'sm' ? '90vh' : 'unset'
+    }
+  }
+
+  const collapse = () => {
+    setIsCover(false)
+    const video = intro.current.querySelector('div video')
+    if (video) {
+      video.style.borderRadius = '50%'
+      video.style.width = device === 'xs' ? '25vw' : '15vw'
+      video.style.height = 'unset'
+    }
+  }
+
+  const skip = () => {
+    setIsPlay(true)
+    setIsEnd(true)
+    setIsCover(false)
+  }
+  const playVideo = () => {
+    const box = intro.current
+    setIsPlay(true)
+    setIsCover(false)
+    const video = box.querySelector('div video')
+    if (box && video) {
+      video.style.width = device === 'xs' ? '25vw' : '15vw'
+      video.style.animation = ''
+      video.play()
+      video.addEventListener('ended', () => {
+        setIsEnd(true)
+        setIsCover(false)
+      })
+    }
+  }
+  window.addEventListener('load', () => {
+    const box = intro.current
+    const video = box.querySelector('div video')
+
+    video.style.animation = 'attract 0.8s infinite'
+    video.style.width = device === 'xs' ? '35vw' : '20vw'
+  })
   return (
-    <Box
+    <Stack
       ref={intro}
       sx={{
-        position: 'fixed',
+        position: 'absolute',
         zIndex: 1001,
-        width: device === 'xs' ? '40vw' : '30vw',
         right: '0',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
+      style={isCover ? cover : notCover}
     >
-      <video
-        autoPlay={'autoplay'}
-        controls
-        loop
-        width='100%'
-        src={require('../videos/intro.mp4').default}
-        muted
-      ></video>
-    </Box>
+      <Typography
+        display={isPlay ? 'none' : ''}
+        sx={{ color: '#fff', marginBottom: '1rem', fontSize: '2.4rem' }}
+      >
+        Check it out!
+      </Typography>
+      <Box position='relative'>
+        <video
+          width='100%'
+          src={require('../videos/intro.mp4').default}
+          style={{
+            display: isEnd ? 'none' : '',
+            borderRadius: '50%',
+            width: device === 'xs' ? '25vw' : '15vw',
+          }}
+        ></video>
+        <Button
+          display={isPlay ? 'none' : ''}
+          onClick={playVideo}
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          <PlayArrowIcon
+            sx={{
+              color: '#fff',
+              fontSize: isPlay ? '0rem' : '4rem',
+            }}
+          />
+        </Button>
+        <Button
+          display={isPlay && !isCover && !isEnd ? '' : 'none'}
+          onClick={expand}
+          sx={{
+            position: 'absolute',
+            bottom: '20%',
+            left: '20%',
+            transform: 'translate(-50%, 50%)',
+          }}
+        >
+          <FullscreenIcon
+            sx={{
+              color: '#fff',
+              fontSize: isPlay && !isCover && !isEnd ? '2rem' : '0',
+            }}
+          />
+        </Button>
+        <Button
+          display={isPlay && isCover ? '' : 'none'}
+          onClick={collapse}
+          sx={{
+            position: 'absolute',
+            bottom: '5%',
+            left: '5%',
+            transform: 'translate(-50%, 50%)',
+            backgroundColor: isPlay && isCover ? 'rgba(0,0,0,0.3)' : '',
+          }}
+        >
+          <FullscreenExitIcon
+            sx={{
+              color: '#fff',
+              fontSize: isPlay && isCover ? '2rem' : '0',
+            }}
+          />
+        </Button>
+      </Box>
+      <Button
+        onClick={() => skip()}
+        sx={{
+          marginTop: '1rem',
+          padding: '0',
+        }}
+        display={isPlay ? 'none' : ''}
+      >
+        <Typography color='#fff' fontSize='2rem' display={isPlay ? 'none' : ''}>
+          Skip
+        </Typography>
+        <KeyboardDoubleArrowRightIcon
+          sx={{ color: '#fff', fontSize: isPlay ? '0rem' : '2rem' }}
+        />
+      </Button>
+    </Stack>
   )
 }
 
@@ -61,25 +211,10 @@ const Navbar = ({
     setOpenLan(false)
   }
 
-  const nav = useRef(null)
   const intro = useRef(null)
-  const [sticky, setSticky] = useState(nav.current && nav.current.clientHeight)
-
-  window.addEventListener('scroll', () => {
-    setSticky(nav.current && nav.current.clientHeight)
-    if (window.pageYOffset >= sticky && sticky > 0) {
-      if (intro.current) {
-        intro.current.style.top = '0'
-      }
-    } else if (intro.current && sticky > 0) {
-      intro.current.style.top = `${sticky - window.pageYOffset}px`
-    }
-  })
-
   return (
     <>
       <Box
-        ref={nav}
         sx={
           theme.palette.mode === 'dark'
             ? { backgroundColor: theme.palette.background }
