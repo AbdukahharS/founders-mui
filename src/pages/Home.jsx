@@ -11,22 +11,21 @@ import Footer from '../components/Footer'
 import MenuModal from '../components/MenuModal'
 import InstructorModal from '../components/InstructorModal'
 import CourseModal from '../components/CourseModal'
+import QAModal from '../components/QAModal'
 // MUI
 import { lightTheme, darkTheme } from '../muiConfig'
+import { Stack } from '@mui/material'
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
+// DB
+const courses = require('../db/courses')
 
 const Home = ({ theme, setTheme, device, language, changeLang }) => {
-  const [currentCourse, setCurrentCourse] = useState({
-    name: 'General English',
-    description:
-      'Lorem ipsum dolor sit amet, cons ectetur adipiscing elit. Phasellus molestie enim.',
-    banner: 'general-english.mp4',
-    duration: '3 months',
-    requirement: 'Elementary',
-  })
+  const [currentCourse, setCurrentCourse] = useState(courses.default[0])
   const [curVideo, setCurVideo] = useState('teacher1.mp4')
   const [isVideoOpen, setIsVideoOpen] = useState(false)
   const [openMenu, setOpenMenu] = useState(false)
   const [openModal, setOpenModal] = useState(false)
+  const [openQA, setOpenQA] = useState(false)
 
   useEffect(() => {
     let themeColor = theme === darkTheme ? 'dark' : 'light'
@@ -83,14 +82,30 @@ const Home = ({ theme, setTheme, device, language, changeLang }) => {
         setIsVideoOpen={setIsVideoOpen}
         curVideo={curVideo}
       />
-      {/* <Stack style={style} backgroundColor='primary.main'>
+      <QAModal openQA={openQA} setOpenQA={setOpenQA} />
+      <Stack
+        sx={{
+          position: 'fixed',
+          bottom: '2%',
+          right: '2%',
+          width: '4rem',
+          height: '4rem',
+          borderRadius: '50%',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          zIndex: '1001',
+        }}
+        backgroundColor='primary.main'
+        onClick={() => setOpenQA(true)}
+      >
         <QuestionMarkIcon
           sx={{
             color: 'primary.contrastText',
             fontSize: '2rem',
           }}
         />
-      </Stack> */}
+      </Stack>
     </>
   )
 }

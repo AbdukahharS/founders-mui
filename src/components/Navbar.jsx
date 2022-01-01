@@ -17,33 +17,12 @@ import MenuIcon from '@mui/icons-material/Menu'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
-import FullscreenIcon from '@mui/icons-material/Fullscreen'
-import FullscreenExitIcon from '@mui/icons-material/FullscreenExit'
 
 const Intro = ({ intro, device }) => {
   const filter = useRef(null)
 
   const [isPlay, setIsPlay] = useState(false)
   const [isEnd, setIsEnd] = useState(false)
-  const [isExpanded, setIsExpanded] = useState(false)
-
-  const expand = () => {
-    setIsExpanded(true)
-    const video = intro.current.querySelector('div video')
-    if (video) {
-      video.style.width = device === 'xs' || device === 'sm' ? '90vw' : 'unset'
-      video.style.height = device !== 'xs' && device !== 'sm' ? '90vh' : 'unset'
-    }
-  }
-
-  const collapse = () => {
-    setIsExpanded(false)
-    const video = intro.current.querySelector('div video')
-    if (video) {
-      video.style.width = device === 'xs' ? '30vw' : '20vw'
-      video.style.height = 'unset'
-    }
-  }
 
   const skip = () => {
     setIsPlay(true)
@@ -54,7 +33,8 @@ const Intro = ({ intro, device }) => {
     setIsPlay(true)
     const video = box.querySelector('div video')
     if (box && video) {
-      video.style.width = device === 'xs' ? '30vw' : '20vw'
+      video.style.width = device === 'xs' || device === 'sm' ? '90vw' : 'unset'
+      video.style.height = device !== 'xs' && device !== 'sm' ? '90vh' : 'unset'
       video.style.animation = ''
       video.style.borderRadius = '0'
       video.play()
@@ -123,41 +103,6 @@ const Intro = ({ intro, device }) => {
               sx={{
                 color: '#fff',
                 fontSize: isPlay ? '0rem' : '4rem',
-              }}
-            />
-          </Button>
-          <Button
-            display={isPlay && !isExpanded && !isEnd ? '' : 'none'}
-            onClick={expand}
-            sx={{
-              position: 'absolute',
-              bottom: '0',
-              left: '0',
-              backgroundColor:
-                isPlay && !isExpanded && !isEnd ? 'rgba(0,0,0,0.3)' : '',
-            }}
-          >
-            <FullscreenIcon
-              sx={{
-                color: '#fff',
-                fontSize: isPlay && !isExpanded && !isEnd ? '2rem' : '0',
-              }}
-            />
-          </Button>
-          <Button
-            display={isPlay && isExpanded ? '' : 'none'}
-            onClick={collapse}
-            sx={{
-              position: 'absolute',
-              bottom: '0',
-              left: '0',
-              backgroundColor: isPlay && isExpanded ? 'rgba(0,0,0,0.3)' : '',
-            }}
-          >
-            <FullscreenExitIcon
-              sx={{
-                color: '#fff',
-                fontSize: isPlay && isExpanded ? '2rem' : '0',
               }}
             />
           </Button>
