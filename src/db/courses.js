@@ -29,9 +29,9 @@ const courses = [
     name: 'IELTS courses',
     type: 'group',
     description: {
-      eng: 'Blah-blah-blah-blah-blah-blah-blah-blah-blah-blah-blah-blah-blah-blah-blah-blah-blah-blah',
-      ru: 'Бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла',
-      uz: 'Bla-bla-bla-bla-bla-bla-bla-bla-bla-bla-bla-bla-bla-bla-bla-bla-bla-bla-bla-bla-bla-bla',
+      eng: '',
+      ru: '',
+      uz: '',
     },
     items: [
       {
