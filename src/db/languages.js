@@ -67,7 +67,7 @@ const uzbek = {
   },
   contact: {
     heading: "Biz bilan bog'laning",
-    address: "Milliy Bog' bekati, Oliy majlis qarshisida",
+    address: "Milliy Bog' metro bekati, Oliy majlis qarshisida",
   },
   courseModal: {
     duration: 'Kurs davomiyligi',
@@ -109,7 +109,7 @@ const russian = {
   },
   contact: {
     heading: 'Связаться с нами',
-    address: 'Станция Миллий Бог, напротив Законодательной палаты',
+    address: 'Станция Миллий Бог, напротив Олий Мажлис',
   },
   courseModal: {
     duration: 'Продолжительность курса',

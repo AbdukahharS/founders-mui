@@ -56,7 +56,7 @@ const CourseCard = ({
             >
               {course.name}
             </Typography>
-            <Typography variant='p' fontSize='1.2rem'>
+            <Typography variant='p' fontSize='1rem'>
               {course.description[lang] && course.description[lang]}
             </Typography>
             <Stack

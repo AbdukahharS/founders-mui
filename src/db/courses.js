@@ -18,7 +18,7 @@ const courses = [
     description: {
       eng: 'Lead your children towards better career path. Let them learn English with us.',
       ru: 'Направляйте своих детей на лучший карьерный путь. Пусть учат английский с нами.',
-      uz: "Farzandlaringizni yaxshiroq keryera tomon yetaklang. Ularni Ingliz tilini biz bilan o'rganishlariga imkon bering.",
+      uz: "Farzandlaringizni yaxshiroq karyera tomon yetaklang. Ularni Ingliz tilini biz bilan o'rganishlariga imkon bering.",
     },
     banner: 'english-for-kids.mp4',
     duration: '6',
