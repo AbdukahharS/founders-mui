@@ -39,8 +39,7 @@ const Intro = ({ intro, device }) => {
       video.style.borderRadius = '0'
       video.play()
       video.addEventListener('ended', () => {
-        video.style.animation = 'end 1s'
-        setTimeout(() => setIsEnd(true), 1000)
+        setIsEnd(true)
       })
     }
   }
@@ -62,7 +61,7 @@ const Intro = ({ intro, device }) => {
           top: '0',
           left: '0',
           backgroundColor: 'rgba(0,0,0,0.7)',
-          zIndex: 1000,
+          zIndex: isEnd ? -1 : 1000,
         }}
         display={isEnd ? 'none' : ''}
       ></Box>
@@ -70,7 +69,7 @@ const Intro = ({ intro, device }) => {
         ref={intro}
         sx={{
           position: 'absolute',
-          zIndex: 1001,
+          zIndex: isEnd ? -1 : 1001,
           width: '100vw',
           height: '100vh',
           top: '0',
@@ -335,7 +334,10 @@ const Navbar = ({
                   </Button>
                   <Box>
                     <Button
-                      onClick={() => setOpenLan(true)}
+                      onClick={() => {
+                        setOpenLan(true)
+                        console.log('work')
+                      }}
                       sx={{
                         padding: device === 'md' ? '0.1rem' : '0.4rem',
                         minWidth: 'unset',

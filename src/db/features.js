@@ -5,6 +5,8 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import CreditCardIcon from '@mui/icons-material/CreditCard'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import EventIcon from '@mui/icons-material/Event'
+import SchoolIcon from '@mui/icons-material/School'
+import OfflineBoltIcon from '@mui/icons-material/OfflineBolt'
 
 const features = [
   {
@@ -32,7 +34,7 @@ const features = [
     },
   },
   {
-    icon: AccountCircleIcon,
+    icon: SchoolIcon,
     name: 'Free Educational Materials',
     description: {
       eng: 'Be aware of your learning process from monthly statistics based on the regular lesson performances and mock exam results.',
@@ -40,36 +42,40 @@ const features = [
     },
   },
   {
-    icon: BookIcon,
+    icon: OfflineBoltIcon,
     name: 'Electronic Vocabulary',
     description: {
       eng: 'Collect books and own electronic vocabulary.',
     },
-    link: { name: 'Go to library', path: '/library' },
   },
   {
     icon: AccountCircleIcon,
     name: 'Personal Account',
     description: {
-      eng: 'Fun and easy way to learn English: *Speaking clubs *Bookclubs *Coffecups *Movie clubs *Bookclubs *Mock exams',
+      eng: 'Be aware of your learning process from monthly statistics based on the regular lesson performances and mock exam results.',
       ru: '',
     },
-    link: { name: 'Go to events', path: '/events' },
   },
   {
     icon: EventIcon,
     name: 'Sunday events',
     description: {
-      eng: 'Fun and easy way to learn English (*Speaking Clubs *Bookclubs *CoffeeClubs *Movie Clubs *Mock exams)',
+      eng: 'Fun and easy way to learn English with different activities (*Speaking Clubs *Bookclubs *CoffeeClubs *Movie Clubs *Mock exams)',
       ru: '',
     },
+    link: { name: 'Go to events', path: '/events' },
   },
   {
     icon: WifiIcon,
     name: '24/7 Online Service',
     description: { eng: '', ru: '' },
   },
-  { icon: BookIcon, name: 'Libary', description: { eng: '', ru: '' } },
+  {
+    icon: BookIcon,
+    name: 'Libary',
+    description: { eng: '', ru: '' },
+    link: { name: 'Go to library', path: '/library' },
+  },
 ]
 
 export default features

@@ -3,7 +3,7 @@ const courses = [
     name: 'General English',
     type: 'course',
     description: {
-      eng: 'In this course, you can improve your English language Grammar.',
+      eng: 'In this course, you can improve your English language Grammar and Conversation skills.',
       ru: 'В этом курсы вы сможете улучшить свою грамматика английского языка .',
       uz: 'Bu kursda siz Ingliz tili grammatikangizni oshira olasiz.',
     },
@@ -43,7 +43,7 @@ const courses = [
         },
         banner: 'ielts-turbo.mp4',
         duration: '2',
-        requirement: 'Pre-Intermediate',
+        requirement: 'Advanced',
         price: '700 000',
       },
       {
