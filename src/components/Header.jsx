@@ -21,7 +21,11 @@ const Header = ({ device }) => {
   })
 
   return (
-    <Box color='primary.contrastText' bgcolor='primary.main'>
+    <Box
+      color='primary.contrastText'
+      bgcolor='primary.main'
+      position={device !== 'xl' ? 'relative' : 'unset'}
+    >
       <video
         ref={video}
         autoPlay
