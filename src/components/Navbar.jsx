@@ -23,9 +23,12 @@ const Intro = ({ intro, device }) => {
   const filter = useRef(null)
 
   const [isPlay, setIsPlay] = useState(false)
-  const [isEnd, setIsEnd] = useState(false)
+  const [isEnd, setIsEnd] = useState(
+    window.localStorage.getItem('isEnd') ? true : false
+  )
 
   const skip = () => {
+    window.localStorage.setItem('isEnd', true)
     setIsPlay(true)
     setIsEnd(true)
   }
@@ -40,6 +43,7 @@ const Intro = ({ intro, device }) => {
       video.style.borderRadius = '0'
       video.play()
       video.addEventListener('ended', () => {
+        window.localStorage.setItem('isEnd', true)
         setIsEnd(true)
       })
     }
