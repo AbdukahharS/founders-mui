@@ -6,11 +6,7 @@ const english = {
     instructors: 'Instructors',
     contact: 'Contact Us',
     button: {
-      img: 'eng.png',
-      otherBtns: [
-        { img: 'uz.png', lang: 'uz' },
-        { img: 'ru.png', lang: 'ru' },
-      ],
+      otherBtns: [{ lang: 'uz' }, { lang: 'ru' }],
     },
   },
   courses: {
@@ -45,11 +41,7 @@ const uzbek = {
     instructors: 'Ustozlar',
     contact: "Biz bilan bog'laning",
     button: {
-      img: 'uz.png',
-      otherBtns: [
-        { img: 'eng.png', lang: 'eng' },
-        { img: 'ru.png', lang: 'ru' },
-      ],
+      otherBtns: [{ lang: 'eng' }, { lang: 'ru' }],
     },
   },
   courses: {
@@ -87,11 +79,7 @@ const russian = {
     instructors: 'Инструкторы',
     contact: 'Свяжитесь с нами',
     button: {
-      img: 'ru.png',
-      otherBtns: [
-        { img: 'uz.png', lang: 'uz' },
-        { img: 'eng.png', lang: 'eng' },
-      ],
+      otherBtns: [{ lang: 'uz' }, { lang: 'eng' }],
     },
   },
   courses: {

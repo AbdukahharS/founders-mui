@@ -17,6 +17,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
+import LanguageIcon from '@mui/icons-material/Language'
 
 const Intro = ({ intro, device }) => {
   const filter = useRef(null)
@@ -56,7 +57,7 @@ const Intro = ({ intro, device }) => {
         ref={filter}
         sx={{
           position: 'fixed',
-          width: '100vw',
+          width: isEnd ? '0vw' : '100vw',
           height: '100vh',
           top: '0',
           left: '0',
@@ -70,7 +71,7 @@ const Intro = ({ intro, device }) => {
         sx={{
           position: 'absolute',
           zIndex: isEnd ? -1 : 1001,
-          width: '100vw',
+          width: '100%',
           height: '100vh',
           top: '0',
           left: '0',
@@ -343,15 +344,15 @@ const Navbar = ({
                         minWidth: 'unset',
                       }}
                     >
-                      <img
-                        src={
-                          language.navbar.button &&
-                          require(`../images/${language.navbar.button.img}`)
-                            .default
-                        }
-                        alt='Country Flag'
-                        style={{ width: '2.2rem' }}
-                      />
+                      <LanguageIcon sx={{ color: 'primary.contrastText' }} />
+                      <Typography
+                        sx={{
+                          textTransform: 'uppercase',
+                          color: 'primary.contrastText',
+                        }}
+                      >
+                        {language.lang}
+                      </Typography>
                       {device !== 'md' && (
                         <KeyboardArrowDownIcon
                           sx={{ color: 'secondary.main' }}
@@ -364,6 +365,7 @@ const Navbar = ({
                         sx={{
                           backgroundColor: 'primary.main',
                           borderRadius: '1rem',
+                          zIndex: '1001',
                         }}
                       >
                         {language.navbar.button &&
@@ -378,11 +380,9 @@ const Navbar = ({
                                 zIndex: 1002,
                               }}
                             >
-                              <img
-                                src={require(`../images/${btn.img}`).default}
-                                alt='Country Flag'
-                                style={{ width: '2rem' }}
-                              />
+                              <Typography sx={{ textTransform: 'uppercase' }}>
+                                {btn.lang}
+                              </Typography>
                             </Box>
                           ))}
                       </Stack>

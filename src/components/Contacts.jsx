@@ -129,7 +129,7 @@ const Contacts = ({ language }) => {
                   }}
                 />
               </Stack>
-              t.me/founders_school_uz
+              T.me/founders_school_uz
             </Link>
             <Link
               underline='hover'
@@ -155,7 +155,7 @@ const Contacts = ({ language }) => {
                   }}
                 />
               </Stack>
-              instagram.com/founders.school.uz
+              Instagram.com/founders.school.uz
             </Link>
             <Link
               underline='hover'

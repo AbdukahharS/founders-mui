@@ -14,6 +14,7 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import LanguageIcon from '@mui/icons-material/Language'
 
 const style = {
   position: 'fixed',
@@ -69,15 +70,25 @@ const MenuModal = ({
                 )}
               </Button>
               <Box>
-                <Button onClick={() => setOpenLan(true)}>
-                  <img
-                    src={
-                      language.navbar.button &&
-                      require(`../images/${language.navbar.button.img}`).default
-                    }
-                    alt='Country Flag'
-                    style={{ width: '2.2rem' }}
-                  />
+                <Button
+                  onClick={() => {
+                    setOpenLan(true)
+                    console.log('work')
+                  }}
+                  sx={{
+                    padding: '0.4rem',
+                    minWidth: 'unset',
+                  }}
+                >
+                  <LanguageIcon sx={{ color: 'primary.contrastText' }} />
+                  <Typography
+                    sx={{
+                      textTransform: 'uppercase',
+                      color: 'primary.contrastText',
+                    }}
+                  >
+                    {language.lang}
+                  </Typography>
                   <KeyboardArrowDownIcon sx={{ color: 'secondary.main' }} />
                 </Button>
                 <Grow in={openLan}>
@@ -86,6 +97,7 @@ const MenuModal = ({
                     sx={{
                       backgroundColor: 'primary.main',
                       borderRadius: '1rem',
+                      zIndex: '1001',
                     }}
                   >
                     {language.navbar.button &&
@@ -93,13 +105,16 @@ const MenuModal = ({
                         <Box
                           onClick={() => handleChange(btn.lang)}
                           key={i}
-                          sx={{ cursor: 'pointer', py: 1, px: 2 }}
+                          sx={{
+                            cursor: 'pointer',
+                            py: 1,
+                            px: 2,
+                            zIndex: 1002,
+                          }}
                         >
-                          <img
-                            src={require(`../images/${btn.img}`).default}
-                            alt='Country Flag'
-                            style={{ width: '2rem' }}
-                          />
+                          <Typography sx={{ textTransform: 'uppercase' }}>
+                            {btn.lang}
+                          </Typography>
                         </Box>
                       ))}
                   </Stack>

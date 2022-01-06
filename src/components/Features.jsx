@@ -96,7 +96,7 @@ const Features = ({ device, theme, language }) => {
             >
               <feature.icon sx={{ fontSize: '8rem' }} />
               <Typography fontSize='1.8rem' fontWeight={700}>
-                {feature.name}
+                {feature.name[language.lang]}
               </Typography>
               <Typography fontSize='1.4rem' textAlign='center'>
                 {feature.description[language.lang]}
