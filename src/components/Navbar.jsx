@@ -17,7 +17,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
-import LanguageIcon from '@mui/icons-material/Language'
+import PublicIcon from '@mui/icons-material/Public'
 
 const Intro = ({ intro, device }) => {
   const filter = useRef(null)
@@ -320,7 +320,10 @@ const Navbar = ({
                       p={device === 'md' ? 0.4 : 1}
                       mr={1}
                     >
-                      <LocalPhoneIcon color='primary' />
+                      <LocalPhoneIcon
+                        color='primary'
+                        sx={{ fontSize: '1.4rem' }}
+                      />
                     </Stack>
                     +998 71 205 53 33
                   </Link>
@@ -348,7 +351,13 @@ const Navbar = ({
                         minWidth: 'unset',
                       }}
                     >
-                      <LanguageIcon sx={{ color: 'primary.contrastText' }} />
+                      <PublicIcon
+                        sx={{
+                          color: 'primary.contrastText',
+                          fontSize: '1.8rem',
+                          mr: '0.2rem',
+                        }}
+                      />
                       <Typography
                         sx={{
                           textTransform: 'uppercase',

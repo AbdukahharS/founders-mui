@@ -14,7 +14,7 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
-import LanguageIcon from '@mui/icons-material/Language'
+import PublicIcon from '@mui/icons-material/Public'
 
 const style = {
   position: 'fixed',
@@ -80,7 +80,7 @@ const MenuModal = ({
                     minWidth: 'unset',
                   }}
                 >
-                  <LanguageIcon sx={{ color: 'primary.contrastText' }} />
+                  <PublicIcon sx={{ color: 'primary.contrastText' }} />
                   <Typography
                     sx={{
                       textTransform: 'uppercase',

@@ -31,6 +31,7 @@ const english = {
     soum: 'soum/month',
     enroll: 'Enroll',
   },
+  help: 'Help Center',
 }
 
 const uzbek = {
@@ -69,6 +70,7 @@ const uzbek = {
     soum: "so'm/oy",
     enroll: 'Kursga yozilish',
   },
+  help: 'Yordam markazi',
 }
 
 const russian = {
@@ -107,6 +109,7 @@ const russian = {
     soum: 'сум/месяца',
     enroll: 'Записываться',
   },
+  help: 'Центр помощи',
 }
 
 export { english, uzbek, russian }

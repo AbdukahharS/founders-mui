@@ -14,8 +14,7 @@ import CourseModal from '../components/CourseModal'
 import QAModal from '../components/QAModal'
 // MUI
 import { lightTheme, darkTheme } from '../muiConfig'
-import { Stack } from '@mui/material'
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
+import { Stack, Typography } from '@mui/material'
 // DB
 const courses = require('../db/courses')
 
@@ -88,23 +87,30 @@ const Home = ({ theme, setTheme, device, language, changeLang }) => {
           position: 'fixed',
           bottom: '2%',
           right: '2%',
-          width: '4rem',
-          height: '4rem',
-          borderRadius: '50%',
+          // width: '4rem',
+          height: '3rem',
+          py: 0.4,
+          px: 1.4,
+          borderRadius: '1.5rem',
           alignItems: 'center',
           justifyContent: 'center',
           cursor: 'pointer',
           zIndex: '1001',
+          flexDirection: 'row',
         }}
         backgroundColor='primary.main'
         onClick={() => setOpenQA(true)}
       >
-        <QuestionMarkIcon
-          sx={{
-            color: 'primary.contrastText',
-            fontSize: '2rem',
-          }}
+        <img
+          style={{ width: '2rem', marginRight: '0.6rem' }}
+          src={
+            theme === darkTheme
+              ? require('../images/help-light.png').default
+              : require('../images/help-dark.png').default
+          }
+          alt='Help Icon'
         />
+        <Typography color='secondary'>{language.help}</Typography>
       </Stack>
     </>
   )
