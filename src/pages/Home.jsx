@@ -7,14 +7,13 @@ import Features from '../components/Features'
 import Contacts from '../components/Contacts'
 import Teachers from '../components/Teachers'
 import Footer from '../components/Footer'
+import Help from '../components/Help'
 // Modals
 import MenuModal from '../components/MenuModal'
 import InstructorModal from '../components/InstructorModal'
 import CourseModal from '../components/CourseModal'
-import QAModal from '../components/QAModal'
 // MUI
 import { lightTheme, darkTheme } from '../muiConfig'
-import { Stack, Typography } from '@mui/material'
 // DB
 const courses = require('../db/courses')
 
@@ -81,37 +80,12 @@ const Home = ({ theme, setTheme, device, language, changeLang }) => {
         setIsVideoOpen={setIsVideoOpen}
         curVideo={curVideo}
       />
-      <QAModal openQA={openQA} setOpenQA={setOpenQA} />
-      <Stack
-        sx={{
-          position: 'fixed',
-          bottom: '2%',
-          right: '2%',
-          // width: '4rem',
-          height: '3rem',
-          py: 0.4,
-          px: 1.4,
-          borderRadius: '1.5rem',
-          alignItems: 'center',
-          justifyContent: 'center',
-          cursor: 'pointer',
-          zIndex: '1001',
-          flexDirection: 'row',
-        }}
-        backgroundColor='primary.main'
-        onClick={() => setOpenQA(true)}
-      >
-        <img
-          style={{ width: '2rem', marginRight: '0.6rem' }}
-          src={
-            theme === darkTheme
-              ? require('../images/help-light.png').default
-              : require('../images/help-dark.png').default
-          }
-          alt='Help Icon'
-        />
-        <Typography color='secondary'>{language.help}</Typography>
-      </Stack>
+      <Help
+        openQA={openQA}
+        setOpenQA={setOpenQA}
+        theme={theme}
+        language={language}
+      />
     </>
   )
 }

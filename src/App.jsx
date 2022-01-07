@@ -11,6 +11,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import { lightTheme, darkTheme } from './muiConfig'
 // DB
 import { uzbek, english, russian } from './db/languages'
+import FAQs from './pages/FAQs'
 
 function App() {
   const [theme, setTheme] = useState(
@@ -78,7 +79,12 @@ function App() {
                 <Library theme={theme} setTheme={setTheme} device={device} />
               }
             />
-
+            <Route
+              path='/faqs'
+              element={
+                <FAQs theme={theme} setTheme={setTheme} device={device} />
+              }
+            />
             <Route
               path='/events'
               element={
