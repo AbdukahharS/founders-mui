@@ -169,6 +169,16 @@ const Modal = ({ openQA, theme }) => {
                 Job vacancies
               </Link>
             </Button>
+            <Button
+              sx={{ justifyContent: 'flex-start', color: 'secondary.main' }}
+            >
+              <Link
+                to='/admin'
+                style={{ display: 'block', width: '100%', textAlign: 'left' }}
+              >
+                Log in
+              </Link>
+            </Button>
           </Stack>
         </Stack>
       </Collapse>
