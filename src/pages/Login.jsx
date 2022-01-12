@@ -36,7 +36,7 @@ async function send() {
 
 function urlBase64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
-  const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/')
+  const base64 = (base64String + padding).replace(/_/g, '/')
 
   const rawData = window.atob(base64)
   const outputArray = new Uint8Array(rawData.length)
@@ -71,21 +71,23 @@ const Login = ({ token, setToken }) => {
       }
     )
     const data = await res.json()
-    console.log(data)
     if (data) {
       // Check for service worker
       if ('serviceWorker' in navigator) {
         send().catch((err) => console.error(err))
       }
       await setToken(data.token)
-      console.log(token, data.token)
       navigate('/admin')
     }
   }
   return (
     <div>
       <GoogleLogin
-        clientId='1010777994659-c0e9tob38lbmohe1abp966ik9v44h76o.apps.googleusercontent.com'
+        clientId={
+          window.location.hostname === 'localhost'
+            ? '1010777994659-c0e9tob38lbmohe1abp966ik9v44h76o.apps.googleusercontent.com'
+            : '1010777994659-bc7apgtst6dclnu9in97mah9tqkk2usa.apps.googleusercontent.com'
+        }
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
       />
