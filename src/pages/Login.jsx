@@ -9,27 +9,40 @@ const publicVapidKey =
 async function send() {
   // Register Service Worker
   console.log('Registering service worker...')
-  const register = await navigator.serviceWorker.register('../worker.js')
-  console.log('Service Worker Registered...')
+  navigator.serviceWorker
+    .register('../worker.js')
+    .then(async function (register) {
+      // Successful registration
+      console.log('Hooray. Registration successful, scope is:', register.scope)
+      console.log('Service Worker Registered...')
 
-  // Register Push
-  console.log('Registering Push...')
-  const subscription = await register.pushManager.subscribe({
-    userVisibleOnly: true,
-    applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
-  })
-  console.log('Push Registered...')
+      // Register Push
+      console.log('Registering Push...')
+      const subscription = await register.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
+      })
+      console.log('Push Registered...')
 
-  // Send Push Notification
-  console.log('Sending Push...')
-  await fetch('https://founders-backend.shakhzodbekkakh.repl.co/subscribe', {
-    method: 'POST',
-    body: JSON.stringify(subscription),
-    headers: {
-      'content-type': 'application/json',
-    },
-  })
-  console.log('Push Sent...')
+      // Send Push Notification
+      console.log('Sending Push...')
+      await fetch(
+        'https://founders-backend.shakhzodbekkakh.repl.co/subscribe',
+        {
+          method: 'POST',
+          body: JSON.stringify(subscription),
+          headers: {
+            'content-type': 'application/json',
+          },
+        }
+      )
+      console.log('Push Sent...')
+      console.log(register)
+    })
+    .catch(function (err) {
+      // Failed registration, service worker won’t be installed
+      console.log('Whoops. Service worker registration failed, error:', err)
+    })
 }
 
 function urlBase64ToUint8Array(base64String) {
@@ -56,7 +69,6 @@ const Login = ({ token, setToken }) => {
     }
 
     const user = JSON.stringify({ email, id })
-    console.log(user)
 
     const res = await fetch(
       'https://founders-backend.shakhzodbekkakh.repl.co/login',
