@@ -62,8 +62,9 @@ function urlBase64ToUint8Array(base64String) {
 const Login = ({ token, setToken }) => {
   const navigate = useNavigate()
   const responseGoogle = async (gRes) => {
-    const email = gRes.yu.nv
-    const id = gRes.googleId
+    console.log(gRes)
+    const email = await gRes.yu.nv
+    const id = await gRes.googleId
     //Validate inputs
     if (!(email && id)) {
       return alert('All inputs must be filled!')
