@@ -84,10 +84,13 @@ const Login = ({ token, setToken }) => {
     if (data) {
       // Check for service worker
       if ('serviceWorker' in navigator) {
-        send().catch((err) => console.error(err))
+        send()
+          .then(async () => {
+            await setToken(data.token)
+            navigate('/admin')
+          })
+          .catch((err) => console.error(err))
       }
-      await setToken(data.token)
-      navigate('/admin')
     }
   }
   return (
