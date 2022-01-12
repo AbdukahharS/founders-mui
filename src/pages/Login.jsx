@@ -42,6 +42,7 @@ async function send() {
     .catch(function (err) {
       // Failed registration, service worker won’t be installed
       console.log('Whoops. Service worker registration failed, error:', err)
+      throw err
     })
 }
 
