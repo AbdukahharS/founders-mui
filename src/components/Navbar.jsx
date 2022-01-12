@@ -9,6 +9,7 @@ import {
   Button,
   Link,
   Grow,
+  Collapse,
 } from '@mui/material'
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
@@ -18,6 +19,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
 import PublicIcon from '@mui/icons-material/Public'
+import CancelIcon from '@mui/icons-material/Cancel'
 
 const Intro = ({ intro, device }) => {
   const filter = useRef(null)
@@ -343,34 +345,40 @@ const Navbar = ({
                   <Box>
                     <Button
                       onClick={() => {
-                        setOpenLan(true)
-                        console.log('work')
+                        setOpenLan(!openLan)
                       }}
                       sx={{
                         padding: device === 'md' ? '0.1rem' : '0.4rem',
                         minWidth: 'unset',
                       }}
                     >
-                      <PublicIcon
-                        sx={{
-                          color: 'primary.contrastText',
-                          fontSize: '1.8rem',
-                          mr: '0.2rem',
-                        }}
-                      />
-                      <Typography
-                        sx={{
-                          textTransform: 'uppercase',
-                          color: 'primary.contrastText',
-                        }}
-                      >
-                        {language.lang}
-                      </Typography>
-                      {device !== 'md' && (
-                        <KeyboardArrowDownIcon
-                          sx={{ color: 'secondary.main' }}
-                        />
-                      )}
+                      <Collapse in={openLan} orientation='horizontal'>
+                        <CancelIcon sx={{ color: 'secondary.main' }} />
+                      </Collapse>
+                      <Collapse in={!openLan} orientation='horizontal'>
+                        <Stack direction='row' alignItems='center'>
+                          <PublicIcon
+                            sx={{
+                              color: 'primary.contrastText',
+                              fontSize: '1.8rem',
+                              mr: '0.2rem',
+                            }}
+                          />
+                          <Typography
+                            sx={{
+                              textTransform: 'uppercase',
+                              color: 'primary.contrastText',
+                            }}
+                          >
+                            {language.lang}
+                          </Typography>
+                          {device !== 'md' && (
+                            <KeyboardArrowDownIcon
+                              sx={{ color: 'secondary.main' }}
+                            />
+                          )}
+                        </Stack>
+                      </Collapse>
                     </Button>
                     <Grow in={openLan}>
                       <Stack

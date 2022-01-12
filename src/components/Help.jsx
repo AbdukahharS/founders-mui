@@ -16,9 +16,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-// Icons
-import AddIcon from '@mui/icons-material/Add'
-import RemoveIcon from '@mui/icons-material/Remove'
+import CancelIcon from '@mui/icons-material/Cancel'
 
 const Modal = ({ openQA, theme }) => {
   const [openForm, setOpenForm] = useState(false)
@@ -81,16 +79,15 @@ const Modal = ({ openQA, theme }) => {
               Hi, how can we help?
             </Typography>
           </Box>
-          <Stack sx={{ backgroundColor: 'info.light' }} direction='column'>
+          <Stack
+            sx={{ backgroundColor: 'info.light' }}
+            minHeight='70vh'
+            direction='column'
+          >
             <Button
               onClick={() => setOpenForm(!openForm)}
               sx={{ justifyContent: 'flex-start' }}
             >
-              {openForm ? (
-                <RemoveIcon sx={{ color: 'secondary.main' }} />
-              ) : (
-                <AddIcon sx={{ color: 'secondary.main' }} />
-              )}
               <Typography color='info.contrastText'>
                 Do you have Suggestion or Objection?
               </Typography>
@@ -153,13 +150,6 @@ const Modal = ({ openQA, theme }) => {
               </Stack>
             </Collapse>
             <Button
-              href='https://t.me'
-              target='_blank'
-              sx={{ justifyContent: 'flex-start', color: 'secondary.main' }}
-            >
-              Contact with administrators
-            </Button>
-            <Button
               sx={{ justifyContent: 'flex-start', color: 'secondary.main' }}
             >
               <Link
@@ -217,20 +207,26 @@ const Help = ({ theme, openQA, setOpenQA, language }) => {
           }}
           backgroundColor='primary.main'
           onClick={() => {
-            setOpenQA(true)
-            console.log('w')
+            setOpenQA(!openQA)
           }}
         >
-          <img
-            style={{ width: '2rem', marginRight: '0.6rem' }}
-            src={
-              theme === darkTheme
-                ? require('../images/help-light.png').default
-                : require('../images/help-dark.png').default
-            }
-            alt='Help Icon'
-          />
-          <Typography color='secondary'>{language.help}!</Typography>
+          <Collapse in={openQA} orientation='horizontal'>
+            <CancelIcon sx={{ color: 'secondary.main' }} />
+          </Collapse>
+          <Collapse in={!openQA} orientation='horizontal'>
+            <Stack sx={{ alignItems: 'center' }} direction='row'>
+              <img
+                style={{ width: '2rem', marginRight: '0.6rem' }}
+                src={
+                  theme === darkTheme
+                    ? require('../images/help-light.png').default
+                    : require('../images/help-dark.png').default
+                }
+                alt='Help Icon'
+              />
+              <Typography color='secondary'>{language.help}!</Typography>
+            </Stack>
+          </Collapse>
         </Stack>
       </Stack>
     </>

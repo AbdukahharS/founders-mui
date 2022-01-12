@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 // Pages
 import Home from './pages/Home'
@@ -12,8 +12,17 @@ import { lightTheme, darkTheme } from './muiConfig'
 // DB
 import { uzbek, english, russian } from './db/languages'
 import FAQs from './pages/FAQs'
+import Admin from './pages/Admin'
+import Login from './pages/Login'
 
 function App() {
+  const [token, setToken] = useState(localStorage.getItem('token'))
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      localStorage.removeItem('token')
+    }
+    localStorage.setItem('token', token)
+  }, [token])
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') === 'dark' ? darkTheme : lightTheme
   )
@@ -90,6 +99,12 @@ function App() {
               element={
                 <Events theme={theme} setTheme={setTheme} device={device} />
               }
+            />
+            <Route path='/admin' exact element={<Admin token={token} />} />
+            <Route
+              path='/admin/login'
+              exact
+              element={<Login token={token} setToken={setToken} />}
             />
           </Routes>
         </ThemeProvider>
