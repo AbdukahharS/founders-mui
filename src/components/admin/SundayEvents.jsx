@@ -26,8 +26,8 @@ const SundayEvents = ({ screen }) => {
                 <TableCell align='right'>Protein&nbsp;(g)</TableCell>
               </TableRow>
             </TableHead>
-            {/* <TableBody>
-              {rows.map((row) => (
+            <TableBody>
+              {/* {rows.map((row) => (
                 <TableRow
                   key={row.name}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -40,8 +40,8 @@ const SundayEvents = ({ screen }) => {
                   <TableCell align='right'>{row.carbs}</TableCell>
                   <TableCell align='right'>{row.protein}</TableCell>
                 </TableRow>
-              ))}
-            </TableBody> */}
+              ))} */}
+            </TableBody>
           </Table>
         </TableContainer>
       </Box>

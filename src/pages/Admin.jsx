@@ -19,6 +19,7 @@ const Admin = ({ token }) => {
   const navigate = useNavigate()
   const [screen, setScreen] = useState('sundayEvents')
 
+  setScreen('')
   const checkToken = async () => {
     try {
       const res = await fetch(
