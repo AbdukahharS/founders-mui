@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Box,
@@ -11,15 +11,15 @@ import {
   Typography,
 } from '@mui/material'
 import { Link } from 'react-router-dom'
-import SundayEvents from '../components/admin/SundayEvents'
+// import SundayEvents from '../components/admin/SundayEvents'
 
 const localStorage = window.localStorage
 
 const Admin = ({ token }) => {
   const navigate = useNavigate()
-  const [screen, setScreen] = useState('sundayEvents')
+  // const [screen, setScreen] = useState('sundayEvents')
 
-  setScreen('')
+  // setScreen('')
   const checkToken = async () => {
     try {
       const res = await fetch(
@@ -88,9 +88,7 @@ const Admin = ({ token }) => {
               <ListItemText primary='Registrations for Sunday events' />
             </ListItem>
           </List>
-          <Box width='70%'>
-            <SundayEvents screen={screen} />
-          </Box>
+          <Box width='70%'>{/* <SundayEvents screen={screen} /> */}</Box>
         </Stack>
       ) : (
         <Typography>
