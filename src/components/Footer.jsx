@@ -5,15 +5,7 @@ import logoDark from './../images/logo-dark.png'
 
 const Footer = ({ theme, lightTheme }) => {
   return (
-    <Box
-      sx={
-        theme.palette.mode === 'dark'
-          ? { backgroundColor: 'primary.main' }
-          : { backgroundImage: theme.palette.background }
-      }
-      color='primary.contrastText'
-      py={4}
-    >
+    <Box bgcolor='primary.main' color='primary.contrastText' py={4}>
       <Container>
         <Grid container alignItems='center' justifyContent='center'>
           <Grid item xs={12} md={3}>

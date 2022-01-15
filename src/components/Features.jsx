@@ -63,12 +63,7 @@ const Features = ({ device, theme, language }) => {
       id='features'
       pt={6}
       pb={device === 'xs' ? 6 : 12}
-      bgcolor={theme.palette.mode === 'dark' && 'primary.main'}
-      sx={
-        theme.palette.mode === 'dark'
-          ? { backgroundColor: 'primary.main' }
-          : { backgroundImage: theme.palette.background }
-      }
+      bgcolor='primary.main'
       color='primary.contrastText'
     >
       <Container>

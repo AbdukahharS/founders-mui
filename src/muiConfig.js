@@ -3,7 +3,7 @@ import { createTheme } from '@mui/material/styles'
 const lightTheme = createTheme({
   palette: {
     mode: 'light',
-    background: 'linear-gradient(#f4d40d, #feac14)',
+    // background: 'linear-gradient(#f4d40d, #feac14)',
     primary: {
       main: '#f4d40d',
       //   contrastText: '#191919',
@@ -33,7 +33,7 @@ const lightTheme = createTheme({
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
-    background: '#191919',
+    // background: '#191919',
     primary: {
       main: '#191919',
       //   contrastText: '#fff',

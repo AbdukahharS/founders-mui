@@ -163,11 +163,7 @@ const Navbar = ({
   return (
     <>
       <Box
-        sx={
-          theme.palette.mode === 'dark'
-            ? { backgroundColor: theme.palette.background }
-            : { backgroundImage: theme.palette.background }
-        }
+        bgcolor='primary.main'
         color='primary.contrastText'
         py={device === 'xs' ? '0.2rem' : '0.6rem'}
         zIndex={1}
