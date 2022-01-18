@@ -44,13 +44,7 @@ const Library = ({ theme, setTheme, device }) => {
       justifyContent='stretch'
       bgcolor='info.light'
     >
-      <Box
-        sx={
-          theme.palette.mode === 'dark'
-            ? { backgroundColor: 'primary.main' }
-            : { backgroundImage: theme.palette.background }
-        }
-      >
+      <Box bgcolor='primary.main'>
         <Box color='primary.contrastText' py='0.6rem'>
           <Container>
             <Stack

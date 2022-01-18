@@ -70,7 +70,6 @@ function App() {
         <ThemeProvider theme={theme}>
           <Routes>
             <Route
-              exact
               path='/'
               element={
                 <Home
@@ -100,11 +99,14 @@ function App() {
                 <Events theme={theme} setTheme={setTheme} device={device} />
               }
             />
-            <Route path='/admin' exact element={<Admin token={token} />} />
             <Route
-              path='/admin/login'
+              path='/login'
               exact
               element={<Login token={token} setToken={setToken} />}
+            />
+            <Route
+              path='admin/*'
+              element={<Admin token={token} setToken={setToken} />}
             />
           </Routes>
         </ThemeProvider>

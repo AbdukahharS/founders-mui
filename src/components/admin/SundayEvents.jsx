@@ -1,51 +1,84 @@
+import React, { useEffect, useState } from 'react'
+import { Box, Button } from '@mui/material'
 import {
-  Collapse,
-  Table,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  TableBody,
-} from '@mui/material'
-import React from 'react'
-import { Box } from '@mui/system'
+  DataGrid,
+  GridToolbarContainer,
+  GridToolbarExport,
+  gridClasses,
+} from '@mui/x-data-grid'
+import CreateSundayEvent from './forms/CreateSundayEvent'
 
-const SundayEvents = ({ screen }) => {
+function CustomToolbar() {
   return (
-    <Collapse in={screen === 'sundayEvents'}>
-      <Box style={{ height: 300, width: '100%' }}>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-            <TableHead>
-              <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell align='right'>Calories</TableCell>
-                <TableCell align='right'>Fat&nbsp;(g)</TableCell>
-                <TableCell align='right'>Carbs&nbsp;(g)</TableCell>
-                <TableCell align='right'>Protein&nbsp;(g)</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {/* {rows.map((row) => (
-                <TableRow
-                  key={row.name}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component='th' scope='row'>
-                    {row.name}
-                  </TableCell>
-                  <TableCell align='right'>{row.calories}</TableCell>
-                  <TableCell align='right'>{row.fat}</TableCell>
-                  <TableCell align='right'>{row.carbs}</TableCell>
-                  <TableCell align='right'>{row.protein}</TableCell>
-                </TableRow>
-              ))} */}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Box>
-    </Collapse>
+    <GridToolbarContainer className={gridClasses.toolbarContainer}>
+      <GridToolbarExport sx={{ color: 'secondary.main' }} />
+    </GridToolbarContainer>
+  )
+}
+
+const columns = [
+  { field: 'id', headerName: 'ID', width: 90 },
+  {
+    field: 'name',
+    headerName: 'Name',
+  },
+  {
+    field: 'description',
+    headerName: 'Description',
+  },
+  {
+    field: 'date',
+    headerName: 'Date',
+    type: 'date',
+  },
+  {
+    field: 'size',
+    headerName: 'Intended Size',
+    type: 'date',
+  },
+  {
+    field: 'banner',
+    headerName: 'Banner',
+    renderCell: (params) => (
+      <img style={{ width: '100%' }} src={params.value} alt='Banner of event' />
+    ),
+  },
+]
+
+const SundayEvents = () => {
+  const [modal, setModal] = useState(false)
+  const [rows, setRows] = useState([])
+  useEffect(() => {
+    fetch('https://founders-backend.shakhzodbekkakh.repl.co/events', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.getItem('token'),
+        'Access-Control-Allow-Origin': 'no-cors',
+      },
+    })
+      .then(async (res) => {
+        const data = await res.json()
+        setRows(data)
+      })
+      .catch((err) => console.error(err))
+  })
+  return (
+    <Box style={{ height: 400, width: '100%' }}>
+      <Button variant='contained' onClick={() => setModal(true)}>
+        Add Event
+      </Button>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+        components={{
+          Toolbar: CustomToolbar,
+        }}
+      />
+      <CreateSundayEvent modal={modal} setModal={setModal} />
+    </Box>
   )
 }
 
