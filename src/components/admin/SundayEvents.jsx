@@ -10,6 +10,7 @@ import {
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import CreateSundayEvent from './forms/CreateSundayEvent'
+import UpdateSundayEvent from './forms/UpdateSundayEvent'
 
 function CustomToolbar() {
   return (
@@ -20,7 +21,9 @@ function CustomToolbar() {
 }
 
 const SundayEvents = () => {
-  const [modal, setModal] = useState(false)
+  const [createModal, setCreateModal] = useState(false)
+  const [updateModal, setUpdateModal] = useState(false)
+  const [editID, setEditID] = useState(null)
   const [rows, setRows] = useState([])
 
   useEffect(() => {
@@ -79,7 +82,14 @@ const SundayEvents = () => {
       headerName: 'Actions',
       type: 'actions',
       getActions: (params) => [
-        <GridActionsCellItem icon={<EditIcon />} label='Edit' />,
+        <GridActionsCellItem
+          icon={<EditIcon />}
+          onClick={() => {
+            setUpdateModal(true)
+            setEditID(params.id)
+          }}
+          label='Edit'
+        />,
         <GridActionsCellItem
           icon={<DeleteIcon />}
           onClick={() => deleteHandle(params.id)}
@@ -106,7 +116,7 @@ const SundayEvents = () => {
   }
   return (
     <Box style={{ height: 600, width: '100%' }}>
-      <Button variant='contained' onClick={() => setModal(true)}>
+      <Button variant='contained' onClick={() => setCreateModal(true)}>
         Add Event
       </Button>
       <DataGrid
@@ -117,7 +127,13 @@ const SundayEvents = () => {
           Toolbar: CustomToolbar,
         }}
       />
-      <CreateSundayEvent modal={modal} setModal={setModal} />
+      <UpdateSundayEvent
+        modal={updateModal}
+        setModal={setUpdateModal}
+        id={editID}
+        setId={setEditID}
+      />
+      <CreateSundayEvent modal={createModal} setModal={setCreateModal} />
     </Box>
   )
 }
