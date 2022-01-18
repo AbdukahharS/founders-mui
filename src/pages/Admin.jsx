@@ -85,7 +85,7 @@ const Admin = ({ token, setToken }) => {
                 <ListItemText primary='Registrations for Sunday events' />
               </ListItem>
             </List>
-            <Box width='70%'>
+            <Box width='100%'>
               <Routes>
                 <Route path='sundayevents' element={<SundayEvents />} />
               </Routes>

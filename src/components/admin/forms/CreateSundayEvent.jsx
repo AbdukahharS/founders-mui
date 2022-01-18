@@ -36,16 +36,23 @@ const CreateSundayEvent = ({ modal, setModal }) => {
         >
           <Stack sx={style} spacing={2}>
             <Typography>Add a new Sunday Event</Typography>
-            <TextField label='Name of event' variant='outlined' name='name' />
+            <TextField
+              label='Name of event'
+              variant='outlined'
+              name='name'
+              required
+            />
             <TextField
               label='Description of event'
               variant='outlined'
               name='description'
+              required
             />
             <TextField
               label='Intended size of event'
               variant='outlined'
               name='size'
+              required
             />
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
@@ -63,6 +70,7 @@ const CreateSundayEvent = ({ modal, setModal }) => {
                 id='contained-button-file'
                 name='image'
                 type='file'
+                required
               />
               <Button variant='raised' component='span'>
                 Upload Image

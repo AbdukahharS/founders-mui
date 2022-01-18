@@ -5,7 +5,10 @@ import {
   GridToolbarContainer,
   GridToolbarExport,
   gridClasses,
+  GridActionsCellItem,
 } from '@mui/x-data-grid'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
 import CreateSundayEvent from './forms/CreateSundayEvent'
 
 function CustomToolbar() {
@@ -16,38 +19,10 @@ function CustomToolbar() {
   )
 }
 
-const columns = [
-  { field: 'id', headerName: 'ID', width: 90 },
-  {
-    field: 'name',
-    headerName: 'Name',
-  },
-  {
-    field: 'description',
-    headerName: 'Description',
-  },
-  {
-    field: 'date',
-    headerName: 'Date',
-    type: 'date',
-  },
-  {
-    field: 'size',
-    headerName: 'Intended Size',
-    type: 'date',
-  },
-  {
-    field: 'banner',
-    headerName: 'Banner',
-    renderCell: (params) => (
-      <img style={{ width: '100%' }} src={params.value} alt='Banner of event' />
-    ),
-  },
-]
-
 const SundayEvents = () => {
   const [modal, setModal] = useState(false)
   const [rows, setRows] = useState([])
+
   useEffect(() => {
     fetch('https://founders-backend.shakhzodbekkakh.repl.co/events', {
       method: 'GET',
@@ -63,16 +38,81 @@ const SundayEvents = () => {
       })
       .catch((err) => console.error(err))
   })
+
+  const columns = [
+    { field: 'id', headerName: 'ID' },
+    {
+      field: 'name',
+      headerName: 'Name',
+      minWidth: 200,
+    },
+    {
+      field: 'description',
+      headerName: 'Description',
+      flex: 0.5,
+      minWidth: 300,
+    },
+    {
+      field: 'date',
+      headerName: 'Date',
+      type: 'date',
+    },
+    {
+      field: 'size',
+      headerName: 'Intended Size',
+      type: 'date',
+    },
+    {
+      field: 'banner',
+      headerName: 'Banner',
+      minWidth: 200,
+      renderCell: (params) => (
+        <img
+          style={{ width: '100%' }}
+          src={params.value}
+          alt='Banner of event'
+        />
+      ),
+    },
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      type: 'actions',
+      getActions: (params) => [
+        <GridActionsCellItem icon={<EditIcon />} label='Edit' />,
+        <GridActionsCellItem
+          icon={<DeleteIcon />}
+          onClick={() => deleteHandle(params.id)}
+          label='Delete'
+        />,
+      ],
+    },
+  ]
+
+  const deleteHandle = (id) => {
+    fetch(`https://founders-backend.shakhzodbekkakh.repl.co/events/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.getItem('token'),
+        'Access-Control-Allow-Origin': 'no-cors',
+      },
+    })
+      .then(() => {
+        const newData = rows.filter((row) => row.id !== id)
+        setRows(newData)
+      })
+      .catch((err) => console.error(err))
+  }
   return (
-    <Box style={{ height: 400, width: '100%' }}>
+    <Box style={{ height: 600, width: '100%' }}>
       <Button variant='contained' onClick={() => setModal(true)}>
         Add Event
       </Button>
       <DataGrid
         rows={rows}
         columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
+        rowHeight={120}
         components={{
           Toolbar: CustomToolbar,
         }}
