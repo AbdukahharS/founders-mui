@@ -1,13 +1,7 @@
 import React from 'react'
 import { Box, Stack, Typography } from '@mui/material'
 
-const TeacherBox = ({
-  teacher,
-  setIsHover,
-  setCurVideo,
-  setIsVideoOpen,
-  theme,
-}) => {
+const TeacherBox = ({ teacher, setIsHover, theme }) => {
   return (
     <Box
       width='90%'
@@ -31,6 +25,7 @@ const TeacherBox = ({
           width: '100%',
           height: '100%',
           borderRadius: '2rem',
+          boxShadow: '-2px 2px 4px rgba(0,0,0,0.5)',
         }}
       >
         <Box
@@ -70,21 +65,6 @@ const TeacherBox = ({
           <Typography variant='h5' className='desc' textAlign='center'>
             {teacher.description}
           </Typography>
-          <Box
-            className='btn'
-            bgcolor='secondary.main'
-            p='0.4rem 1rem'
-            borderRadius='0.4rem'
-            sx={{ cursor: 'pointer' }}
-            onClick={() => {
-              setCurVideo(teacher.video)
-              setIsVideoOpen(true)
-            }}
-          >
-            <Typography fontSize='1.4rem' color='primary'>
-              Learn more
-            </Typography>
-          </Box>
         </Stack>
       </Box>
     </Box>

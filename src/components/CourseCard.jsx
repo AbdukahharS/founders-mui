@@ -76,7 +76,7 @@ const CourseCard = ({
               alignItems='center'
             >
               <Typography fontSize='1.4rem'>
-                {lang === 'eng'
+                {lan === 'eng'
                   ? 'Learn more'
                   : lang === 'uz'
                   ? 'Batafsil'

@@ -169,16 +169,6 @@ const Modal = ({ openQA, theme }) => {
                 Job vacancies
               </Link>
             </Button>
-            <Button
-              sx={{ justifyContent: 'flex-start', color: 'secondary.main' }}
-            >
-              <Link
-                to='/admin'
-                style={{ display: 'block', width: '100%', textAlign: 'left' }}
-              >
-                Log in
-              </Link>
-            </Button>
           </Stack>
         </Stack>
       </Collapse>
@@ -215,13 +205,13 @@ const Help = ({ theme, openQA, setOpenQA, language }) => {
             flexDirection: 'row',
             width: 'fit-content',
           }}
-          backgroundColor='primary.main'
+          backgroundColor={openQA ? 'transparent' : 'primary.main'}
           onClick={() => {
             setOpenQA(!openQA)
           }}
         >
           <Collapse in={openQA} orientation='horizontal'>
-            <CancelIcon sx={{ color: 'secondary.main' }} />
+            <CancelIcon sx={{ color: 'secondary.main', fontSize: '2.6rem' }} />
           </Collapse>
           <Collapse in={!openQA} orientation='horizontal'>
             <Stack sx={{ alignItems: 'center' }} direction='row'>

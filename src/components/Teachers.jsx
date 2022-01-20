@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import TeacherBox from './TeacherBox'
 import { Box, Container, Typography } from '@mui/material'
-
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
+import stuff from '../db/stuff'
 const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },
@@ -23,29 +23,9 @@ const responsive = {
   },
 }
 
-const teachers = [
-  {
-    name: 'John Doe',
-    description: 'Instructor of IELTS 7+ course and 8.5 score holder',
-    banner: 'teacher1.png',
-    video: 'teacher1.mp4',
-  },
-  {
-    name: 'Edward Snowden',
-    description: 'Instructor of General English course and 8.0 holder',
-    banner: 'teacher2.png',
-    video: 'teacher2.mp4',
-  },
-  {
-    name: 'Jane Doe',
-    description: 'Instructor of IELTS speed-up course and 8.0 holder',
-    banner: 'teacher3.png',
-    video: 'teacher3.mp4',
-  },
-]
-
-const Teachers = ({ setCurVideo, setIsVideoOpen, theme, language }) => {
+const Teachers = ({ theme, language }) => {
   const [isHover, setIsHover] = useState(false)
+  const [role, setRole] = useState('admin')
 
   return (
     <Box
@@ -57,7 +37,7 @@ const Teachers = ({ setCurVideo, setIsVideoOpen, theme, language }) => {
     >
       <Container>
         <Typography py={4} fontSize='3rem' color='secondary' fontWeight={700}>
-          {language.instructors.heading}
+          {language.instructors.heading[role]}
         </Typography>
         <Carousel
           responsive={responsive}
@@ -68,11 +48,14 @@ const Teachers = ({ setCurVideo, setIsVideoOpen, theme, language }) => {
           autoPlay={!isHover}
           keyBoardControl={true}
           autoPlaySpeed={2000}
+          afterChange={(previousSlide, { currentSlide, onMove }) => {
+            setRole(
+              currentSlide === 4 || currentSlide === 5 ? 'admin' : 'instructor'
+            )
+          }}
         >
-          {teachers.map((teacher, ind) => (
+          {stuff.map((teacher, ind) => (
             <TeacherBox
-              setCurVideo={setCurVideo}
-              setIsVideoOpen={setIsVideoOpen}
               setIsHover={setIsHover}
               teacher={teacher}
               key={ind}

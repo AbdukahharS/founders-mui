@@ -10,7 +10,6 @@ import Footer from '../components/Footer'
 import Help from '../components/Help'
 // Modals
 import MenuModal from '../components/MenuModal'
-import InstructorModal from '../components/InstructorModal'
 import CourseModal from '../components/CourseModal'
 // MUI
 import { lightTheme, darkTheme } from '../muiConfig'
@@ -19,8 +18,6 @@ const courses = require('../db/courses')
 
 const Home = ({ theme, setTheme, device, language, changeLang }) => {
   const [currentCourse, setCurrentCourse] = useState(courses.default[0])
-  const [curVideo, setCurVideo] = useState('teacher1.mp4')
-  const [isVideoOpen, setIsVideoOpen] = useState(false)
   const [openMenu, setOpenMenu] = useState(false)
   const [openModal, setOpenModal] = useState(false)
   const [openQA, setOpenQA] = useState(false)
@@ -50,12 +47,7 @@ const Home = ({ theme, setTheme, device, language, changeLang }) => {
         language={language}
       />
       <Features device={device} theme={theme} language={language} />
-      <Teachers
-        setCurVideo={setCurVideo}
-        setIsVideoOpen={setIsVideoOpen}
-        theme={theme}
-        language={language}
-      />
+      <Teachers theme={theme} language={language} />
       <Contacts language={language} />
       <Footer theme={theme} lightTheme={lightTheme} />
       <CourseModal
@@ -74,11 +66,6 @@ const Home = ({ theme, setTheme, device, language, changeLang }) => {
         darkTheme={darkTheme}
         language={language}
         changeLang={changeLang}
-      />
-      <InstructorModal
-        isVideoOpen={isVideoOpen}
-        setIsVideoOpen={setIsVideoOpen}
-        curVideo={curVideo}
       />
       <Help
         openQA={openQA}

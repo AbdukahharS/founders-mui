@@ -18,11 +18,15 @@ import Login from './pages/Login'
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token'))
   useEffect(() => {
+    if (!localStorage.getItem('language')) {
+      localStorage.setItem('language', 'eng')
+    }
     if (localStorage.getItem('token')) {
       localStorage.removeItem('token')
     }
     localStorage.setItem('token', token)
   }, [token])
+
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') === 'dark' ? darkTheme : lightTheme
   )

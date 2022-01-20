@@ -1,45 +1,50 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate, Route, Routes } from 'react-router-dom'
 import {
   Box,
   Container,
   Divider,
-  List,
   ListItem,
   ListItemText,
   Stack,
   Typography,
+  List,
 } from '@mui/material'
 import SundayEvents from '../components/admin/SundayEvents'
+import RegsForEvents from '../components/admin/RegsForEvents'
 
 const localStorage = window.localStorage
 
-const Admin = ({ token, setToken }) => {
+const Admin = ({ setToken }) => {
   const navigate = useNavigate()
   const [isValid, setIsValid] = useState(false)
 
-  useEffect(() => {
-    fetch('https://founders-backend.shakhzodbekkakh.repl.co/welcome', {
-      method: 'POST',
-      headers: {
-        'x-access-token': localStorage.getItem('token'),
-        'Access-Control-Allow-Origin': 'no-cors',
-      },
-    })
-      .then(async (res) => {
-        const data = await res.json()
-        if (data.message !== 'valid') {
-          setToken(null)
-          navigate('/login')
-        } else {
-          setIsValid(true)
-          navigate('/admin/sundayevents')
-        }
-      })
-      .catch((err) => {
-        console.error(err)
-      })
-  }, [navigate, setToken])
+  // useEffect(() => {
+
+  window.onload = async () => {
+    const res = await fetch(
+      'https://founders-backend.shakhzodbekkakh.repl.co/welcome',
+      {
+        method: 'POST',
+        headers: {
+          'x-access-token': localStorage.getItem('token'),
+          'Access-Control-Allow-Origin': 'no-cors',
+        },
+      }
+    )
+    try {
+      const data = await res.json()
+      if (data.message !== 'valid') {
+        setToken(null)
+        navigate('/login')
+      } else {
+        setIsValid(true)
+        navigate('/admin/sundayevents')
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   return (
     <main>
@@ -64,13 +69,8 @@ const Admin = ({ token, setToken }) => {
             p={2}
             spacing={2}
           >
-            <List
-              width='30%'
-              sx={{ bgcolor: 'primary.main' }}
-              component='nav'
-              aria-label='mailbox folders'
-            >
-              <ListItem button>
+            <List sx={{ bgcolor: 'primary.main', width: '30%' }}>
+              <ListItem button onClick={() => navigate('/admin/sundayevents')}>
                 <ListItemText primary='Sunday Events' />
               </ListItem>
               <Divider />
@@ -81,13 +81,14 @@ const Admin = ({ token, setToken }) => {
                 <ListItemText primary='Offers for Sunday events' />
               </ListItem>
               <Divider light />
-              <ListItem button>
+              <ListItem button onClick={() => navigate('/admin/regsforevents')}>
                 <ListItemText primary='Registrations for Sunday events' />
               </ListItem>
             </List>
             <Box width='100%'>
               <Routes>
                 <Route path='sundayevents' element={<SundayEvents />} />
+                <Route path='regsforevent' element={<RegsForEvents />} />
               </Routes>
             </Box>
           </Stack>

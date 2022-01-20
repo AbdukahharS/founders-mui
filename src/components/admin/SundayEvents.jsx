@@ -40,7 +40,7 @@ const SundayEvents = () => {
         setRows(data)
       })
       .catch((err) => console.error(err))
-  })
+  }, [])
 
   const columns = [
     { field: 'id', headerName: 'ID' },

@@ -17,7 +17,7 @@ const english = {
     heading: 'Features',
   },
   instructors: {
-    heading: 'Instructors',
+    heading: { instructor: 'Instructors', admin: 'Administrators' },
   },
   contact: {
     heading: 'Contact Us',
@@ -56,7 +56,7 @@ const uzbek = {
     heading: 'Qulayliklar',
   },
   instructors: {
-    heading: 'Ustozlar',
+    heading: { instructor: 'Ustozlar', admin: 'Administratorlar' },
   },
   contact: {
     heading: "Biz bilan bog'laning",
@@ -95,7 +95,7 @@ const russian = {
     heading: 'Функции',
   },
   instructors: {
-    heading: 'Инструкторы',
+    heading: { instructor: 'Инструкторы', admin: 'Администраторы' },
   },
   contact: {
     heading: 'Связаться с нами',

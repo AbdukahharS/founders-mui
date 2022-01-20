@@ -57,6 +57,7 @@ body {
 }
 
 .card:hover .front-box span {
+  opacity: 0;
   transform: translateX(-2rem);
 }
 
