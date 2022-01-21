@@ -2,23 +2,17 @@ import { Box, Container, Stack, Typography, Button } from '@mui/material'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import logo from './../images/logo.png'
 import logoDark from './../images/logo-dark.png'
 import { lightTheme, darkTheme } from '../muiConfig'
-import { Routes, Route } from 'react-router-dom'
 import Recent from '../components/events/Recent'
 import Upcoming from '../components/events/Upcoming'
 
 const Events = ({ theme, setTheme }) => {
-  const [path, setPath] = useState()
-  const navigate = useNavigate()
+  const [path, setPath] = useState('recent')
   const clickHandler = () => {
     setTheme(theme === lightTheme ? darkTheme : lightTheme)
-  }
-  window.onload = () => {
-    navigate('/events/recent')
-    setPath('recent')
   }
   return (
     <Stack
@@ -71,7 +65,6 @@ const Events = ({ theme, setTheme }) => {
               : { color: 'primary.contrastText' }
           }
           onClick={() => {
-            navigate('/events/recent')
             setPath('recent')
           }}
         >
@@ -90,19 +83,13 @@ const Events = ({ theme, setTheme }) => {
               : { color: 'primary.contrastText' }
           }
           onClick={() => {
-            navigate('/events/upcoming')
             setPath('upcoming')
           }}
         >
           Upcoming
         </Button>
       </Stack>
-      <Box>
-        <Routes>
-          <Route path='recent' element={<Recent />} />
-          <Route path='upcoming' element={<Upcoming />} />
-        </Routes>
-      </Box>
+      <Box>{path === 'recent' ? <Recent /> : <Upcoming />}</Box>
     </Stack>
   )
 }

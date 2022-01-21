@@ -9,6 +9,7 @@ import {
   Stack,
   Typography,
   List,
+  CircularProgress,
 } from '@mui/material'
 import SundayEvents from '../components/admin/SundayEvents'
 import RegsForEvents from '../components/admin/RegsForEvents'
@@ -48,17 +49,19 @@ const Admin = ({ setToken }) => {
 
   return (
     <main>
-      {isValid && (
-        <>
-          <Box py={1}>
+      {isValid ? (
+        <Box bgcolor='info.light' minHeight='100vh'>
+          <Box py={1} sx={{ bgcolor: 'primary.main' }}>
             <Container>
               <Stack direction='row' alignItems='center' spacing={1}>
                 <img
-                  src={require('../images/logo-dark.png').default}
+                  src={require('../images/logo.png').default}
                   alt='Logo'
                   style={{ width: '4rem' }}
                 />
-                <Typography fontSize='2rem'>Admin Panel</Typography>
+                <Typography fontSize='2rem' color='primary.contrastText'>
+                  Admin Panel
+                </Typography>
               </Stack>
             </Container>
           </Box>
@@ -69,7 +72,13 @@ const Admin = ({ setToken }) => {
             p={2}
             spacing={2}
           >
-            <List sx={{ bgcolor: 'primary.main', width: '30%' }}>
+            <List
+              sx={{
+                bgcolor: 'primary.main',
+                width: '20%',
+                color: 'primary.contrastText',
+              }}
+            >
               <ListItem button onClick={() => navigate('/admin/sundayevents')}>
                 <ListItemText primary='Sunday Events' />
               </ListItem>
@@ -92,7 +101,11 @@ const Admin = ({ setToken }) => {
               </Routes>
             </Box>
           </Stack>
-        </>
+        </Box>
+      ) : (
+        <Stack alignItems='center' justifyContent='center' height='100vh'>
+          <CircularProgress size='6rem' />
+        </Stack>
       )}
     </main>
   )

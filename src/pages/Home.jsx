@@ -7,10 +7,10 @@ import Features from '../components/Features'
 import Contacts from '../components/Contacts'
 import Teachers from '../components/Teachers'
 import Footer from '../components/Footer'
-import Help from '../components/Help'
+import Help from '../components/modals/Help'
 // Modals
-import MenuModal from '../components/MenuModal'
-import CourseModal from '../components/CourseModal'
+import MenuModal from '../components/modals/MenuModal'
+import CourseModal from '../components/modals/CourseModal'
 // MUI
 import { lightTheme, darkTheme } from '../muiConfig'
 // DB

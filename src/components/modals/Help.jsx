@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 // MUI
-import { darkTheme } from '../muiConfig'
+import { darkTheme } from '../../muiConfig'
 import {
   Alert,
   Box,
@@ -219,8 +219,8 @@ const Help = ({ theme, openQA, setOpenQA, language }) => {
                 style={{ width: '2rem', marginRight: '0.6rem' }}
                 src={
                   theme === darkTheme
-                    ? require('../images/help-light.png').default
-                    : require('../images/help-dark.png').default
+                    ? require('../../images/help-light.png').default
+                    : require('../../images/help-dark.png').default
                 }
                 alt='Help Icon'
               />

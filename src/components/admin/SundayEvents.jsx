@@ -1,16 +1,33 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Button } from '@mui/material'
+import { Box, Button, LinearProgress, Typography } from '@mui/material'
 import {
+  GridOverlay,
   DataGrid,
   GridToolbarContainer,
   GridToolbarExport,
   gridClasses,
   GridActionsCellItem,
 } from '@mui/x-data-grid'
+// Icons
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+// Form Modals
 import CreateSundayEvent from './forms/CreateSundayEvent'
 import UpdateSundayEvent from './forms/UpdateSundayEvent'
+import SetIsDone from './forms/SetIsDone'
+// Another Modal
+import Gallery from './Gallery'
+
+function CustomLoadingOverlay() {
+  return (
+    <GridOverlay>
+      <div style={{ position: 'absolute', top: 0, width: '100%' }}>
+        <LinearProgress />
+      </div>
+    </GridOverlay>
+  )
+}
 
 function CustomToolbar() {
   return (
@@ -23,8 +40,12 @@ function CustomToolbar() {
 const SundayEvents = () => {
   const [createModal, setCreateModal] = useState(false)
   const [updateModal, setUpdateModal] = useState(false)
+  const [isDoneModal, setIsDoneModal] = useState(false)
+  const [galleryModal, setGalleryModal] = useState(false)
   const [editID, setEditID] = useState(null)
+  const [gallery, setGallery] = useState(null)
   const [rows, setRows] = useState([])
+  const [load, setLoad] = useState(true)
 
   useEffect(() => {
     fetch('https://founders-backend.shakhzodbekkakh.repl.co/events', {
@@ -38,12 +59,13 @@ const SundayEvents = () => {
       .then(async (res) => {
         const data = await res.json()
         setRows(data)
+        setLoad(false)
       })
       .catch((err) => console.error(err))
   }, [])
 
   const columns = [
-    { field: 'id', headerName: 'ID' },
+    { field: 'id', headerName: 'ID', minWidth: 110 },
     {
       field: 'name',
       headerName: 'Name',
@@ -53,7 +75,6 @@ const SundayEvents = () => {
       field: 'description',
       headerName: 'Description',
       flex: 0.5,
-      minWidth: 300,
     },
     {
       field: 'date',
@@ -64,6 +85,31 @@ const SundayEvents = () => {
       field: 'size',
       headerName: 'Intended Size',
       type: 'date',
+    },
+    {
+      field: 'isDone',
+      headerName: 'Is Done',
+      type: 'boolean',
+    },
+    {
+      field: 'gallery',
+      headerName: 'Gallery',
+      width: 80,
+      type: 'actions',
+      getActions: (params) => [
+        params.row.isDone ? (
+          <GridActionsCellItem
+            icon={<span>See</span>}
+            onClick={() => {
+              setGalleryModal(true)
+              setGallery(params.row.gallery)
+            }}
+            label='See'
+          />
+        ) : (
+          <Typography fontSize='1.8rem'>-</Typography>
+        ),
+      ],
     },
     {
       field: 'banner',
@@ -95,6 +141,15 @@ const SundayEvents = () => {
           onClick={() => deleteHandle(params.id)}
           label='Delete'
         />,
+        <GridActionsCellItem
+          sx={params.row.isDone ? { display: 'none' } : {}}
+          icon={<CheckCircleIcon />}
+          onClick={() => {
+            setIsDoneModal(true)
+            setEditID(params.id)
+          }}
+          label='SetIsDone'
+        />,
       ],
     },
   ]
@@ -120,12 +175,14 @@ const SundayEvents = () => {
         Add Event
       </Button>
       <DataGrid
-        rows={rows}
         columns={columns}
-        rowHeight={120}
         components={{
+          LoadingOverlay: CustomLoadingOverlay,
           Toolbar: CustomToolbar,
         }}
+        loading={load}
+        rows={rows}
+        rowHeight={120}
       />
       <UpdateSundayEvent
         modal={updateModal}
@@ -134,6 +191,12 @@ const SundayEvents = () => {
         setId={setEditID}
       />
       <CreateSundayEvent modal={createModal} setModal={setCreateModal} />
+      <SetIsDone modal={isDoneModal} setModal={setIsDoneModal} id={editID} />
+      <Gallery
+        modal={galleryModal}
+        setModal={setGalleryModal}
+        gallery={gallery}
+      />
     </Box>
   )
 }

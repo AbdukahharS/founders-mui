@@ -8,7 +8,7 @@ const TeacherBox = ({ teacher, setIsHover, theme, i, role }) => {
         sx={{
           fontSize: '1.6rem',
           ml: 1,
-          color: i === 0 || i === 2 ? 'primary.contrastText' : 'info.main',
+          color: i === 0 || i === 2 ? 'primary.contrastText' : 'info.light',
         }}
       >
         {role}
