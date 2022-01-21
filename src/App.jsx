@@ -98,7 +98,7 @@ function App() {
               }
             />
             <Route
-              path='/events'
+              path='events/*'
               element={
                 <Events theme={theme} setTheme={setTheme} device={device} />
               }

@@ -1,4 +1,4 @@
-const stuff = [
+const staff = [
   {
     name: 'Jane Doe',
     description: 'Lorem ipsum dolor sit amet.',
@@ -50,4 +50,4 @@ const stuff = [
   },
 ]
 
-export default stuff
+export default staff

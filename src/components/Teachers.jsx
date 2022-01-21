@@ -3,7 +3,7 @@ import TeacherBox from './TeacherBox'
 import { Box, Container, Typography } from '@mui/material'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
-import stuff from '../db/stuff'
+import staff from '../db/staff'
 const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },
@@ -25,7 +25,6 @@ const responsive = {
 
 const Teachers = ({ theme, language }) => {
   const [isHover, setIsHover] = useState(false)
-  const [role, setRole] = useState('admin')
 
   return (
     <Box
@@ -37,7 +36,7 @@ const Teachers = ({ theme, language }) => {
     >
       <Container>
         <Typography py={4} fontSize='3rem' color='secondary' fontWeight={700}>
-          {language.instructors.heading[role]}
+          {language.instructors.heading}
         </Typography>
         <Carousel
           responsive={responsive}
@@ -48,18 +47,15 @@ const Teachers = ({ theme, language }) => {
           autoPlay={!isHover}
           keyBoardControl={true}
           autoPlaySpeed={2000}
-          afterChange={(previousSlide, { currentSlide, onMove }) => {
-            setRole(
-              currentSlide === 4 || currentSlide === 5 ? 'admin' : 'instructor'
-            )
-          }}
         >
-          {stuff.map((teacher, ind) => (
+          {staff.map((teacher, ind) => (
             <TeacherBox
               setIsHover={setIsHover}
               teacher={teacher}
               key={ind}
               theme={theme}
+              i={ind}
+              role={language.instructors.roles[teacher.role]}
             />
           ))}
         </Carousel>
