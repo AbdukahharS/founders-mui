@@ -19,7 +19,6 @@ const Input = styled('input')({
 })
 
 const SetIsDone = ({ modal, setModal, id }) => {
-  console.log(id)
   return (
     <Modal open={modal} onClose={() => setModal(false)}>
       <Box>
