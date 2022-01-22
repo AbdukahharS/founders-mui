@@ -52,7 +52,7 @@ const RecentModal = ({ modal, setModal, event }) => {
               <img
                 src={event.banner}
                 alt={`Banner for event ${event.name}`}
-                style={{ width: '30vw', maxHeight: '40vh' }}
+                style={{ maxWidth: '30vw', maxHeight: '40vh' }}
               />
               <Stack>
                 <Typography fontSize={'2rem'} fontWeight={700}>
