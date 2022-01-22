@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  Container,
-  Typography,
-  Box,
-  Stack,
-  CircularProgress,
-} from '@mui/material'
+import { Container, Typography, Box, CircularProgress } from '@mui/material'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import RecentModal from '../modals/RecentModal'

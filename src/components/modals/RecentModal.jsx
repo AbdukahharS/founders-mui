@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-  Box,
-  CircularProgress,
-  Modal,
-  Stack,
-  Typography,
-  Skeleton,
-} from '@mui/material'
+import { Box, CircularProgress, Modal, Stack, Typography } from '@mui/material'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 
