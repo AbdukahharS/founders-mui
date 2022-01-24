@@ -1,5 +1,13 @@
-import React from 'react'
-import { Modal, Stack, TextField, InputAdornment, Button } from '@mui/material'
+import React, { useState } from 'react'
+import {
+  Modal,
+  Stack,
+  TextField,
+  InputAdornment,
+  Button,
+  Snackbar,
+  Alert,
+} from '@mui/material'
 import CancelIcon from '@mui/icons-material/Cancel'
 
 const style = {
@@ -14,44 +22,151 @@ const style = {
 }
 
 const EventOffer = ({ modal, setModal, device }) => {
+  const [fullname, setFullname] = useState('')
+  const [name, setName] = useState('')
+  const [purpose, setPurpose] = useState('')
+  const [size, setSize] = useState(1)
+  const [phone, setPhone] = useState(1111111)
+  const [error, setError] = useState(null)
+  const [success, setSuccess] = useState(false)
+
+  const handleSubmit = async () => {
+    if (fullname && name && purpose && size && phone) {
+      if (size >= 5) {
+        if (phone.toString().length === 7) {
+          const res = await fetch(
+            'https://founders-backend.shakhzodbekkakh.repl.co/eventsuggestions',
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ fullname, name, purpose, size, phone }),
+            }
+          )
+          if (res.ok) {
+            setModal(false)
+            setSuccess(true)
+          } else {
+            const data = await res.json()
+            setError(data.message)
+          }
+        } else {
+          setError('Phone number must contain 7 numbers!')
+        }
+      } else {
+        setError('Intended size must be more than 4!')
+      }
+    } else {
+      setError('All inputs must be filled!')
+    }
+  }
   return (
-    <Modal open={modal} onClose={() => setModal(false)}>
-      <Stack
-        sx={style}
-        style={device === 'xs' ? { width: '100vw', height: '100vh' } : {}}
-        spacing={2}
+    <>
+      <Modal open={modal} onClose={() => setModal(false)}>
+        <>
+          <Stack
+            sx={style}
+            style={device === 'xs' ? { width: '100vw', height: '100vh' } : {}}
+            spacing={2}
+          >
+            <Stack direction='column' spacing={3}>
+              <TextField
+                variant='outlined'
+                label='What is your name?'
+                value={fullname}
+                onChange={(e) => setFullname(e.target.value)}
+                color='secondary'
+              />
+              <TextField
+                variant='outlined'
+                label='What is name of the event?'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                color='secondary'
+              />
+              <TextField
+                variant='outlined'
+                label='What is purpose of the event?'
+                multiline
+                value={purpose}
+                onChange={(e) => setPurpose(e.target.value)}
+                color='secondary'
+              />
+              <TextField
+                variant='outlined'
+                label='How many is intended size?'
+                value={size}
+                type='number'
+                onChange={(e) => {
+                  setSize(Number(e.target.value))
+                }}
+                color='secondary'
+              />
+              <TextField
+                variant='outlined'
+                label='Give us your phone number to contact back'
+                value={phone}
+                onChange={(e) => setPhone(Number(e.target.value))}
+                type='number'
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>+998</InputAdornment>
+                  ),
+                }}
+                color='secondary'
+              />
+
+              <Button
+                sx={{ bgcolor: 'secondary.main' }}
+                onClick={() => handleSubmit()}
+              >
+                Submit
+              </Button>
+            </Stack>
+            {(device === 'xs' || device === 'xs') && (
+              <CancelIcon
+                sx={{
+                  color: '#e3242b',
+                  position: 'absolute',
+                  top: '1rem',
+                  left: '1rem',
+                  fontSize: '2.8rem',
+                }}
+              />
+            )}
+          </Stack>
+          <Snackbar
+            open={error ? true : false}
+            autoHideDuration={6000}
+            onClose={() => setError(null)}
+          >
+            <Alert
+              onClose={() => setError(null)}
+              severity='error'
+              sx={{
+                width: '100%',
+              }}
+            >
+              {error}
+            </Alert>
+          </Snackbar>
+        </>
+      </Modal>
+      <Snackbar
+        open={success}
+        autoHideDuration={6000}
+        onClose={() => setSuccess(null)}
       >
-        <Stack direction='column' spacing={3}>
-          <TextField variant='outlined' label='What is your name?' error />
-          <TextField variant='outlined' label='What is name of the event?' />
-          <TextField variant='outlined' label='What is purpose of the event?' />
-          <TextField variant='outlined' label='How many is intended size?' />
-          <TextField
-            variant='outlined'
-            label='Give us your phone number to contact back'
-            InputProps={{
-              inputMode: 'numeric',
-              pattern: '[0-9]*',
-              startAdornment: (
-                <InputAdornment position='start'>+998</InputAdornment>
-              ),
-            }}
-          />
-          <Button sx={{ bgcolor: 'secondary.main' }}>Submit</Button>
-        </Stack>
-        {(device === 'xs' || device === 'xs') && (
-          <CancelIcon
-            sx={{
-              color: '#e3242b',
-              position: 'absolute',
-              top: '1rem',
-              left: '1rem',
-              fontSize: '2.8rem',
-            }}
-          />
-        )}
-      </Stack>
-    </Modal>
+        <Alert
+          onClose={() => setSuccess(null)}
+          severity='success'
+          sx={{
+            width: '100%',
+          }}
+        >
+          Your suggestion is sent. Thank you for your cooperation.
+        </Alert>
+      </Snackbar>
+    </>
   )
 }
 

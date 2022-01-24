@@ -93,7 +93,7 @@ const Modal = ({ openQA, theme }) => {
             </Typography>
           </Box>
           <Stack
-            sx={{ backgroundColor: 'info.light', position: 'relative' }}
+            sx={{ backgroundColor: 'light.main', position: 'relative' }}
             minHeight='70vh'
             direction='column'
           >
@@ -101,7 +101,7 @@ const Modal = ({ openQA, theme }) => {
               onClick={() => setOpenForm(!openForm)}
               sx={{ justifyContent: 'flex-start' }}
             >
-              <Typography color='info.contrastText'>
+              <Typography color='light.contrastText'>
                 Do you have Suggestion or Objection?
               </Typography>
             </Button>
@@ -115,7 +115,7 @@ const Modal = ({ openQA, theme }) => {
                 <FormControl
                   fullWidth
                   color='secondary'
-                  sx={{ backgroundColor: 'info.light' }}
+                  sx={{ backgroundColor: 'light.main' }}
                 >
                   <InputLabel id='demo-simple-select-label'>
                     You have
@@ -128,7 +128,7 @@ const Modal = ({ openQA, theme }) => {
                     onChange={(e) => {
                       setType(e.target.value)
                     }}
-                    sx={{ backgroundColor: 'info.light' }}
+                    sx={{ backgroundColor: 'light.main' }}
                   >
                     <MenuItem className='blah' value={'suggestion'}>
                       Suggestion

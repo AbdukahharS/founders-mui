@@ -22,7 +22,7 @@ const style = {
   left: '0',
   width: '100vw',
   height: '100vh',
-  bgcolor: 'info.light',
+  bgcolor: 'light.main',
   color: 'primary.contrastText',
   p: 4,
 }

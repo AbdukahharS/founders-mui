@@ -72,7 +72,12 @@ const TeacherBox = ({ teacher, setIsHover, theme, i, role }) => {
                   }
             }
           >
-            <Typography variant='h5' className='desc' textAlign='center'>
+            <Typography
+              variant='h5'
+              className='desc'
+              color='light.contrastText'
+              textAlign='center'
+            >
               {teacher.description}
             </Typography>
           </Stack>

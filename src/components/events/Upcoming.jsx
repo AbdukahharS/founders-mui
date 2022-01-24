@@ -148,8 +148,6 @@ const Upcoming = ({ device }) => {
               onClose={() => setSuccess(false)}
               sx={{
                 width: '100%',
-                bgcolor: 'secondary.main',
-                color: 'secondary.contrastText',
               }}
             >
               Your informations are sent!

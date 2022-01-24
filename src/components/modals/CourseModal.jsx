@@ -24,7 +24,7 @@ const mStyle = {
   left: '0',
   width: '100vw',
   height: '100vh',
-  bgcolor: 'info.light',
+  bgcolor: 'light.main',
   color: 'primary.contrastText',
   overflowY: 'auto',
 }
@@ -34,7 +34,7 @@ const notMStyle = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  bgcolor: 'info.light',
+  bgcolor: 'light.main',
   color: 'primary.contrastText',
   width: '90vw',
   maxWidth: '1080px',

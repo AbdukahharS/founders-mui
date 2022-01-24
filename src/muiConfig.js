@@ -28,7 +28,8 @@ const darkTheme = createTheme({
       main: '#f4d40d',
     },
     light: {
-      main: '#191919',
+      main: '#474747',
+      contrastText: '#fff',
     },
   },
   typography: {

@@ -50,7 +50,7 @@ const Admin = ({ setToken }) => {
   return (
     <main>
       {isValid ? (
-        <Box bgcolor='info.light' minHeight='100vh'>
+        <Box bgcolor='light.main' minHeight='100vh'>
           <Box py={1} sx={{ bgcolor: 'primary.main' }}>
             <Container>
               <Stack direction='row' alignItems='center' spacing={1}>
