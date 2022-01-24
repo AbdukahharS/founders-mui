@@ -1,19 +1,24 @@
+// React
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+// MUI
 import { Box, Container, Stack, Typography, Button } from '@mui/material'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import logo from './../images/logo.png'
 import logoDark from './../images/logo-dark.png'
 import { lightTheme, darkTheme } from '../muiConfig'
 import Recent from '../components/events/Recent'
 import Upcoming from '../components/events/Upcoming'
 
-const Events = ({ theme, setTheme }) => {
-  const [path, setPath] = useState('recent')
+const Events = ({ theme, setTheme, device }) => {
+  const [path, setPath] = useState(localStorage.getItem('path') || 'recent')
   const clickHandler = () => {
     setTheme(theme === lightTheme ? darkTheme : lightTheme)
   }
+  useEffect(() => {
+    localStorage.setItem('path', path)
+  }, [path])
   return (
     <Stack
       direction='column'
@@ -38,7 +43,9 @@ const Events = ({ theme, setTheme }) => {
                     alt='Founders Logo'
                   />
                 </Link>
-                <Typography variant='h2'>Sunday Events</Typography>
+                <Typography fontSize={device !== 'xs' ? '2rem' : '1.4rem'}>
+                  Sunday Events
+                </Typography>
               </Stack>
               <Button onClick={() => clickHandler()}>
                 {theme === lightTheme ? (
@@ -89,7 +96,13 @@ const Events = ({ theme, setTheme }) => {
           Upcoming
         </Button>
       </Stack>
-      <Box>{path === 'recent' ? <Recent /> : <Upcoming />}</Box>
+      <Box>
+        {path === 'recent' ? (
+          <Recent device={device} />
+        ) : (
+          <Upcoming device={device} />
+        )}
+      </Box>
     </Stack>
   )
 }
