@@ -30,7 +30,7 @@ const FAQs = ({ theme, setTheme, device }) => {
       alignItems='stretch'
       minHeight='100vh'
       justifyContent='stretch'
-      bgcolor='info.light'
+      bgcolor='light.main'
     >
       <Box
         sx={

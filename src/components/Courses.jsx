@@ -13,7 +13,7 @@ const Courses = ({ setCurrentCourse, setOpenModal, device, language }) => {
   }
 
   return (
-    <Box id='courses' bgcolor='info.light' color='info.contrastText' pb={8}>
+    <Box id='courses' bgcolor={'light.main'} color='light.contrastText' pb={8}>
       <Container>
         <Typography py={4} fontSize='3rem' color='secondary' fontWeight={700}>
           {language.courses.heading}

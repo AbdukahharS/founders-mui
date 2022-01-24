@@ -10,8 +10,8 @@ const Contacts = ({ language }) => {
   return (
     <Box
       id='contacts'
-      bgcolor='info.light'
-      color='info.contrastText'
+      bgcolor='light.main'
+      color='light.contrastText'
       pt={2}
       pb={10}
     >

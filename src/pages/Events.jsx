@@ -25,7 +25,7 @@ const Events = ({ theme, setTheme, device }) => {
       alignItems='stretch'
       minHeight='100vh'
       justifyContent='stretch'
-      bgcolor='info.light'
+      bgcolor='light.main'
     >
       <Box bgcolor='primary.main'>
         <Box color='primary.contrastText' py='0.6rem'>

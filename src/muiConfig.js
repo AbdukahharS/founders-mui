@@ -3,27 +3,14 @@ import { createTheme } from '@mui/material/styles'
 const lightTheme = createTheme({
   palette: {
     mode: 'light',
-    // background: 'linear-gradient(#f4d40d, #feac14)',
+    background: { default: '#fff' },
     primary: {
       main: '#f4d40d',
-      //   contrastText: '#191919',
     },
     secondary: {
       main: '#191919',
-      //   contrastText: '#fff',
     },
-    light: {
-      main: '#fff',
-    },
-    info: {
-      main: '#fff',
-    },
-    error: {
-      main: '#fff',
-    },
-    success: {
-      main: '#f4d40d88',
-    },
+    light: { main: '#fff' },
   },
   typography: {
     fontFamily: `"Josefin Slab", "Roboto Slab", "Helvetica", "Arial", sans-serif`,
@@ -33,26 +20,15 @@ const lightTheme = createTheme({
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
-    // background: '#191919',
+    background: { default: '#191919' },
     primary: {
       main: '#191919',
-      //   contrastText: '#fff',
     },
     secondary: {
       main: '#f4d40d',
-      //   contrastText: '#191919',
     },
     light: {
-      main: '#fff',
-    },
-    info: {
       main: '#191919',
-    },
-    error: {
-      main: '#f4d40d',
-    },
-    success: {
-      main: '#19191988',
     },
   },
   typography: {

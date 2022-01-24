@@ -26,7 +26,7 @@ const CourseCard = ({
         <Box
           onClick={() => openModal()}
           sx={{
-            bgcolor: 'info.main',
+            bgcolor: 'light.main',
             color: 'primary.contrastText',
             borderRadius: '0.8rem',
             cursor: 'pointer',
@@ -63,7 +63,7 @@ const CourseCard = ({
             <Stack
               sx={{
                 bgcolor: 'secondary.main',
-                color: 'info.main',
+                color: 'light.main',
                 width: 'fit-content',
                 p: '0 0.8rem',
                 my: '1rem',

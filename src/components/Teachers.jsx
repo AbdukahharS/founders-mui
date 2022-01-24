@@ -30,8 +30,8 @@ const Teachers = ({ theme, language }) => {
   return (
     <Box
       id='instructors'
-      bgcolor='info.light'
-      color='info.contrastText'
+      bgcolor='light.main'
+      color='light.contrastText'
       pb={8}
       position='relative'
     >

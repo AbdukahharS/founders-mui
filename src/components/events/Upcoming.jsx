@@ -18,11 +18,13 @@ import {
   Snackbar,
 } from '@mui/material'
 import RegForEvent from '../admin/forms/RegForEvent'
+import EventOffer from '../admin/forms/EventOffer'
 
 const Upcoming = ({ device }) => {
   const [upcomings, setUpcomings] = useState([])
   const [load, setLoad] = useState(true)
   const [modal, setModal] = useState(false)
+  const [offerModal, setOfferModal] = useState(false)
   const [id, setId] = useState('')
   const [success, setSuccess] = useState(false)
   const [regs, setRegs] = useState(
@@ -114,6 +116,7 @@ const Upcoming = ({ device }) => {
               <Typography>Submit your own...</Typography>
             </Stack>
             <Button
+              onClick={() => setOfferModal(true)}
               sx={{
                 bgcolor: 'secondary.main',
                 color: 'secondary.contrastText',
@@ -130,6 +133,11 @@ const Upcoming = ({ device }) => {
             setSuccess={setSuccess}
             regs={regs}
             setRegs={setRegs}
+          />
+          <EventOffer
+            modal={offerModal}
+            setModal={setOfferModal}
+            device={device}
           />
           <Snackbar
             open={success}

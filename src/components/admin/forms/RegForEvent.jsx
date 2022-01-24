@@ -6,7 +6,7 @@ const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
-  bgcolor: 'info.light',
+  bgcolor: 'light.main',
   transform: 'translate(-50%, -50%)',
   p: 4,
   justifyContent: 'space-evenly',

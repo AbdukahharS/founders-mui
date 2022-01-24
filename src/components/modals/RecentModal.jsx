@@ -8,7 +8,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  backgroundColor: 'info.light',
+  backgroundColor: 'light.main',
   p: 4,
   borderRadius: '1rem',
   boxShadow: '1px 1px 4px rgba(0,0,0,0.6)',
