@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate, Route, Routes } from 'react-router-dom'
 import {
   Box,
@@ -20,32 +20,35 @@ const Admin = ({ setToken }) => {
   const navigate = useNavigate()
   const [isValid, setIsValid] = useState(false)
 
-  // useEffect(() => {
-
-  window.onload = async () => {
-    const res = await fetch(
-      'https://founders-backend.shakhzodbekkakh.repl.co/welcome',
-      {
-        method: 'POST',
-        headers: {
-          'x-access-token': localStorage.getItem('token'),
-          'Access-Control-Allow-Origin': 'no-cors',
-        },
+  useEffect(() => {
+    const checkToken = async () => {
+      const res = await fetch(
+        'https://founders-backend.shakhzodbekkakh.repl.co/welcome',
+        {
+          method: 'POST',
+          headers: {
+            'x-access-token': localStorage.getItem('token'),
+            'Access-Control-Allow-Origin': 'no-cors',
+          },
+        }
+      )
+      try {
+        const data = await res.json()
+        if (data.message !== 'valid') {
+          setToken(null)
+          navigate('/login')
+        } else {
+          setIsValid(true)
+          navigate('/admin/sundayevents')
+        }
+      } catch (err) {
+        console.error(err)
       }
-    )
-    try {
-      const data = await res.json()
-      if (data.message !== 'valid') {
-        setToken(null)
-        navigate('/login')
-      } else {
-        setIsValid(true)
-        navigate('/admin/sundayevents')
-      }
-    } catch (err) {
-      console.error(err)
     }
-  }
+    if (!isValid) {
+      checkToken()
+    }
+  }, [isValid, navigate, setToken])
 
   return (
     <main>

@@ -51,19 +51,19 @@ const Upcoming = ({ device }) => {
   }, [regs])
   return (
     <Container>
-      {load ? (
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-          }}
-        >
-          <CircularProgress size='5rem' />
-        </Box>
-      ) : (
-        <Stack pt={6} spacing={8}>
+      <Stack pt={6} spacing={8}>
+        {load ? (
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+            }}
+          >
+            <CircularProgress size='5rem' />
+          </Box>
+        ) : (
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 250 }} aria-label='simple table'>
               <TableHead>
@@ -101,60 +101,60 @@ const Upcoming = ({ device }) => {
               </TableBody>
             </Table>
           </TableContainer>
-          <Stack
-            direction='row'
-            bgcolor='primary.main'
-            color='primary.contrastText'
-            p={device !== 'xs' ? 4 : 2}
-            justifyContent='space-between'
-            alignItems='center'
-          >
-            <Stack direction='column'>
-              <Typography fontSize={device !== 'xs' ? '2rem' : '1.4rem'}>
-                Panning an event?
-              </Typography>
-              <Typography>Submit your own...</Typography>
-            </Stack>
-            <Button
-              onClick={() => setOfferModal(true)}
-              sx={{
-                bgcolor: 'secondary.main',
-                color: 'secondary.contrastText',
-              }}
-            >
-              Submit an event
-            </Button>
+        )}
+        <Stack
+          direction='row'
+          bgcolor='primary.main'
+          color='primary.contrastText'
+          p={device !== 'xs' ? 4 : 2}
+          justifyContent='space-between'
+          alignItems='center'
+        >
+          <Stack direction='column'>
+            <Typography fontSize={device !== 'xs' ? '2rem' : '1.4rem'}>
+              Panning an event?
+            </Typography>
+            <Typography>Submit your own...</Typography>
           </Stack>
-          <RegForEvent
-            modal={modal}
-            setModal={setModal}
-            id={id}
-            d={device}
-            setSuccess={setSuccess}
-            regs={regs}
-            setRegs={setRegs}
-          />
-          <EventOffer
-            modal={offerModal}
-            setModal={setOfferModal}
-            device={device}
-          />
-          <Snackbar
-            open={success}
-            onClick={() => setSuccess(false)}
-            autoHideDuration={6000}
+          <Button
+            onClick={() => setOfferModal(true)}
+            sx={{
+              bgcolor: 'secondary.main',
+              color: 'secondary.contrastText',
+            }}
           >
-            <Alert
-              onClose={() => setSuccess(false)}
-              sx={{
-                width: '100%',
-              }}
-            >
-              Your informations are sent!
-            </Alert>
-          </Snackbar>
+            Submit an event
+          </Button>
         </Stack>
-      )}
+        <RegForEvent
+          modal={modal}
+          setModal={setModal}
+          id={id}
+          d={device}
+          setSuccess={setSuccess}
+          regs={regs}
+          setRegs={setRegs}
+        />
+        <EventOffer
+          modal={offerModal}
+          setModal={setOfferModal}
+          device={device}
+        />
+        <Snackbar
+          open={success}
+          onClick={() => setSuccess(false)}
+          autoHideDuration={6000}
+        >
+          <Alert
+            onClose={() => setSuccess(false)}
+            sx={{
+              width: '100%',
+            }}
+          >
+            Your informations are sent!
+          </Alert>
+        </Snackbar>
+      </Stack>
     </Container>
   )
 }

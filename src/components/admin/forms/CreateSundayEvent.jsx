@@ -4,6 +4,7 @@ import { styled } from '@mui/material/styles'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DatePicker from '@mui/lab/DatePicker'
+import TimePicker from '@mui/lab/TimePicker'
 
 const style = {
   position: 'absolute',
@@ -22,10 +23,10 @@ const Input = styled('input')({
 })
 
 const CreateSundayEvent = ({ modal, setModal }) => {
-  // const d = new Date()
   const [date, setDate] = useState(new Date())
-  // console.log(date)
+  const [time, setTime] = useState(new Date())
 
+  // console.log(new )
   return (
     <Modal open={modal} onClose={() => setModal(false)}>
       <Box>
@@ -35,12 +36,15 @@ const CreateSundayEvent = ({ modal, setModal }) => {
           encType='multipart/form-data'
         >
           <Stack sx={style} spacing={2}>
-            <Typography>Add a new Sunday Event</Typography>
+            <Typography color='secondary.main' fontSize='2rem'>
+              Add a new Sunday Event
+            </Typography>
             <TextField
               label='Name of event'
               variant='outlined'
               name='name'
               required
+              color='secondary'
             />
             <TextField
               label='Description of event'
@@ -49,12 +53,14 @@ const CreateSundayEvent = ({ modal, setModal }) => {
               required
               multiline
               maxRows={8}
+              color='secondary'
             />
             <TextField
               label='Intended size of event'
               variant='outlined'
               name='size'
               required
+              color='secondary'
             />
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
@@ -63,18 +69,33 @@ const CreateSundayEvent = ({ modal, setModal }) => {
                 onChange={(newValue) => {
                   setDate(newValue)
                 }}
-                renderInput={(params) => <TextField {...params} />}
+                renderInput={(params) => (
+                  <TextField {...params} color='secondary' />
+                )}
+              />
+              <TimePicker
+                value={time}
+                onChange={(newValue) => {
+                  setTime(newValue)
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} color='secondary' />
+                )}
               />
             </LocalizationProvider>
             <label htmlFor='contained-button-file'>
               <Input
-                // accept='image/*'
+                accept='image/*'
                 id='contained-button-file'
                 name='image'
                 type='file'
                 required
               />
-              <Button variant='raised' component='span'>
+              <Button
+                variant='raised'
+                component='span'
+                sx={{ color: 'secondary.main' }}
+              >
                 Upload Image
               </Button>
             </label>
@@ -101,6 +122,17 @@ const CreateSundayEvent = ({ modal, setModal }) => {
                 '-' +
                 (date.getDate() > 9 ? date.getDate() : '0' + date.getDate())
               }
+              readOnly
+            />
+            <input
+              type='time'
+              style={{ display: 'none' }}
+              name='time'
+              value={`${time.getHours()}:${
+                time.getMinutes() < 10
+                  ? '0' + time.getMinutes()
+                  : time.getMinutes()
+              }`}
               readOnly
             />
           </Stack>

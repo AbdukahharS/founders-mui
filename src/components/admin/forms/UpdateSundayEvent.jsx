@@ -12,6 +12,7 @@ import { styled } from '@mui/material/styles'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DatePicker from '@mui/lab/DatePicker'
+import TimePicker from '@mui/lab/TimePicker'
 
 const style = {
   position: 'absolute',
@@ -36,6 +37,7 @@ const UpdateSundayEvent = ({ modal, setModal, id, setId }) => {
   const [date, setDate] = useState(new Date())
   const [image, setImage] = useState('')
   const [isDone, setIsDone] = useState('')
+  const [time, setTime] = useState(new Date())
   const [load, setLoad] = useState(true)
 
   useEffect(() => {
@@ -56,6 +58,13 @@ const UpdateSundayEvent = ({ modal, setModal, id, setId }) => {
           setDate(new Date(data.date))
           setImage(data.banner)
           setIsDone(data.isDone)
+          if (data.time) {
+            const hour = data.time.split(':')[0]
+            const min = data.time.split(':')[1]
+            const d = new Date()
+            d.setHours(hour, min)
+            setTime(d)
+          }
           setLoad(false)
         })
         .catch((err) => console.error(err))
@@ -79,8 +88,15 @@ const UpdateSundayEvent = ({ modal, setModal, id, setId }) => {
               }}
             />
           ) : (
-            <Stack sx={style} spacing={2}>
-              <Typography>Edit Sunday Event #{id}</Typography>
+            <Stack
+              sx={style}
+              spacing={2}
+              justifyContent='space-between'
+              align='flex-start'
+            >
+              <Typography color='secondary.main'>
+                Edit Sunday Event #{id}
+              </Typography>
               <TextField
                 label='Name of event'
                 variant='outlined'
@@ -88,6 +104,7 @@ const UpdateSundayEvent = ({ modal, setModal, id, setId }) => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
+                color='secondary'
               />
               <TextField
                 label='Description of event'
@@ -96,6 +113,7 @@ const UpdateSundayEvent = ({ modal, setModal, id, setId }) => {
                 value={desc}
                 onChange={(e) => setDesc(e.target.value)}
                 required
+                color='secondary'
               />
               <TextField
                 label='Intended size of event'
@@ -104,6 +122,7 @@ const UpdateSundayEvent = ({ modal, setModal, id, setId }) => {
                 value={size}
                 onChange={(e) => setSize(e.target.value)}
                 required
+                color='secondary'
               />
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
@@ -112,14 +131,31 @@ const UpdateSundayEvent = ({ modal, setModal, id, setId }) => {
                   onChange={(newValue) => {
                     setDate(newValue)
                   }}
-                  renderInput={(params) => <TextField {...params} />}
+                  renderInput={(params) => (
+                    <TextField {...params} color='secondary' />
+                  )}
+                />
+                <TimePicker
+                  value={time}
+                  onChange={(newValue) => {
+                    setTime(newValue)
+                  }}
+                  renderInput={(params) => (
+                    <TextField {...params} color='secondary' />
+                  )}
                 />
               </LocalizationProvider>
-              <img
-                src={image}
-                alt='Banner of the event'
-                style={{ width: '100%' }}
-              />
+              <Box>
+                <img
+                  src={image}
+                  alt='Banner of the event'
+                  style={{
+                    maxHeight: '20rem',
+                    margin: 'auto',
+                    display: 'block',
+                  }}
+                />
+              </Box>
               <label htmlFor='contained-button-file'>
                 <Input
                   accept='image/*'
@@ -127,7 +163,11 @@ const UpdateSundayEvent = ({ modal, setModal, id, setId }) => {
                   name='image'
                   type='file'
                 />
-                <Button variant='raised' component='span'>
+                <Button
+                  variant='raised'
+                  component='span'
+                  sx={{ color: 'secondary.main' }}
+                >
                   Upload Image
                 </Button>
               </label>
@@ -153,6 +193,25 @@ const UpdateSundayEvent = ({ modal, setModal, id, setId }) => {
                     : '0' + (date.getMonth() + 1)) +
                   '-' +
                   (date.getDate() > 9 ? date.getDate() : '0' + date.getDate())
+                }
+                readOnly
+              />
+              <input
+                type='time'
+                style={{ display: 'none' }}
+                name='time'
+                value={
+                  typeof time === 'object'
+                    ? `${
+                        time.getHours() < 10
+                          ? '0' + time.getHours()
+                          : time.getHours()
+                      }:${
+                        time.getMinutes() < 10
+                          ? '0' + time.getMinutes()
+                          : time.getMinutes()
+                      }`
+                    : time
                 }
                 readOnly
               />

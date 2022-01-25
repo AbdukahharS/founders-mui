@@ -25,7 +25,7 @@ const EventOffer = ({ modal, setModal, device }) => {
   const [fullname, setFullname] = useState('')
   const [name, setName] = useState('')
   const [purpose, setPurpose] = useState('')
-  const [size, setSize] = useState(1)
+  const [size, setSize] = useState(5)
   const [phone, setPhone] = useState(1111111)
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(false)

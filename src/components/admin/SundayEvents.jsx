@@ -82,6 +82,11 @@ const SundayEvents = () => {
       type: 'date',
     },
     {
+      field: 'time',
+      headerName: 'Time',
+      type: 'time',
+    },
+    {
       field: 'size',
       headerName: 'Intended Size',
       type: 'date',
