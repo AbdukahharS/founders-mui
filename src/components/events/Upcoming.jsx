@@ -17,8 +17,8 @@ import {
   Alert,
   Snackbar,
 } from '@mui/material'
-import RegForEvent from '../admin/forms/RegForEvent'
-import EventOffer from '../admin/forms/EventOffer'
+import RegForEvent from './forms/RegForEvent'
+import EventOffer from './forms/EventOffer'
 
 const Upcoming = ({ device }) => {
   const [upcomings, setUpcomings] = useState([])

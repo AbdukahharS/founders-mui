@@ -17,29 +17,33 @@ const RegForEvent = ({ modal, setModal, id, d, setSuccess, regs, setRegs }) => {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const handleSubmit = () => {
-    const newReg = {
-      name,
-      phone,
-      id,
+    if (name && phone) {
+      const newReg = {
+        name,
+        phone,
+        id,
+      }
+      fetch('https://founders-backend.shakhzodbekkakh.repl.co/regsforevents', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          'Access-Control-Allow-Origin': 'no-cors',
+        },
+        body: JSON.stringify(newReg),
+      })
+        .then(async (res) => {
+          if (res.ok) {
+            setModal(false)
+            setSuccess(true)
+            setRegs([...regs, id])
+          }
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    } else {
+      alert('All inputs must be filled')
     }
-    fetch('https://founders-backend.shakhzodbekkakh.repl.co/regsforevents', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-        'Access-Control-Allow-Origin': 'no-cors',
-      },
-      body: JSON.stringify(newReg),
-    })
-      .then(async (res) => {
-        if (res.ok) {
-          setModal(false)
-          setSuccess(true)
-          setRegs([...regs, id])
-        }
-      })
-      .catch((err) => {
-        console.error(err)
-      })
   }
   return (
     <Modal open={modal} onClose={() => setModal(false)}>
@@ -54,12 +58,14 @@ const RegForEvent = ({ modal, setModal, id, d, setSuccess, regs, setRegs }) => {
             label='What is your name?'
             value={name}
             onChange={(e) => setName(e.target.value)}
+            color='secondary'
           />
           <TextField
             variant='outlined'
             label='Give us your phone number'
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+            color='secondary'
           />
           <Button onClick={handleSubmit} sx={{ bgcolor: 'secondary.main' }}>
             Submit
