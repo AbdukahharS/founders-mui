@@ -12,12 +12,14 @@ import {
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import VisibilityIcon from '@mui/icons-material/Visibility'
 // Form Modals
 import CreateSundayEvent from './forms/CreateSundayEvent'
 import UpdateSundayEvent from './forms/UpdateSundayEvent'
 import SetIsDone from './forms/SetIsDone'
 // Another Modal
 import Gallery from './Gallery'
+import Banner from './Banner'
 
 function CustomLoadingOverlay() {
   return (
@@ -46,6 +48,7 @@ const SundayEvents = () => {
   const [gallery, setGallery] = useState(null)
   const [rows, setRows] = useState([])
   const [load, setLoad] = useState(true)
+  const [url, setUrl] = useState(null)
 
   useEffect(() => {
     fetch('https://founders-backend.shakhzodbekkakh.repl.co/events', {
@@ -69,7 +72,7 @@ const SundayEvents = () => {
     {
       field: 'name',
       headerName: 'Name',
-      minWidth: 200,
+      minWidth: 160,
     },
     {
       field: 'description',
@@ -88,8 +91,9 @@ const SundayEvents = () => {
     },
     {
       field: 'size',
-      headerName: 'Intended Size',
-      type: 'date',
+      headerName: 'Size',
+      width: 80,
+      type: 'number',
     },
     {
       field: 'isDone',
@@ -119,14 +123,17 @@ const SundayEvents = () => {
     {
       field: 'banner',
       headerName: 'Banner',
-      minWidth: 200,
-      renderCell: (params) => (
-        <img
-          style={{ width: '100%' }}
-          src={params.value}
-          alt='Banner of event'
-        />
-      ),
+      type: 'actions',
+      width: 80,
+      getActions: (params) => [
+        <GridActionsCellItem
+          icon={<VisibilityIcon />}
+          onClick={() => {
+            setUrl(params.row.banner)
+          }}
+          label='See'
+        />,
+      ],
     },
     {
       field: 'actions',
@@ -195,13 +202,20 @@ const SundayEvents = () => {
         id={editID}
         setId={setEditID}
       />
-      <CreateSundayEvent modal={createModal} setModal={setCreateModal} />
+      <CreateSundayEvent
+        modal={createModal}
+        setModal={setCreateModal}
+        rows={rows}
+        setRows={setRows}
+        setTableLoad={setLoad}
+      />
       <SetIsDone modal={isDoneModal} setModal={setIsDoneModal} id={editID} />
       <Gallery
         modal={galleryModal}
         setModal={setGalleryModal}
         gallery={gallery}
       />
+      <Banner url={url} setUrl={setUrl} />
     </Box>
   )
 }

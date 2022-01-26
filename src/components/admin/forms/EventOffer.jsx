@@ -71,7 +71,7 @@ const EventOffer = ({ modal, setModal, device }) => {
             <Stack direction='column' spacing={3}>
               <TextField
                 variant='outlined'
-                label='What is your name?'
+                label='Organizer'
                 value={fullname}
                 onChange={(e) => setFullname(e.target.value)}
                 color='secondary'
@@ -124,6 +124,7 @@ const EventOffer = ({ modal, setModal, device }) => {
             </Stack>
             {(device === 'xs' || device === 'xs') && (
               <CancelIcon
+                onClick={() => setModal(false)}
                 sx={{
                   color: '#e3242b',
                   position: 'absolute',

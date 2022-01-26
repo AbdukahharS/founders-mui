@@ -103,9 +103,7 @@ const CourseModal = ({
                 <Typography fontSize='1.2rem'>
                   {language.courseModal.requirement +
                     ': ' +
-                    currentCourse.requirement +
-                    ' ' +
-                    language.courseModal.month}
+                    currentCourse.requirement}
                 </Typography>
               </Stack>
               <Stack direction='row' alignItems='center' spacing={0.6}>

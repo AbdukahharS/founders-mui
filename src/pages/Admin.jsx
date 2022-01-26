@@ -19,36 +19,43 @@ const localStorage = window.localStorage
 const Admin = ({ setToken }) => {
   const navigate = useNavigate()
   const [isValid, setIsValid] = useState(false)
+  const [path, setPath] = useState(
+    localStorage.getItem('adminpath')
+      ? localStorage.getItem('adminpath')
+      : 'sundayevents'
+  )
 
   useEffect(() => {
-    const checkToken = async () => {
-      const res = await fetch(
-        'https://founders-backend.shakhzodbekkakh.repl.co/welcome',
-        {
-          method: 'POST',
-          headers: {
-            'x-access-token': localStorage.getItem('token'),
-            'Access-Control-Allow-Origin': 'no-cors',
-          },
-        }
-      )
-      try {
-        const data = await res.json()
-        if (data.message !== 'valid') {
-          setToken(null)
-          navigate('/login')
-        } else {
-          setIsValid(true)
-          navigate('/admin/sundayevents')
-        }
-      } catch (err) {
-        console.error(err)
-      }
+    localStorage.setItem('adminpath', path)
+  }, [path])
+
+  useEffect(() => {
+    const checkToken = () => {
+      fetch('https://founders-backend.shakhzodbekkakh.repl.co/welcome', {
+        method: 'POST',
+        headers: {
+          'x-access-token': localStorage.getItem('token'),
+          'Access-Control-Allow-Origin': 'no-cors',
+        },
+      })
+        .then(async (res) => {
+          const data = await res.json()
+          if (data.message !== 'valid') {
+            setToken(null)
+            navigate('/login')
+          } else {
+            setIsValid(true)
+            navigate(`/admin/${path}`)
+          }
+        })
+        .catch((err) => {
+          console.error(err)
+        })
     }
     if (!isValid) {
       checkToken()
     }
-  }, [isValid, navigate, setToken])
+  }, [isValid, navigate, setToken, path])
 
   return (
     <main>
@@ -82,7 +89,13 @@ const Admin = ({ setToken }) => {
                 color: 'primary.contrastText',
               }}
             >
-              <ListItem button onClick={() => navigate('/admin/sundayevents')}>
+              <ListItem
+                button
+                onClick={() => {
+                  setPath('sundayevents')
+                  navigate('/admin/sundayevents')
+                }}
+              >
                 <ListItemText primary='Sunday Events' />
               </ListItem>
               <Divider />
@@ -93,14 +106,20 @@ const Admin = ({ setToken }) => {
                 <ListItemText primary='Offers for Sunday events' />
               </ListItem>
               <Divider light />
-              <ListItem button onClick={() => navigate('/admin/regsforevents')}>
+              <ListItem
+                button
+                onClick={() => {
+                  setPath('regsforevents')
+                  navigate('/admin/regsforevents')
+                }}
+              >
                 <ListItemText primary='Registrations for Sunday events' />
               </ListItem>
             </List>
             <Box width='100%'>
               <Routes>
                 <Route path='sundayevents' element={<SundayEvents />} />
-                <Route path='regsforevent' element={<RegsForEvents />} />
+                <Route path='regsforevents' element={<RegsForEvents />} />
               </Routes>
             </Box>
           </Stack>
