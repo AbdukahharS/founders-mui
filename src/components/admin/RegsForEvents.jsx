@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, LinearProgress } from '@mui/material'
+import { Box, Button, LinearProgress, Stack } from '@mui/material'
 import {
   DataGrid,
   GridOverlay,
@@ -27,8 +27,10 @@ function CustomToolbar() {
 }
 
 const RegsForEvents = () => {
+  const [data, setData] = useState([])
+  const [event, setEvent] = useState('')
+  const [events, setEvents] = useState([])
   const [rows, setRows] = useState([])
-  const [load, setLoad] = useState(true)
 
   const columns = [
     { field: 'id', headerName: 'ID', minWidth: 110 },
@@ -36,30 +38,12 @@ const RegsForEvents = () => {
       field: 'name',
       headerName: 'Name',
       minWidth: 150,
+      flex: 1,
     },
     {
       field: 'phone',
       headerName: 'Phone',
-    },
-    {
-      field: 'date',
-      headerName: 'Date',
-      type: 'date',
-    },
-    {
-      field: 'time',
-      headerName: 'Time',
-      type: 'time',
-    },
-    {
-      field: 'size',
-      headerName: 'Intended Size',
-      type: 'date',
-    },
-    {
-      field: 'isDone',
-      headerName: 'Is Done',
-      type: 'boolean',
+      minWidth: 150,
     },
   ]
 
@@ -72,22 +56,52 @@ const RegsForEvents = () => {
       },
     })
       .then(async (res) => {
-        const data = await res.json()
-        console.log(data)
-        setRows(data)
-        setLoad(false)
+        if (res.ok) {
+          const newData = await res.json()
+          setData(newData)
+          const newEvents = await newData.map((event) => {
+            return event.name
+          })
+          setEvents(newEvents)
+          const newEvent = await newEvents[0]
+          setEvent(newEvent)
+          const newRows = await newData[0].registrations
+          setRows(newRows)
+        }
       })
       .catch((err) => console.error(err))
   }, [])
+  const handleClick = (eventName) => {
+    const newRows = data.filter((ev) => ev.name === eventName)
+    setRows(newRows[0].registrations)
+    setEvent(eventName)
+  }
   return (
     <Box style={{ height: 600, width: '100%' }}>
+      <Stack direction='row' spacing={2} mb={2}>
+        {events.length &&
+          events.map((e, i) => (
+            <Button
+              key={i}
+              disabled={e === event}
+              sx={
+                e === event
+                  ? { bgcolor: '#333', color: '#aaa', cursor: 'default' }
+                  : { bgcolor: 'secondary.main' }
+              }
+              onClick={() => handleClick(e)}
+            >
+              {e}
+            </Button>
+          ))}
+      </Stack>
       <DataGrid
         columns={columns}
         components={{
           LoadingOverlay: CustomLoadingOverlay,
           Toolbar: CustomToolbar,
         }}
-        loading={load}
+        loading={rows ? false : true}
         rows={rows}
         rowHeight={120}
       />

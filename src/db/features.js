@@ -7,6 +7,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import EventIcon from '@mui/icons-material/Event'
 import SchoolIcon from '@mui/icons-material/School'
 import OfflineBoltIcon from '@mui/icons-material/OfflineBolt'
+import CastForEducationIcon from '@mui/icons-material/CastForEducation'
 
 const features = [
   {
@@ -81,6 +82,15 @@ const features = [
       ru: 'У нас есть собственная библиотека для всех.',
     },
     link: { name: 'Go to library', path: '/library' },
+  },
+  {
+    icon: CastForEducationIcon,
+    name: { eng: 'More lessons', ru: 'Больше уроков', uz: "Ko'proq darslar" },
+    description: {
+      eng: 'Unlike others, our courses include 20 lessons per month.',
+      ru: 'В отличие от других, наши курсы включают 20 уроков в месяц.',
+      uz: "Boshqalardan farqli o'laroq, bizning kurslarimiz oyiga 20 ta darsni o'z ichiga oladi.",
+    },
   },
 ]
 
