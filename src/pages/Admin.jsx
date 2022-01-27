@@ -14,6 +14,7 @@ import {
 import SundayEvents from '../components/admin/SundayEvents'
 import RegsForEvents from '../components/admin/RegsForEvents'
 import Offers from '../components/admin/Offers'
+import EventSuggestions from '../components/admin/EventSuggestions'
 
 const localStorage = window.localStorage
 
@@ -110,7 +111,13 @@ const Admin = ({ setToken }) => {
               >
                 <ListItemText primary='Suggestions&Objections' />
               </ListItem>
-              <ListItem button>
+              <ListItem
+                button
+                onClick={() => {
+                  setPath('eventsuggestions')
+                  navigate('/admin/eventsuggestions')
+                }}
+              >
                 <ListItemText primary='Offers for Sunday events' />
               </ListItem>
               <Divider light />
@@ -129,6 +136,7 @@ const Admin = ({ setToken }) => {
                 <Route path='sundayevents' element={<SundayEvents />} />
                 <Route path='regsforevents' element={<RegsForEvents />} />
                 <Route path='offers' element={<Offers />} />
+                <Route path='eventsuggestions' element={<EventSuggestions />} />
               </Routes>
             </Box>
           </Stack>

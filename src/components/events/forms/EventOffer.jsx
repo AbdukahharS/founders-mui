@@ -39,7 +39,13 @@ const EventOffer = ({ modal, setModal, device }) => {
             {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ fullname, name, purpose, size, phone }),
+              body: JSON.stringify({
+                fullname,
+                name,
+                purpose,
+                size,
+                phone: `+998 ${phone}`,
+              }),
             }
           )
           if (res.ok) {
