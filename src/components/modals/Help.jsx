@@ -16,6 +16,7 @@ import {
   Stack,
   TextField,
   Typography,
+  InputAdornment,
 } from '@mui/material'
 import CancelIcon from '@mui/icons-material/Cancel'
 
@@ -23,6 +24,7 @@ const Modal = ({ openQA, theme }) => {
   const [num, setNum] = useState(0)
   const [type, setType] = useState('suggestion')
   const [body, setBody] = useState('')
+  const [phone, setPhone] = useState(1111111)
   const [succes, setSucces] = useState(false)
 
   useEffect(() => {
@@ -40,7 +42,7 @@ const Modal = ({ openQA, theme }) => {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ type, body }),
+      body: JSON.stringify({ type, body, phone: `+998 ${phone}` }),
     }
     const data = await fetch(
       'https://founders-backend.shakhzodbekkakh.repl.co/offers',
@@ -136,11 +138,25 @@ const Modal = ({ openQA, theme }) => {
                 id='outlined-basic'
                 label={`Write your ${type}`}
                 variant='outlined'
-                sx={{ mt: 1 }}
+                sx={{ mt: 1.6 }}
                 multiline
                 onChange={(e) => {
                   setBody(e.target.value)
                 }}
+              />
+              <TextField
+                variant='outlined'
+                label='Your phone number'
+                value={phone}
+                sx={{ mt: 1.6 }}
+                onChange={(e) => setPhone(Number(e.target.value))}
+                type='number'
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>+998</InputAdornment>
+                  ),
+                }}
+                color='secondary'
               />
               <Button
                 sx={{
@@ -169,12 +185,27 @@ const Modal = ({ openQA, theme }) => {
                 FAQs
               </Link>
             </Button>
+            <Button
+              sx={{ justifyContent: 'flex-start', color: 'secondary.main' }}
+            >
+              <Link
+                to='https://t.me'
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  textAlign: 'left',
+                  fontSize: '1.2rem',
+                }}
+              >
+                Direct to Administration
+              </Link>
+            </Button>
             <Fade in={num === 0}>
               <img
                 src={require('../../images/svg1.svg').default}
                 alt='Svg for Help'
                 style={{
-                  width: '80%',
+                  width: '50%',
                   position: 'absolute',
                   bottom: '2rem',
                   left: '50%',
@@ -187,7 +218,7 @@ const Modal = ({ openQA, theme }) => {
                 src={require('../../images/svg2.svg').default}
                 alt='Svg for Help'
                 style={{
-                  width: '80%',
+                  width: '50%',
                   position: 'absolute',
                   bottom: '2rem',
                   left: '50%',
@@ -200,7 +231,7 @@ const Modal = ({ openQA, theme }) => {
                 src={require('../../images/svg3.svg').default}
                 alt='Svg for Help'
                 style={{
-                  width: '80%',
+                  width: '50%',
                   position: 'absolute',
                   bottom: '2rem',
                   left: '50%',

@@ -39,7 +39,7 @@ const courses = [
       {
         name: 'IELTS Turbo',
         description: {
-          eng: 'Intensive preparation course for IELTS.',
+          eng: 'Preparation course for 7+',
           ru: 'Это интенсивный курс подготовки к IELTS',
           uz: 'IELTS uchun jadal tayyorlanish kursi.',
         },
@@ -52,7 +52,7 @@ const courses = [
       {
         name: 'IELTS Up',
         description: {
-          eng: 'This course contains 6 levels',
+          eng: 'Preparation course for 6+ in 3 months.',
           ru: 'Этот курс состоит из 6 уровней',
           uz: "Bu kurs 6 bosqichni o'z ichiga oladi.",
         },

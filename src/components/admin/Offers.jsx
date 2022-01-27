@@ -34,6 +34,7 @@ const columns = [
     minWidth: 150,
     flex: 1,
   },
+  { field: 'phone', headerName: 'Phone' },
 ]
 
 const Offers = () => {

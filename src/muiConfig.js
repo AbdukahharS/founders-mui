@@ -13,7 +13,7 @@ const lightTheme = createTheme({
     light: { main: '#fff' },
   },
   typography: {
-    fontFamily: `"Josefin Slab", "Roboto Slab", "Helvetica", "Arial", sans-serif`,
+    fontFamily: `"Josefin Slab", "Raleway", "Roboto Slab", "Helvetica", "Arial", sans-serif`,
   },
 })
 
@@ -33,7 +33,7 @@ const darkTheme = createTheme({
     },
   },
   typography: {
-    fontFamily: `"Josefin Slab", "Roboto Slab", "Helvetica", "Arial", serif`,
+    fontFamily: `"Josefin Slab", "Raleway", "Roboto Slab", "Helvetica", "Arial", serif`,
   },
 })
 

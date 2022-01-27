@@ -17,6 +17,7 @@ import LocalPhone from '@mui/icons-material/LocalPhone'
 import CancelIcon from '@mui/icons-material/Cancel'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
 
 const mStyle = {
   position: 'absolute',
@@ -91,11 +92,17 @@ const CourseModal = ({
               <Stack pb={1} direction='row' alignItems='center' spacing={0.6}>
                 <DateRangeIcon fontSize='large' />
                 <Typography fontSize='1.2rem'>
-                  {language.courseModal.duration +
+                  {language.courseModal.length +
                     ': ' +
-                    currentCourse.duration +
+                    currentCourse.length +
                     ' ' +
                     language.courseModal.month}
+                </Typography>
+              </Stack>
+              <Stack pb={1} direction='row' alignItems='center' spacing={0.6}>
+                <AccessTimeIcon fontSize='large' />
+                <Typography fontSize='1.2rem'>
+                  {currentCourse.duration + ' ' + language.courseModal.duration}
                 </Typography>
               </Stack>
               <Stack pb={1} direction='row' alignItems='center' spacing={0.6}>
@@ -209,11 +216,24 @@ const CourseModal = ({
                       >
                         <DateRangeIcon fontSize='large' />
                         <Typography fontSize='1.2rem'>
-                          {language.courseModal.duration +
+                          {language.courseModal.length +
                             ': ' +
-                            item.duration +
+                            currentCourse.length +
                             ' ' +
                             language.courseModal.month}
+                        </Typography>
+                      </Stack>
+                      <Stack
+                        pb={1}
+                        direction='row'
+                        alignItems='center'
+                        spacing={0.6}
+                      >
+                        <AccessTimeIcon fontSize='large' />
+                        <Typography fontSize='1.2rem'>
+                          {currentCourse.duration +
+                            ' ' +
+                            language.courseModal.duration}
                         </Typography>
                       </Stack>
                       <Stack

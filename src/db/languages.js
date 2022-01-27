@@ -25,7 +25,8 @@ const english = {
     address: ' Milliy Bog metro station, opposite to Oliy Majlis',
   },
   courseModal: {
-    duration: 'Course duration',
+    length: 'Course duration',
+    duration: ' hours per day',
     month: 'months',
     requirement: 'Minimum requirement',
     price: 'Price',
@@ -65,7 +66,8 @@ const uzbek = {
     address: "Milliy Bog' metro bekati, Oliy majlis qarshisida",
   },
   courseModal: {
-    duration: 'Kurs davomiyligi',
+    length: 'Kurs davomiyligi',
+    duration: 'soat kuniga',
     month: 'oy',
     requirement: 'Minimal bosqich',
     price: 'Narx',
@@ -105,7 +107,8 @@ const russian = {
     address: 'Станция Миллий Бог, напротив Олий Мажлис',
   },
   courseModal: {
-    duration: 'Продолжительность курса',
+    length: 'Продолжительность курса',
+    duration: ' часа в день',
     month: 'месяца',
     requirement: 'Минимальное требование',
     price: 'Цена',
