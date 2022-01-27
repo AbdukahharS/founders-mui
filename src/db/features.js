@@ -30,8 +30,8 @@ const features = [
     icon: CreditCardIcon,
     name: { eng: 'Discount Card', ru: 'Дисконтная карта' },
     description: {
-      eng: 'Take from 10% to 50% discounts according to your active membership and successful performance in mock exams.',
-      ru: 'Скидки от 10% до 50% согласно вашему активному членству и удачное исполнение в экзамены',
+      eng: 'Take from 10% to 15% discounts according to your active membership and successful performance in mock exams.',
+      ru: 'Скидки от 10% до 15% согласно вашему активному членству и удачное исполнение в экзамены',
     },
   },
   {
@@ -41,7 +41,7 @@ const features = [
       ru: 'Бесплатные учебные материалы',
     },
     description: {
-      eng: 'You will be provided with 6 copyrighted books.',
+      eng: 'You will be provided with 3 Kids English, 3 General English and 6 IELTS copyrighted books.',
       ru: 'Вам будет предоставлено 6 авторскими книгами',
     },
   },
@@ -49,7 +49,7 @@ const features = [
     icon: OfflineBoltIcon,
     name: { eng: 'Electronic Vocabulary', ru: 'Электронная лексика' },
     description: {
-      eng: 'Use our effective method to have a massive vocabulary source in your fluent speech with perfect, real American pronunciation.',
+      eng: 'Use our effective method to have a massive vocabulary source in your fluent speech with perfect, real British pronunciation.',
     },
   },
   {

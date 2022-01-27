@@ -21,7 +21,6 @@ import CancelIcon from '@mui/icons-material/Cancel'
 
 const Modal = ({ openQA, theme }) => {
   const [num, setNum] = useState(0)
-  const [openForm, setOpenForm] = useState(false)
   const [type, setType] = useState('suggestion')
   const [body, setBody] = useState('')
   const [succes, setSucces] = useState(false)
@@ -33,7 +32,7 @@ const Modal = ({ openQA, theme }) => {
       } else {
         setNum(num + 1)
       }
-    }, 3000)
+    }, 4000)
     return () => clearInterval(interval)
   })
 
@@ -97,89 +96,77 @@ const Modal = ({ openQA, theme }) => {
             minHeight='70vh'
             direction='column'
           >
-            <Button
-              onClick={() => setOpenForm(!openForm)}
-              sx={{ justifyContent: 'flex-start' }}
+            <Typography
+              fontSize='1.6rem'
+              px={2}
+              py={1}
+              color='light.contrastText'
             >
-              <Typography color='light.contrastText'>
-                Do you have Suggestion or Objection?
-              </Typography>
-            </Button>
-            <Collapse in={openForm}>
-              <Stack
-                sx={{
-                  py: 2,
-                  px: 3,
-                }}
+              Do you have ... ?
+            </Typography>
+            <Stack
+              sx={{
+                py: 2,
+                px: 3,
+              }}
+            >
+              <FormControl
+                fullWidth
+                color='secondary'
+                sx={{ backgroundColor: 'light.main' }}
               >
-                <FormControl
-                  fullWidth
-                  color='secondary'
+                <InputLabel id='demo-simple-select-label'>You have</InputLabel>
+                <Select
+                  labelId='demo-simple-select-label'
+                  id='demo-simple-select'
+                  value={type}
+                  label='Information type'
+                  onChange={(e) => {
+                    setType(e.target.value)
+                  }}
                   sx={{ backgroundColor: 'light.main' }}
                 >
-                  <InputLabel id='demo-simple-select-label'>
-                    You have
-                  </InputLabel>
-                  <Select
-                    labelId='demo-simple-select-label'
-                    id='demo-simple-select'
-                    value={type}
-                    label='Information type'
-                    onChange={(e) => {
-                      setType(e.target.value)
-                    }}
-                    sx={{ backgroundColor: 'light.main' }}
-                  >
-                    <MenuItem className='blah' value={'suggestion'}>
-                      Suggestion
-                    </MenuItem>
-                    <MenuItem className='blah' value={'objection'}>
-                      Objection
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-                <TextField
-                  color='secondary'
-                  id='outlined-basic'
-                  label={`Write your ${type}`}
-                  variant='outlined'
-                  sx={{ mt: 1 }}
-                  multiline
-                  onChange={(e) => {
-                    setBody(e.target.value)
-                  }}
-                />
-                <Button
-                  sx={{
-                    backgroundColor: 'secondary.main',
-                    width: 'fit-content',
-                    mx: 'auto',
-                    mt: 1,
-                  }}
-                  onClick={handleClick}
-                >
-                  Submit
-                </Button>
-              </Stack>
-            </Collapse>
+                  <MenuItem value={'suggestion'}>Suggestion</MenuItem>
+                  <MenuItem value={'objection'}>Objection</MenuItem>
+                  <MenuItem value={'question'}>Question</MenuItem>
+                </Select>
+              </FormControl>
+              <TextField
+                color='secondary'
+                id='outlined-basic'
+                label={`Write your ${type}`}
+                variant='outlined'
+                sx={{ mt: 1 }}
+                multiline
+                onChange={(e) => {
+                  setBody(e.target.value)
+                }}
+              />
+              <Button
+                sx={{
+                  backgroundColor: 'secondary.main',
+                  width: 'fit-content',
+                  mx: 'auto',
+                  mt: 1,
+                }}
+                onClick={handleClick}
+              >
+                Submit
+              </Button>
+            </Stack>
             <Button
               sx={{ justifyContent: 'flex-start', color: 'secondary.main' }}
             >
               <Link
                 to='/faqs'
-                style={{ display: 'block', width: '100%', textAlign: 'left' }}
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  textAlign: 'left',
+                  fontSize: '1.2rem',
+                }}
               >
                 FAQs
-              </Link>
-            </Button>
-            <Button
-              sx={{ justifyContent: 'flex-start', color: 'secondary.main' }}
-            >
-              <Link
-                to='/jobs'
-                style={{ display: 'block', width: '100%', textAlign: 'left' }}
-              >
-                Job vacancies
               </Link>
             </Button>
             <Fade in={num === 0}>
@@ -210,7 +197,7 @@ const Modal = ({ openQA, theme }) => {
             </Fade>
             <Fade in={num === 2}>
               <img
-                src={require('../../images/svg2.svg').default}
+                src={require('../../images/svg3.svg').default}
                 alt='Svg for Help'
                 style={{
                   width: '80%',

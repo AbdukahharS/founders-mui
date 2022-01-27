@@ -13,6 +13,7 @@ import {
 } from '@mui/material'
 import SundayEvents from '../components/admin/SundayEvents'
 import RegsForEvents from '../components/admin/RegsForEvents'
+import Offers from '../components/admin/Offers'
 
 const localStorage = window.localStorage
 
@@ -99,7 +100,14 @@ const Admin = ({ setToken }) => {
                 <ListItemText primary='Sunday Events' />
               </ListItem>
               <Divider />
-              <ListItem button divider>
+              <ListItem
+                button
+                divider
+                onClick={() => {
+                  setPath('offers')
+                  navigate('/admin/offers')
+                }}
+              >
                 <ListItemText primary='Suggestions&Objections' />
               </ListItem>
               <ListItem button>
@@ -120,6 +128,7 @@ const Admin = ({ setToken }) => {
               <Routes>
                 <Route path='sundayevents' element={<SundayEvents />} />
                 <Route path='regsforevents' element={<RegsForEvents />} />
+                <Route path='offers' element={<Offers />} />
               </Routes>
             </Box>
           </Stack>
