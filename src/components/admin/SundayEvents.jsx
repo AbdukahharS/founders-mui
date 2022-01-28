@@ -51,7 +51,7 @@ const SundayEvents = () => {
   const [url, setUrl] = useState(null)
 
   useEffect(() => {
-    fetch('https://founders-backend.shakhzodbekkakh.repl.co/events', {
+    fetch('https://founders-backend.shakhzodbekkakh.repl.co/api/events', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -167,7 +167,7 @@ const SundayEvents = () => {
   ]
 
   const deleteHandle = (id) => {
-    fetch(`https://founders-backend.shakhzodbekkakh.repl.co/events/${id}`, {
+    fetch(`https://founders-backend.shakhzodbekkakh.repl.co/api/events/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

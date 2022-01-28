@@ -35,7 +35,7 @@ const EventOffer = ({ modal, setModal, device }) => {
       if (size >= 5) {
         if (phone.toString().length === 7) {
           const res = await fetch(
-            'https://founders-backend.shakhzodbekkakh.repl.co/eventsuggestions',
+            'https://founders-backend.shakhzodbekkakh.repl.co/api/eventsuggestions',
             {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },

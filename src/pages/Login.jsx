@@ -2,7 +2,7 @@ import React from 'react'
 import { GoogleLogin } from 'react-google-login'
 import { useNavigate } from 'react-router-dom'
 
-const Login = ({ token, setToken }) => {
+const Login = ({ setToken }) => {
   const navigate = useNavigate()
   const responseGoogle = async (gRes) => {
     const email = gRes.profileObj.email
@@ -15,7 +15,7 @@ const Login = ({ token, setToken }) => {
     const user = JSON.stringify({ email, id })
 
     const res = await fetch(
-      'https://founders-backend.shakhzodbekkakh.repl.co/login',
+      'https://founders-backend.shakhzodbekkakh.repl.co/api/login',
       {
         method: 'POST',
         headers: {

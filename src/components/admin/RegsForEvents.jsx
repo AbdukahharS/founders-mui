@@ -48,13 +48,16 @@ const RegsForEvents = () => {
   ]
 
   useEffect(() => {
-    fetch('https://founders-backend.shakhzodbekkakh.repl.co/regsforevents', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-access-token': localStorage.getItem('token'),
-      },
-    })
+    fetch(
+      'https://founders-backend.shakhzodbekkakh.repl.co/api/regsforevents',
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': localStorage.getItem('token'),
+        },
+      }
+    )
       .then(async (res) => {
         if (res.ok) {
           const newData = await res.json()

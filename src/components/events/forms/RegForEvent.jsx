@@ -23,14 +23,17 @@ const RegForEvent = ({ modal, setModal, id, d, setSuccess, regs, setRegs }) => {
         phone,
         id,
       }
-      fetch('https://founders-backend.shakhzodbekkakh.repl.co/regsforevents', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-          'Access-Control-Allow-Origin': 'no-cors',
-        },
-        body: JSON.stringify(newReg),
-      })
+      fetch(
+        'https://founders-backend.shakhzodbekkakh.repl.co/api/regsforevents',
+        {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+            'Access-Control-Allow-Origin': 'no-cors',
+          },
+          body: JSON.stringify(newReg),
+        }
+      )
         .then(async (res) => {
           if (res.ok) {
             setModal(false)

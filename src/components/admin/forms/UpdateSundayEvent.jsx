@@ -42,14 +42,17 @@ const UpdateSundayEvent = ({ modal, setModal, id, setId }) => {
 
   useEffect(() => {
     id &&
-      fetch(`https://founders-backend.shakhzodbekkakh.repl.co/events/${id}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-access-token': localStorage.getItem('token'),
-          'Access-Control-Allow-Origin': 'no-cors',
-        },
-      })
+      fetch(
+        `https://founders-backend.shakhzodbekkakh.repl.co/api/events/${id}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': localStorage.getItem('token'),
+            'Access-Control-Allow-Origin': 'no-cors',
+          },
+        }
+      )
         .then(async (res) => {
           const data = await res.json()
           setName(data.name)

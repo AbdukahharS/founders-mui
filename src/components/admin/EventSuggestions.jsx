@@ -36,20 +36,23 @@ const columns = [
   { field: 'name', headerName: 'Name of Event', minWidth: 150 },
   { field: 'purpose', headerName: 'Purposes', flex: 1 },
   { field: 'size', headerName: 'Size' },
-  { field: 'phone', headerName: 'Phone' },
+  { field: 'phone', headerName: 'Phone', minWidth: 130 },
 ]
 
 const EventSuggestions = () => {
   const [offers, setOffers] = useState([])
 
   useEffect(() => {
-    fetch('https://founders-backend.shakhzodbekkakh.repl.co/eventsuggestions', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-access-token': localStorage.getItem('token'),
-      },
-    })
+    fetch(
+      'https://founders-backend.shakhzodbekkakh.repl.co/api/eventsuggestions',
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': localStorage.getItem('token'),
+        },
+      }
+    )
       .then(async (res) => {
         if (res.ok) {
           const newData = await res.json()

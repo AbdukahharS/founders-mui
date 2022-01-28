@@ -37,7 +37,6 @@ const responsive = {
 }
 
 const RecentModal = ({ modal, setModal, event }) => {
-  console.log(event)
   return (
     <Modal
       open={modal}

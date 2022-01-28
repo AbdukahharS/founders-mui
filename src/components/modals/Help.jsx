@@ -45,7 +45,7 @@ const Modal = ({ openQA, theme }) => {
       body: JSON.stringify({ type, body, phone: `+998 ${phone}` }),
     }
     const data = await fetch(
-      'https://founders-backend.shakhzodbekkakh.repl.co/offers',
+      'https://founders-backend.shakhzodbekkakh.repl.co/api/offers',
       requestOptions
     )
     if (data.status === 200) {

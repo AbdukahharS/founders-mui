@@ -74,7 +74,7 @@ const CreateSundayEvent = ({
         newEvent.append('time', timeForm)
         newEvent.append('banner', banner)
         newEvent.append('token', localStorage.getItem('token'))
-        fetch('https://founders-backend.shakhzodbekkakh.repl.co/events', {
+        fetch('https://founders-backend.shakhzodbekkakh.repl.co/api/events', {
           headers: { 'x-access-token': localStorage.getItem('token') },
           method: 'POST',
           body: newEvent,

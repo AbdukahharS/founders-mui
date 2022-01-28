@@ -32,12 +32,15 @@ const Upcoming = ({ device }) => {
   )
 
   useEffect(() => {
-    fetch('https://founders-backend.shakhzodbekkakh.repl.co/events/upcoming', {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json',
-      },
-    })
+    fetch(
+      'https://founders-backend.shakhzodbekkakh.repl.co/api/events/upcoming',
+      {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+        },
+      }
+    )
       .then(async (res) => {
         const data = await res.json()
         setUpcomings(data)

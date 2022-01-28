@@ -43,7 +43,7 @@ const Offers = () => {
   const [offers, setOffers] = useState([])
 
   useEffect(() => {
-    fetch('https://founders-backend.shakhzodbekkakh.repl.co/offers', {
+    fetch('https://founders-backend.shakhzodbekkakh.repl.co/api/offers', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Typography, Box, CircularProgress } from '@mui/material'
+import {
+  Container,
+  Typography,
+  Box,
+  CircularProgress,
+  Stack,
+} from '@mui/material'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import RecentModal from '../modals/RecentModal'
+import { ReactComponent as Empty } from '../../images/empty.svg'
 
 const responsive = {
   superLargeDesktop: {
@@ -27,23 +34,28 @@ const Recent = () => {
   const [recents, setRecents] = useState([])
   const [modal, setModal] = useState(false)
   const [event, setEvent] = useState(null)
+  const [load, setLoad] = useState(true)
   useEffect(() => {
-    fetch('https://founders-backend.shakhzodbekkakh.repl.co/events/recent', {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json',
-        'x-access-token': localStorage.getItem('token'),
-      },
-    })
+    fetch(
+      'https://founders-backend.shakhzodbekkakh.repl.co/api/events/recent',
+      {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+          'x-access-token': localStorage.getItem('token'),
+        },
+      }
+    )
       .then(async (res) => {
         const data = await res.json()
         setRecents(data)
+        setLoad(false)
       })
       .catch((err) => console.error(err))
   }, [])
   return (
     <Container>
-      {recents.length === 0 ? (
+      {load ? (
         <Box
           sx={{
             position: 'absolute',
@@ -54,7 +66,7 @@ const Recent = () => {
         >
           <CircularProgress size='5rem' />
         </Box>
-      ) : (
+      ) : recents.length ? (
         <Box pt={8}>
           <Carousel responsive={responsive}>
             {recents.map((event, i) => (
@@ -102,6 +114,30 @@ const Recent = () => {
             ))}
           </Carousel>
         </Box>
+      ) : (
+        <Stack
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            color: 'secondary.main',
+            direction: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          spacing={4}
+        >
+          <Empty
+            color='inherit'
+            fill='currentColor'
+            width='30vw'
+            height='30vw'
+          />
+          <Typography sx={{ fontSize: '2rem', fontWeight: '700' }}>
+            No Recent Events
+          </Typography>
+        </Stack>
       )}
       <RecentModal modal={modal} setModal={setModal} event={event} />
     </Container>

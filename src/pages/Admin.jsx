@@ -33,7 +33,7 @@ const Admin = ({ setToken }) => {
 
   useEffect(() => {
     const checkToken = () => {
-      fetch('https://founders-backend.shakhzodbekkakh.repl.co/welcome', {
+      fetch('https://founders-backend.shakhzodbekkakh.repl.co/api/welcome', {
         method: 'POST',
         headers: {
           'x-access-token': localStorage.getItem('token'),
@@ -92,6 +92,14 @@ const Admin = ({ setToken }) => {
               }}
             >
               <ListItem
+                sx={
+                  path === 'sundayevents'
+                    ? {
+                        bgcolor: 'secondary.light',
+                        color: 'secondary.contrastText',
+                      }
+                    : { bgcolor: 'primary.main' }
+                }
                 button
                 onClick={() => {
                   setPath('sundayevents')
@@ -102,6 +110,14 @@ const Admin = ({ setToken }) => {
               </ListItem>
               <Divider />
               <ListItem
+                sx={
+                  path === 'offers'
+                    ? {
+                        bgcolor: 'secondary.light',
+                        color: 'secondary.contrastText',
+                      }
+                    : { bgcolor: 'primary.main' }
+                }
                 button
                 divider
                 onClick={() => {
@@ -112,6 +128,14 @@ const Admin = ({ setToken }) => {
                 <ListItemText primary='Suggestions&Objections' />
               </ListItem>
               <ListItem
+                sx={
+                  path === 'eventsuggestions'
+                    ? {
+                        bgcolor: 'secondary.light',
+                        color: 'secondary.contrastText',
+                      }
+                    : { bgcolor: 'primary.main' }
+                }
                 button
                 onClick={() => {
                   setPath('eventsuggestions')
@@ -122,6 +146,14 @@ const Admin = ({ setToken }) => {
               </ListItem>
               <Divider light />
               <ListItem
+                sx={
+                  path === 'regsforevents'
+                    ? {
+                        bgcolor: 'secondary.light',
+                        color: 'secondary.contrastText',
+                      }
+                    : { bgcolor: 'primary.main' }
+                }
                 button
                 onClick={() => {
                   setPath('regsforevents')
