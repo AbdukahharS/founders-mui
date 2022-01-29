@@ -20,6 +20,7 @@ import SetIsDone from './forms/SetIsDone'
 // Another Modal
 import Gallery from './Gallery'
 import Banner from './Banner'
+import AskAgain from './AskAgain'
 
 function CustomLoadingOverlay() {
   return (
@@ -44,7 +45,9 @@ const SundayEvents = () => {
   const [updateModal, setUpdateModal] = useState(false)
   const [isDoneModal, setIsDoneModal] = useState(false)
   const [galleryModal, setGalleryModal] = useState(false)
+  const [deleteModal, setDeleteModal] = useState(false)
   const [editID, setEditID] = useState(null)
+  const [deleteId, setDeleteId] = useState(null)
   const [gallery, setGallery] = useState(null)
   const [rows, setRows] = useState([])
   const [load, setLoad] = useState(true)
@@ -66,6 +69,26 @@ const SundayEvents = () => {
       })
       .catch((err) => console.error(err))
   }, [])
+
+  const deleteHandle = () => {
+    fetch(
+      `https://founders-backend.shakhzodbekkakh.repl.co/api/events/${deleteId}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': localStorage.getItem('token'),
+          'Access-Control-Allow-Origin': 'no-cors',
+        },
+      }
+    )
+      .then(() => {
+        const newData = rows.filter((row) => row.id !== deleteId)
+        setRows(newData)
+        setDeleteModal(false)
+      })
+      .catch((err) => console.error(err))
+  }
 
   const columns = [
     { field: 'id', headerName: 'ID', minWidth: 110 },
@@ -150,7 +173,10 @@ const SundayEvents = () => {
         />,
         <GridActionsCellItem
           icon={<DeleteIcon />}
-          onClick={() => deleteHandle(params.id)}
+          onClick={() => {
+            setDeleteModal(true)
+            setDeleteId(params.id)
+          }}
           label='Delete'
         />,
         <GridActionsCellItem
@@ -165,22 +191,6 @@ const SundayEvents = () => {
       ],
     },
   ]
-
-  const deleteHandle = (id) => {
-    fetch(`https://founders-backend.shakhzodbekkakh.repl.co/api/events/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-access-token': localStorage.getItem('token'),
-        'Access-Control-Allow-Origin': 'no-cors',
-      },
-    })
-      .then(() => {
-        const newData = rows.filter((row) => row.id !== id)
-        setRows(newData)
-      })
-      .catch((err) => console.error(err))
-  }
   return (
     <Box style={{ height: 600, width: '100%' }}>
       <Button variant='contained' onClick={() => setCreateModal(true)}>
@@ -216,6 +226,12 @@ const SundayEvents = () => {
         gallery={gallery}
       />
       <Banner url={url} setUrl={setUrl} />
+      <AskAgain
+        modal={deleteModal}
+        setModal={setDeleteModal}
+        id={deleteId}
+        deleteHandle={deleteHandle}
+      />
     </Box>
   )
 }
