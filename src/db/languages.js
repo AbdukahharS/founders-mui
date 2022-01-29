@@ -18,7 +18,11 @@ const english = {
   },
   instructors: {
     heading: 'Staff',
-    roles: { instructor: 'Instructors', admin: 'Administrators' },
+    roles: {
+      instructor: 'Instructors',
+      admin: 'Administrator office',
+      founder: 'Founders',
+    },
   },
   contact: {
     heading: 'Contact Us',
@@ -59,7 +63,11 @@ const uzbek = {
   },
   instructors: {
     heading: 'Xodimlar',
-    roles: { instructor: 'Ustozlar', admin: 'Administratorlar' },
+    roles: {
+      instructor: 'Ustozlar',
+      admin: 'Administrator idorasi',
+      founder: 'Asoschilar',
+    },
   },
   contact: {
     heading: "Biz bilan bog'laning",
@@ -100,7 +108,11 @@ const russian = {
   },
   instructors: {
     heading: 'Персонал',
-    roles: { instructor: 'Инструкторы', admin: 'Администраторы' },
+    roles: {
+      instructor: 'Инструкторы',
+      admin: 'Офис администратора',
+      founder: 'Основатель',
+    },
   },
   contact: {
     heading: 'Связаться с нами',

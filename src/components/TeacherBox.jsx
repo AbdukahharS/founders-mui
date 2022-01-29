@@ -8,7 +8,10 @@ const TeacherBox = ({ teacher, setIsHover, theme, i, role }) => {
         sx={{
           fontSize: '1.6rem',
           ml: 1,
-          color: i === 0 || i === 2 ? 'primary.contrastText' : 'light.main',
+          color:
+            i === 0 || i === 2 || i === 7
+              ? 'primary.contrastText'
+              : 'light.main',
         }}
       >
         {role}
@@ -50,9 +53,14 @@ const TeacherBox = ({ teacher, setIsHover, theme, i, role }) => {
               backgroundSize: 'cover',
             }}
           >
-            <Typography component='span' color='#ffdf33' variant='h4'>
-              {teacher.name}
-            </Typography>
+            <Stack direction='column' align='center'>
+              <Typography color='#ffdf33' fontSize='2.2rem'>
+                {teacher.name}
+              </Typography>
+              <Typography color='#ffdf33' fontSize='1.1rem'>
+                {teacher.subname}
+              </Typography>
+            </Stack>
           </Box>
           <Stack
             direction='column'

@@ -20,7 +20,7 @@ const features = [
     description: {
       eng: 'Unlike others, accomplish the whole 6-level-English courses "From zero to hero" in only 12 months.',
       ru: 'В отличие от других, пройти все 6-уровневые курсы английского языка «Из грязи в князи» всего за 12 месяцев.',
-      uz: '',
+      uz: `Boshqalardan farqli o'laroq,  6 darajali umumiy ingliz tili kurslarini "0" dan mukkamal darajaga atigi 12 oyda tamomlang.`,
     },
   },
   {
@@ -46,7 +46,7 @@ const features = [
     description: {
       eng: 'Take from 10% to 15% discounts according to your active membership and successful performance in mock exams.',
       ru: 'Скидки от 10% до 15% согласно вашему активному членству и удачное исполнение в экзамены',
-      uz: '',
+      uz: 'Faol aʼzoligingiz va sinov imtihonlarida muvaffaqiyatli ishtirok etishingizga qarab 10% dan 15% gacha chegirmalardan foydalaning.',
     },
   },
   {

@@ -37,7 +37,7 @@ body {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding-bottom: 3rem;
+  padding: 2rem 0.6rem;
   backface-visibility: hidden;
   border-radius: 1rem;
 }

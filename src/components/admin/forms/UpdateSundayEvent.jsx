@@ -30,7 +30,7 @@ const Input = styled('input')({
   display: 'none',
 })
 
-const UpdateSundayEvent = ({ modal, setModal, id, setId }) => {
+const UpdateSundayEvent = ({ modal, setModal, id }) => {
   const [name, setName] = useState('')
   const [desc, setDesc] = useState('')
   const [size, setSize] = useState('')
