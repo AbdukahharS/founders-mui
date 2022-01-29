@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import {
-  // Typography,
   Stack,
   Container,
   Box,
@@ -30,6 +29,8 @@ const Upcoming = ({ device }) => {
   const [regs, setRegs] = useState(
     localStorage.getItem('regs') ? localStorage.getItem('regs').split(',') : []
   )
+
+  console.log(upcomings)
 
   useEffect(() => {
     fetch(
@@ -82,7 +83,9 @@ const Upcoming = ({ device }) => {
                     <TableCell>{upcoming.name}</TableCell>
                     <TableCell>{upcoming.date}</TableCell>
                     <TableCell align='right'>
-                      {regs.indexOf(upcoming.id) === -1 ? (
+                      {upcoming.isFull ? (
+                        <Typography>This event is already full</Typography>
+                      ) : regs.indexOf(upcoming.id) === -1 ? (
                         <Button
                           sx={{
                             bgcolor: 'secondary.main',

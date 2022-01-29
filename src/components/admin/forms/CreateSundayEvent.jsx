@@ -53,48 +53,54 @@ const CreateSundayEvent = ({
   const handleSubmit = () => {
     if (name && description && size && date && time) {
       if (banner) {
-        setLoad(true)
-        const newEvent = new FormData()
-        const dateForm =
-          date.getFullYear() +
-          '-' +
-          (date.getMonth() > 8
-            ? date.getMonth() + 1
-            : '0' + (date.getMonth() + 1)) +
-          '-' +
-          (date.getDate() > 9 ? date.getDate() : '0' + date.getDate())
-        const timeForm =
-          (time.getHours() < 10 ? '0' + time.getHours() : time.getHours()) +
-          ':' +
-          (time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes())
-        newEvent.append('name', name)
-        newEvent.append('description', description)
-        newEvent.append('size', size)
-        newEvent.append('date', dateForm)
-        newEvent.append('time', timeForm)
-        newEvent.append('banner', banner)
-        newEvent.append('token', localStorage.getItem('token'))
-        fetch('https://founders-backend.shakhzodbekkakh.repl.co/api/events', {
-          headers: { 'x-access-token': localStorage.getItem('token') },
-          method: 'POST',
-          body: newEvent,
-        })
-          .then(async (res) => {
-            if (res.ok) {
-              const data = await res.json()
+        if (Number(size) > 1) {
+          setLoad(true)
+          const newEvent = new FormData()
+          const dateForm =
+            date.getFullYear() +
+            '-' +
+            (date.getMonth() > 8
+              ? date.getMonth() + 1
+              : '0' + (date.getMonth() + 1)) +
+            '-' +
+            (date.getDate() > 9 ? date.getDate() : '0' + date.getDate())
+          const timeForm =
+            (time.getHours() < 10 ? '0' + time.getHours() : time.getHours()) +
+            ':' +
+            (time.getMinutes() < 10
+              ? '0' + time.getMinutes()
+              : time.getMinutes())
+          newEvent.append('name', name)
+          newEvent.append('description', description)
+          newEvent.append('size', size)
+          newEvent.append('date', dateForm)
+          newEvent.append('time', timeForm)
+          newEvent.append('banner', banner)
+          newEvent.append('token', localStorage.getItem('token'))
+          fetch('https://founders-backend.shakhzodbekkakh.repl.co/api/events', {
+            headers: { 'x-access-token': localStorage.getItem('token') },
+            method: 'POST',
+            body: newEvent,
+          })
+            .then(async (res) => {
+              if (res.ok) {
+                const data = await res.json()
+                setLoad(false)
+                setSuccess(true)
+                setModal(false)
+                setTableLoad(true)
+                const newRows = [...rows, data.newEvent]
+                setRows(newRows)
+                setTableLoad(false)
+              }
+            })
+            .catch((err) => {
               setLoad(false)
-              setSuccess(true)
-              setModal(false)
-              setTableLoad(true)
-              const newRows = [...rows, data.newEvent]
-              setRows(newRows)
-              setTableLoad(false)
-            }
-          })
-          .catch((err) => {
-            setLoad(false)
-            console.error(err)
-          })
+              console.error(err)
+            })
+        } else {
+          setError('Size must be bigger than 1')
+        }
       } else {
         setError('You should choose one picture!')
       }

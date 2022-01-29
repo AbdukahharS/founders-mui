@@ -37,6 +37,7 @@ const UpdateSundayEvent = ({ modal, setModal, id, setId }) => {
   const [date, setDate] = useState(new Date())
   const [image, setImage] = useState('')
   const [isDone, setIsDone] = useState('')
+  const [isFull, setIsFull] = useState(false)
   const [time, setTime] = useState(new Date())
   const [load, setLoad] = useState(true)
 
@@ -61,6 +62,7 @@ const UpdateSundayEvent = ({ modal, setModal, id, setId }) => {
           setDate(new Date(data.date))
           setImage(data.banner)
           setIsDone(data.isDone)
+          setIsFull(data.isFull)
           if (data.time) {
             const hour = data.time.split(':')[0]
             const min = data.time.split(':')[1]
@@ -78,7 +80,7 @@ const UpdateSundayEvent = ({ modal, setModal, id, setId }) => {
       <Box>
         <form
           method='post'
-          action={`https://founders-backend.shakhzodbekkakh.repl.co/events/${id}`}
+          action={`https://founders-backend.shakhzodbekkakh.repl.co/api/events/${id}`}
           encType='multipart/form-data'
         >
           {load ? (
@@ -222,6 +224,13 @@ const UpdateSundayEvent = ({ modal, setModal, id, setId }) => {
                 type='text'
                 name='isDone'
                 value={isDone}
+                style={{ display: 'none' }}
+                readOnly
+              />
+              <input
+                type='text'
+                name='isFull'
+                value={isFull}
                 style={{ display: 'none' }}
                 readOnly
               />
