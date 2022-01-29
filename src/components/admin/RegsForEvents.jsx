@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Button, LinearProgress, Stack } from '@mui/material'
+import { Box, Button, LinearProgress, Stack, Typography } from '@mui/material'
 import {
   DataGrid,
   GridOverlay,
@@ -31,6 +31,7 @@ const RegsForEvents = () => {
   const [event, setEvent] = useState('')
   const [events, setEvents] = useState([])
   const [rows, setRows] = useState([])
+  const [load, setLoad] = useState(true)
 
   const columns = [
     { field: 'id', headerName: 'ID', minWidth: 110 },
@@ -70,6 +71,7 @@ const RegsForEvents = () => {
           setEvent(newEvent)
           const newRows = await newData[0].registrations
           setRows(newRows)
+          setLoad(false)
         }
       })
       .catch((err) => console.error(err))
@@ -82,7 +84,7 @@ const RegsForEvents = () => {
   return (
     <Box style={{ height: 600, width: '100%' }}>
       <Stack direction='row' spacing={2} mb={2}>
-        {events.length &&
+        {events.length && !load ? (
           events.map((e, i) => (
             <Button
               key={i}
@@ -96,7 +98,12 @@ const RegsForEvents = () => {
             >
               {e}
             </Button>
-          ))}
+          ))
+        ) : (
+          <Typography sx={{ color: 'primary.contrastText' }}>
+            No events
+          </Typography>
+        )}
       </Stack>
       <DataGrid
         columns={columns}
