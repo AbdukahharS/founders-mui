@@ -9,7 +9,7 @@ const TeacherBox = ({ teacher, setIsHover, theme, i, role }) => {
           fontSize: '1.6rem',
           ml: 1,
           color:
-            i === 0 || i === 2 || i === 7
+            i === 0 || i === 3 || i === 8
               ? 'primary.contrastText'
               : 'light.main',
         }}
@@ -21,6 +21,7 @@ const TeacherBox = ({ teacher, setIsHover, theme, i, role }) => {
         sx={{
           perspective: '1000px',
           height: '50vh',
+          minHeight: '30rem',
           marginX: 'auto',
           py: '1rem',
         }}

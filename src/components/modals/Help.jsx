@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 // MUI
 import { darkTheme } from '../../muiConfig'
@@ -7,7 +7,6 @@ import {
   Box,
   Button,
   Collapse,
-  Fade,
   FormControl,
   InputLabel,
   MenuItem,
@@ -21,22 +20,10 @@ import {
 import CancelIcon from '@mui/icons-material/Cancel'
 
 const Modal = ({ openQA, theme }) => {
-  const [num, setNum] = useState(0)
   const [type, setType] = useState('suggestion')
   const [body, setBody] = useState('')
   const [phone, setPhone] = useState(1111111)
   const [succes, setSucces] = useState(false)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (num === 2) {
-        setNum(0)
-      } else {
-        setNum(num + 1)
-      }
-    }, 4000)
-    return () => clearInterval(interval)
-  })
 
   const handleClick = async () => {
     const requestOptions = {
@@ -200,45 +187,6 @@ const Modal = ({ openQA, theme }) => {
                 Direct to Administration
               </Link>
             </Button>
-            <Fade in={num === 0}>
-              <img
-                src={require('../../images/svg1.svg').default}
-                alt='Svg for Help'
-                style={{
-                  width: '50%',
-                  position: 'absolute',
-                  bottom: '2rem',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                }}
-              />
-            </Fade>
-            <Fade in={num === 1}>
-              <img
-                src={require('../../images/svg2.svg').default}
-                alt='Svg for Help'
-                style={{
-                  width: '50%',
-                  position: 'absolute',
-                  bottom: '2rem',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                }}
-              />
-            </Fade>
-            <Fade in={num === 2}>
-              <img
-                src={require('../../images/svg3.svg').default}
-                alt='Svg for Help'
-                style={{
-                  width: '50%',
-                  position: 'absolute',
-                  bottom: '2rem',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                }}
-              />
-            </Fade>
           </Stack>
         </Stack>
       </Collapse>
