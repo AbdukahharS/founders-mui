@@ -10,15 +10,19 @@ import {
   Typography,
   List,
   CircularProgress,
+  Button,
 } from '@mui/material'
 import SundayEvents from '../components/admin/SundayEvents'
 import RegsForEvents from '../components/admin/RegsForEvents'
 import Offers from '../components/admin/Offers'
 import EventSuggestions from '../components/admin/EventSuggestions'
+import Brightness7Icon from '@mui/icons-material/Brightness7'
+import Brightness4Icon from '@mui/icons-material/Brightness4'
+import { lightTheme, darkTheme } from '../muiConfig'
 
 const localStorage = window.localStorage
 
-const Admin = ({ setToken }) => {
+const Admin = ({ setToken, theme, setTheme }) => {
   const navigate = useNavigate()
   const [isValid, setIsValid] = useState(false)
   const [path, setPath] = useState(
@@ -26,6 +30,11 @@ const Admin = ({ setToken }) => {
       ? localStorage.getItem('adminpath')
       : 'sundayevents'
   )
+
+  useEffect(() => {
+    let themeColor = theme === darkTheme ? 'dark' : 'light'
+    localStorage.setItem('theme', themeColor)
+  }, [theme])
 
   useEffect(() => {
     localStorage.setItem('adminpath', path)
@@ -59,21 +68,43 @@ const Admin = ({ setToken }) => {
     }
   }, [isValid, navigate, setToken, path])
 
+  const clickHandler = () => {
+    setTheme(theme === lightTheme ? darkTheme : lightTheme)
+  }
   return (
     <main>
       {isValid ? (
         <Box bgcolor='light.main' minHeight='100vh'>
           <Box py={1} sx={{ bgcolor: 'primary.main' }}>
             <Container>
-              <Stack direction='row' alignItems='center' spacing={1}>
-                <img
-                  src={require('../images/logo.png').default}
-                  alt='Logo'
-                  style={{ width: '4rem' }}
-                />
-                <Typography fontSize='2rem' color='primary.contrastText'>
-                  Admin Panel
-                </Typography>
+              <Stack
+                direction='row'
+                alignItems='center'
+                justifyContent='space-between'
+              >
+                <Stack direction='row' alignItems='center' spacing={1}>
+                  <img
+                    src={require('../images/logo.png').default}
+                    alt='Logo'
+                    style={{ width: '4rem' }}
+                  />
+                  <Typography fontSize='2rem' color='primary.contrastText'>
+                    Admin Panel
+                  </Typography>
+                </Stack>
+                <Button
+                  onClick={() => clickHandler()}
+                  sx={{
+                    padding: '0.4rem',
+                    minWidth: 'unset',
+                  }}
+                >
+                  {theme === lightTheme ? (
+                    <Brightness7Icon sx={{ color: 'primary.contrastText' }} />
+                  ) : (
+                    <Brightness4Icon sx={{ color: 'primary.contrastText' }} />
+                  )}
+                </Button>
               </Stack>
             </Container>
           </Box>

@@ -5,7 +5,7 @@ const courses = [
     description: {
       eng: 'In this course, you can improve your English language Grammar and Conversation skills.',
       ru: 'В этом курсы вы сможете улучшить свою грамматика английского языка .',
-      uz: 'Bu kursda siz Ingliz tili grammatikangizni oshira olasiz.',
+      uz: 'Bu kursda siz Umumiy Ingliz tili va uning Grammatikasini mukammal organasiz.',
     },
     banner: 'general-english.mp4',
     length: '8',

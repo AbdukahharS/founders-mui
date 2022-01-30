@@ -24,6 +24,7 @@ const TeacherBox = ({ teacher, setIsHover, theme, i, role }) => {
           minHeight: '30rem',
           marginX: 'auto',
           py: '1rem',
+          mb: '1.6rem',
         }}
         className='card'
         onMouseEnter={() => setIsHover(true)}
@@ -55,7 +56,7 @@ const TeacherBox = ({ teacher, setIsHover, theme, i, role }) => {
             }}
           >
             <Stack direction='column' align='center'>
-              <Typography color='#ffdf33' fontSize='2.2rem'>
+              <Typography color='#ffdf33' fontSize='2rem'>
                 {teacher.name}
               </Typography>
               <Typography color='#ffdf33' fontSize='1.1rem'>

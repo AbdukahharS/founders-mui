@@ -110,7 +110,14 @@ function App() {
             />
             <Route
               path='admin/*'
-              element={<Admin token={token} setToken={setToken} />}
+              element={
+                <Admin
+                  token={token}
+                  setToken={setToken}
+                  theme={theme}
+                  setTheme={setTheme}
+                />
+              }
             />
           </Routes>
         </ThemeProvider>

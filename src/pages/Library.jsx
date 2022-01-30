@@ -115,7 +115,7 @@ const Library = ({ theme, setTheme, device }) => {
                 <Stack direction='row' alignItems='center' spacing={2}>
                   <img
                     style={{ height: '8rem' }}
-                    src={require(`../images/${book.banner}`).default}
+                    src={require(`../images/books/${book.banner}`).default}
                     alt='blah'
                   />
                   <Stack>

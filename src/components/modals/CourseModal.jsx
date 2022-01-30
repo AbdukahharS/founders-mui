@@ -218,7 +218,7 @@ const CourseModal = ({
                         <Typography fontSize='1.2rem'>
                           {language.courseModal.length +
                             ': ' +
-                            currentCourse.length +
+                            item.length +
                             ' ' +
                             language.courseModal.month}
                         </Typography>
@@ -231,9 +231,7 @@ const CourseModal = ({
                       >
                         <AccessTimeIcon fontSize='large' />
                         <Typography fontSize='1.2rem'>
-                          {currentCourse.duration +
-                            ' ' +
-                            language.courseModal.duration}
+                          {item.duration + ' ' + language.courseModal.duration}
                         </Typography>
                       </Stack>
                       <Stack

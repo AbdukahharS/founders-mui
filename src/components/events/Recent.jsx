@@ -131,8 +131,8 @@ const Recent = () => {
           <Empty
             color='inherit'
             fill='currentColor'
-            width='30vw'
-            height='30vw'
+            width='16vw'
+            height='16vw'
           />
           <Typography sx={{ fontSize: '2rem', fontWeight: '700' }}>
             No Recent Events

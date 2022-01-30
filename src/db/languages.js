@@ -3,7 +3,7 @@ const english = {
   navbar: {
     courses: 'Courses',
     features: 'Features',
-    instructors: 'Instructors',
+    instructors: 'Staff',
     contact: 'Contact Us',
     button: {
       otherBtns: [{ lang: 'uz' }, { lang: 'ru' }],
@@ -45,7 +45,7 @@ const uzbek = {
   navbar: {
     courses: 'Kurslar',
     features: 'Qulayliklar',
-    instructors: 'Ustozlar',
+    instructors: 'Xodimlar',
     contact: "Biz bilan bog'laning",
     button: {
       otherBtns: [{ lang: 'eng' }, { lang: 'ru' }],
@@ -90,7 +90,7 @@ const russian = {
   navbar: {
     courses: 'Курсы',
     features: 'Функции',
-    instructors: 'Инструкторы',
+    instructors: 'Персонал',
     contact: 'Свяжитесь с нами',
     button: {
       otherBtns: [{ lang: 'uz' }, { lang: 'eng' }],
