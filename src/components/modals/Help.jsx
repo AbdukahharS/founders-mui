@@ -175,8 +175,10 @@ const Modal = ({ openQA, theme }) => {
             <Button
               sx={{ justifyContent: 'flex-start', color: 'secondary.main' }}
             >
-              <Link
-                to='https://t.me'
+              <a
+                href='https://t.me/founders_admin'
+                target='_blank'
+                rel='noreferrer'
                 style={{
                   display: 'block',
                   width: '100%',
@@ -185,7 +187,7 @@ const Modal = ({ openQA, theme }) => {
                 }}
               >
                 Direct to Administration
-              </Link>
+              </a>
             </Button>
           </Stack>
         </Stack>

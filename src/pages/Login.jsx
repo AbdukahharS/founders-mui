@@ -1,9 +1,40 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { GoogleLogin } from 'react-google-login'
 import { useNavigate } from 'react-router-dom'
+import { Snackbar, Alert } from '@mui/material'
 
 const Login = ({ setToken }) => {
   const navigate = useNavigate()
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    const pathname = window.location.pathname
+    const checkValid = () => {
+      fetch('https://founders-backend.shakhzodbekkakh.repl.co/api/welcome', {
+        method: 'POST',
+        headers: {
+          'x-access-token': localStorage.getItem('token'),
+          'Access-Control-Allow-Origin': 'no-cors',
+        },
+      })
+        .then(async (res) => {
+          const data = await res.json()
+          if (data.message !== 'valid') {
+            setToken(null)
+            navigate('/login')
+          } else {
+            navigate(`/admin/${localStorage.getItem('adminpath')}`)
+          }
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    }
+    if (pathname === '/login') {
+      checkValid()
+    }
+  }, [navigate, setToken])
+
   const responseGoogle = async (gRes) => {
     const email = gRes.profileObj.email
     const id = gRes.googleId
@@ -24,10 +55,14 @@ const Login = ({ setToken }) => {
         body: user,
       }
     )
-    const data = await res.json()
-    if (data) {
-      await setToken(data.token)
-      navigate('/admin')
+    if (res.statusCode === 405) {
+      setError('You are not allowed to access this pages!')
+    } else if (res.ok) {
+      const data = await res.json()
+      if (data) {
+        await setToken(data.token)
+        navigate('/admin')
+      }
     }
   }
   return (
@@ -48,6 +83,21 @@ const Login = ({ setToken }) => {
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
       />
+      <Snackbar
+        open={error ? true : false}
+        autoHideDuration={6000}
+        onClose={() => setError(null)}
+      >
+        <Alert
+          onClose={() => setError(null)}
+          severity='error'
+          sx={{
+            width: '100%',
+          }}
+        >
+          {error}
+        </Alert>
+      </Snackbar>
     </div>
   )
 }
