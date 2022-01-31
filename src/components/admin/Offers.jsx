@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Button, Stack, LinearProgress } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import { Box, Button, Stack, LinearProgress, Typography } from '@mui/material'
 import {
   DataGrid,
   GridToolbarExport,
@@ -7,6 +8,7 @@ import {
   gridClasses,
   GridOverlay,
 } from '@mui/x-data-grid'
+import { ReactComponent as Empty } from '../../images/empty.svg'
 
 function CustomLoadingOverlay() {
   return (
@@ -26,6 +28,31 @@ function CustomToolbar() {
   )
 }
 
+function CustomNoRowsOverlay() {
+  return (
+    <GridOverlay>
+      <Stack
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          color: 'secondary.main',
+          direction: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        spacing={4}
+      >
+        <Empty color='inherit' fill='currentColor' width='12vw' height='12vw' />
+        <Typography sx={{ fontSize: '1.4rem', fontWeight: '700' }}>
+          Nothing found
+        </Typography>
+      </Stack>
+    </GridOverlay>
+  )
+}
+
 const columns = [
   { field: 'id', headerName: 'ID', minWidth: 110 },
   {
@@ -38,30 +65,39 @@ const columns = [
 ]
 
 const Offers = () => {
+  const navigate = useNavigate()
   const [data, setData] = useState([])
   const [type, setType] = useState('suggestion')
   const [offers, setOffers] = useState([])
 
   useEffect(() => {
-    fetch('https://founders-backend.shakhzodbekkakh.repl.co/api/offers', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-access-token': localStorage.getItem('token'),
-      },
-    })
-      .then(async (res) => {
-        if (res.ok) {
-          const newData = await res.json()
-          setData(newData)
-          const newOffers = await newData.filter(
-            (offer) => offer.type === 'suggestion'
-          )
-          setOffers(newOffers)
-        }
+    const pathname = window.location.pathname
+    const fetchData = () => {
+      fetch('https://founders-backend.shakhzodbekkakh.repl.co/api/offers', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': localStorage.getItem('token'),
+        },
       })
-      .catch((err) => console.error(err))
-  }, [])
+        .then(async (res) => {
+          if (res.statusCode === 401) {
+            navigate('/login')
+          } else if (res.ok) {
+            const newData = await res.json()
+            setData(newData)
+            const newOffers = await newData.filter(
+              (offer) => offer.type === 'suggestion'
+            )
+            setOffers(newOffers)
+          }
+        })
+        .catch((err) => console.error(err))
+    }
+    if (pathname === '/admin/offers') {
+      fetchData()
+    }
+  }, [navigate])
 
   const handleClick = (newType) => {
     setType(newType)
@@ -73,33 +109,21 @@ const Offers = () => {
       <Stack direction='row' spacing={2} mb={2}>
         <Button
           disabled={type === 'suggestion'}
-          sx={
-            type === 'suggestion'
-              ? { bgcolor: '#333', color: '#aaa', cursor: 'default' }
-              : { bgcolor: 'secondary.main' }
-          }
+          sx={type === 'suggestion' ? {} : { bgcolor: 'secondary.main' }}
           onClick={() => handleClick('suggestion')}
         >
           Suggestions
         </Button>
         <Button
           disabled={type === 'objection'}
-          sx={
-            type === 'objection'
-              ? { bgcolor: '#333', color: '#aaa', cursor: 'default' }
-              : { bgcolor: 'secondary.main' }
-          }
+          sx={type === 'objection' ? {} : { bgcolor: 'secondary.main' }}
           onClick={() => handleClick('objection')}
         >
           Objestions
         </Button>
         <Button
           disabled={type === 'question'}
-          sx={
-            type === 'question'
-              ? { bgcolor: '#333', color: '#aaa', cursor: 'default' }
-              : { bgcolor: 'secondary.main' }
-          }
+          sx={type === 'question' ? {} : { bgcolor: 'secondary.main' }}
           onClick={() => handleClick('question')}
         >
           Questions
@@ -110,6 +134,7 @@ const Offers = () => {
         components={{
           LoadingOverlay: CustomLoadingOverlay,
           Toolbar: CustomToolbar,
+          NoRowsOverlay: CustomNoRowsOverlay,
         }}
         loading={offers ? false : true}
         rows={offers}

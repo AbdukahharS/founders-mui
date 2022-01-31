@@ -24,7 +24,7 @@ const SetIsDone = ({ modal, setModal, id }) => {
       <Box>
         <form
           method='post'
-          action={`https://founders-backend.shakhzodbekkakh.repl.co/events/setisdone/${id}`}
+          action={`https://founders-backend.shakhzodbekkakh.repl.co/api/events/setisdone/${id}`}
           encType='multipart/form-data'
         >
           <Stack sx={style}>

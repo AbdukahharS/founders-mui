@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Box, LinearProgress } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import { Box, LinearProgress, Stack, Typography } from '@mui/material'
 import {
   DataGrid,
   GridToolbarExport,
@@ -7,6 +8,7 @@ import {
   gridClasses,
   GridOverlay,
 } from '@mui/x-data-grid'
+import { ReactComponent as Empty } from '../../images/empty.svg'
 
 function CustomLoadingOverlay() {
   return (
@@ -26,6 +28,31 @@ function CustomToolbar() {
   )
 }
 
+function CustomNoRowsOverlay() {
+  return (
+    <GridOverlay>
+      <Stack
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          color: 'secondary.main',
+          direction: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        spacing={4}
+      >
+        <Empty color='inherit' fill='currentColor' width='12vw' height='12vw' />
+        <Typography sx={{ fontSize: '1.4rem', fontWeight: '700' }}>
+          Nothing found
+        </Typography>
+      </Stack>
+    </GridOverlay>
+  )
+}
+
 const columns = [
   { field: 'id', headerName: 'ID', minWidth: 110 },
   {
@@ -40,27 +67,36 @@ const columns = [
 ]
 
 const EventSuggestions = () => {
+  const navigate = useNavigate()
   const [offers, setOffers] = useState([])
 
   useEffect(() => {
-    fetch(
-      'https://founders-backend.shakhzodbekkakh.repl.co/api/eventsuggestions',
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-access-token': localStorage.getItem('token'),
-        },
-      }
-    )
-      .then(async (res) => {
-        if (res.ok) {
-          const newData = await res.json()
-          setOffers(newData)
+    const pathname = window.location.pathname
+    const fetchData = () => {
+      fetch(
+        'https://founders-backend.shakhzodbekkakh.repl.co/api/eventsuggestions',
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': localStorage.getItem('token'),
+          },
         }
-      })
-      .catch((err) => console.error(err))
-  }, [])
+      )
+        .then(async (res) => {
+          if (res.statusCode === 401) {
+            navigate('/login')
+          } else if (res.ok) {
+            const newData = await res.json()
+            setOffers(newData)
+          }
+        })
+        .catch((err) => console.error(err))
+    }
+    if (pathname === '/admin/eventsuggestions') {
+      fetchData()
+    }
+  }, [navigate])
   return (
     <Box style={{ height: 600, width: '100%' }}>
       <DataGrid
@@ -68,6 +104,7 @@ const EventSuggestions = () => {
         components={{
           LoadingOverlay: CustomLoadingOverlay,
           Toolbar: CustomToolbar,
+          NoRowsOverlay: CustomNoRowsOverlay,
         }}
         loading={offers ? false : true}
         rows={offers}

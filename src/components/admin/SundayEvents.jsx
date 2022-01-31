@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Button, LinearProgress, Typography } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import { Box, Button, LinearProgress, Stack, Typography } from '@mui/material'
 import {
   GridOverlay,
   DataGrid,
@@ -13,6 +14,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import VisibilityIcon from '@mui/icons-material/Visibility'
+import { ReactComponent as Empty } from '../../images/empty.svg'
 // Form Modals
 import CreateSundayEvent from './forms/CreateSundayEvent'
 import UpdateSundayEvent from './forms/UpdateSundayEvent'
@@ -40,7 +42,33 @@ function CustomToolbar() {
   )
 }
 
+function CustomNoRowsOverlay() {
+  return (
+    <GridOverlay>
+      <Stack
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          color: 'secondary.main',
+          direction: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        spacing={4}
+      >
+        <Empty color='inherit' fill='currentColor' width='12vw' height='12vw' />
+        <Typography sx={{ fontSize: '1.4rem', fontWeight: '700' }}>
+          No Sunday Events
+        </Typography>
+      </Stack>
+    </GridOverlay>
+  )
+}
+
 const SundayEvents = () => {
+  const navigate = useNavigate()
   const [createModal, setCreateModal] = useState(false)
   const [updateModal, setUpdateModal] = useState(false)
   const [isDoneModal, setIsDoneModal] = useState(false)
@@ -54,21 +82,31 @@ const SundayEvents = () => {
   const [url, setUrl] = useState(null)
 
   useEffect(() => {
-    fetch('https://founders-backend.shakhzodbekkakh.repl.co/api/events', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-access-token': localStorage.getItem('token'),
-        'Access-Control-Allow-Origin': 'no-cors',
-      },
-    })
-      .then(async (res) => {
-        const data = await res.json()
-        setRows(data)
-        setLoad(false)
+    const pathname = window.location.pathname
+    const fetchData = () => {
+      fetch('https://founders-backend.shakhzodbekkakh.repl.co/api/events', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': localStorage.getItem('token'),
+          'Access-Control-Allow-Origin': 'no-cors',
+        },
       })
-      .catch((err) => console.error(err))
-  }, [])
+        .then(async (res) => {
+          if (res.statusCode === 401) {
+            navigate('/login')
+          } else if (res.ok) {
+            const data = await res.json()
+            setRows(data)
+            setLoad(false)
+          }
+        })
+        .catch((err) => console.error(err))
+    }
+    if (pathname === '/admin/sundayevents') {
+      fetchData()
+    }
+  }, [navigate])
 
   const deleteHandle = () => {
     fetch(
@@ -201,6 +239,7 @@ const SundayEvents = () => {
         components={{
           LoadingOverlay: CustomLoadingOverlay,
           Toolbar: CustomToolbar,
+          NoRowsOverlay: CustomNoRowsOverlay,
         }}
         loading={load}
         rows={rows}

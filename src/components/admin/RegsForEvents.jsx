@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Box, Button, LinearProgress, Stack, Typography } from '@mui/material'
 import {
   DataGrid,
@@ -7,6 +8,7 @@ import {
   GridToolbarContainer,
   gridClasses,
 } from '@mui/x-data-grid'
+import { ReactComponent as Empty } from '../../images/empty.svg'
 
 function CustomLoadingOverlay() {
   return (
@@ -26,7 +28,33 @@ function CustomToolbar() {
   )
 }
 
+function CustomNoRowsOverlay() {
+  return (
+    <GridOverlay>
+      <Stack
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          color: 'secondary.main',
+          direction: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        spacing={4}
+      >
+        <Empty color='inherit' fill='currentColor' width='12vw' height='12vw' />
+        <Typography sx={{ fontSize: '1.4rem', fontWeight: '700' }}>
+          No Regisations for Sunday Events
+        </Typography>
+      </Stack>
+    </GridOverlay>
+  )
+}
+
 const RegsForEvents = () => {
+  const navigate = useNavigate()
   const [data, setData] = useState([])
   const [event, setEvent] = useState('')
   const [events, setEvents] = useState([])
@@ -49,33 +77,41 @@ const RegsForEvents = () => {
   ]
 
   useEffect(() => {
-    fetch(
-      'https://founders-backend.shakhzodbekkakh.repl.co/api/regsforevents',
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-access-token': localStorage.getItem('token'),
-        },
-      }
-    )
-      .then(async (res) => {
-        if (res.ok) {
-          const newData = await res.json()
-          setData(newData)
-          const newEvents = await newData.map((event) => {
-            return event.name
-          })
-          setEvents(newEvents)
-          const newEvent = await newEvents[0]
-          setEvent(newEvent)
-          const newRows = await newData[0].registrations
-          setRows(newRows)
-          setLoad(false)
+    const pathname = window.location.pathname
+    const fetchData = () => {
+      fetch(
+        'https://founders-backend.shakhzodbekkakh.repl.co/api/regsforevents',
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': localStorage.getItem('token'),
+          },
         }
-      })
-      .catch((err) => console.error(err))
-  }, [])
+      )
+        .then(async (res) => {
+          if (res.status === 401) {
+            navigate('/login')
+          } else if (res.status === 200) {
+            const newData = await res.json()
+            setData(newData)
+            const newEvents = await newData.map((event) => {
+              return event.name
+            })
+            setEvents(newEvents)
+            const newEvent = await newEvents[0]
+            setEvent(newEvent)
+            const newRows = (await newData[0]) ? newData[0].registrations : []
+            setRows(newRows)
+            setLoad(false)
+          }
+        })
+        .catch((err) => console.error(err))
+    }
+    if (pathname === '/admin/regsforevents') {
+      fetchData()
+    }
+  }, [navigate])
   const handleClick = (eventName) => {
     const newRows = data.filter((ev) => ev.name === eventName)
     setRows(newRows[0].registrations)
@@ -110,6 +146,7 @@ const RegsForEvents = () => {
         components={{
           LoadingOverlay: CustomLoadingOverlay,
           Toolbar: CustomToolbar,
+          NoRowsOverlay: CustomNoRowsOverlay,
         }}
         loading={rows ? false : true}
         rows={rows}
