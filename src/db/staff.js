@@ -11,7 +11,7 @@ const staff = [
     name: 'Mr. Shohruh',
     subname: 'Manager',
     description:
-      'As a diligent and considerate member of our family, Shohruh guides you to join our community and be on the right path.',
+      'As a diligent and considerate member of our family, Mr. Shohruh guides you to join our community and be on the right path.',
     banner: 'video_image2.jpeg',
     role: 'admin',
   },
@@ -19,7 +19,7 @@ const staff = [
     name: 'Ms. Diyora',
     subname: 'SMM Manager',
     description:
-      'Creative and enthusiastic author of all colorful, artistic and inspired posts that you follow. Moreover, she says "I will marry someone who will support me in passing IELTS exam with 8.0 band.',
+      'Creative and enthusiastic author of all colorful, artistic and inspired posts that you follow. Moreover, Ms. Diyora says "I will marry someone who will support me in passing IELTS exam with 8.0+ band.',
     banner: 'ms.diyora.jpeg',
     role: 'admin',
   },
@@ -35,7 +35,7 @@ const staff = [
     name: 'Ms. Zhansaya',
     subname: '7.0 band holder, Kids English, General English',
     description:
-      'Even though she is humorous at heart, Mrs. Zhansaya alludes that she is really strict in class, and even makes students stay after lesson till their homework is fully done.',
+      'Even though she is humorous at heart, Mrs. Zhansaya alludes that she is really strict in class, and even she makes students stay after lesson till their homework is fully done.',
     banner: 'video_image5.jpeg',
     role: 'instructor',
   },
@@ -43,7 +43,7 @@ const staff = [
     name: 'Ms. Nafosat',
     subname: '7.0 band holder, General English',
     description:
-      'Approaching to encourage student interest and active learning energeticly, Nafosat is always ready to invigorate and, keep you focused on your English learning journey.',
+      'Approaching to encourage student interest and active learning energeticly, Ms. Nafosat is always ready to invigorate and, keep you focused on your English learning journey.',
     banner: 'photo_2022-01-29_00-21-21.jpg',
     role: 'instructor',
   },

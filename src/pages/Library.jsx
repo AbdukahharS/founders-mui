@@ -85,16 +85,16 @@ const Library = ({ theme, setTheme, device }) => {
               All
             </Button>
             <Button
-              onClick={() => setCurCategory('writing')}
-              sx={curCategory !== 'writing' ? disable : enable}
+              onClick={() => setCurCategory('Kids English')}
+              sx={curCategory !== 'Kids English' ? disable : enable}
             >
-              Writing
+              Kids English
             </Button>
             <Button
-              onClick={() => setCurCategory('reading')}
-              sx={curCategory !== 'reading' ? disable : enable}
+              onClick={() => setCurCategory('Literature')}
+              sx={curCategory !== 'Literature' ? disable : enable}
             >
-              Reading
+              Literature
             </Button>
           </Container>
         </Box>
@@ -122,11 +122,6 @@ const Library = ({ theme, setTheme, device }) => {
                     <Typography fontSize='1.4rem' color='secondary'>
                       {book.name}
                     </Typography>
-                    {device !== 'xs' && (
-                      <Typography color='primary.contrastText'>
-                        {book.description}
-                      </Typography>
-                    )}
                   </Stack>
                 </Stack>
                 <a href={require(`../books/${book.file}`).default} download>
