@@ -1,6 +1,5 @@
 import React from 'react'
 import { Modal } from '@mui/material'
-
 const style = {
   position: 'absolute',
   top: '50%',
@@ -10,7 +9,6 @@ const style = {
   maxHeight: '95vh',
   display: 'block',
 }
-
 const Banner = ({ url, setUrl }) => {
   return (
     <Modal open={url ? true : false} onClose={() => setUrl(null)}>
@@ -18,5 +16,4 @@ const Banner = ({ url, setUrl }) => {
     </Modal>
   )
 }
-
 export default Banner

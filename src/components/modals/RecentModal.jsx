@@ -1,8 +1,15 @@
 import React from 'react'
-import { Box, CircularProgress, Modal, Stack, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Modal,
+  Stack,
+  Typography,
+} from '@mui/material'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
-
+import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 const style = {
   position: 'absolute',
   top: '50%',
@@ -16,7 +23,6 @@ const style = {
   width: 'fit-content',
   minWidth: '60vw',
 }
-
 const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },
@@ -35,8 +41,20 @@ const responsive = {
     items: 1,
   },
 }
-
 const RecentModal = ({ modal, setModal, event }) => {
+  const handleClick = (id) => {
+    const elem = document.querySelector(`#${id}`)
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen()
+    } else if (elem.webkitRequestFullscreen) {
+      /* Safari */
+      elem.webkitRequestFullscreen()
+    } else if (elem.msRequestFullscreen) {
+      /* IE11 */
+      elem.msRequestFullscreen()
+    }
+    elem.play()
+  }
   return (
     <Modal
       open={modal}
@@ -57,7 +75,9 @@ const RecentModal = ({ modal, setModal, event }) => {
                 <Typography fontSize={'2rem'} fontWeight={700}>
                   {event.name}
                 </Typography>
-                <Typography fontSize={'1.2rem'}>{event.description}</Typography>
+                <Typography fontSize={'1.2rem'} component='pre'>
+                  {event.description}
+                </Typography>
               </Stack>
             </Stack>
             <Typography textAlign='center' my={2} fontSize='1.8rem'>
@@ -68,24 +88,54 @@ const RecentModal = ({ modal, setModal, event }) => {
                 responsive={responsive}
                 swipeable={true}
                 draggable={true}
-                showDots={true}
                 infinite={true}
                 autoPlay={true}
                 keyBoardControl={true}
                 autoPlaySpeed={2000}
+                pauseOnHover
+                style={{ backgroundColor: '#fff' }}
               >
-                {event.gallery.map((image, i) => (
-                  <img
-                    key={i}
-                    src={image}
-                    alt='One of Gallery items'
-                    style={{
-                      width: '90%',
-                      maxHeight: '40vh',
-                      margin: '2rem 0',
-                    }}
-                  />
-                ))}
+                {event.gallery.map((item, i) => {
+                  return item.type === 'image' ? (
+                    <img
+                      key={i}
+                      src={item.url}
+                      alt='One of Gallery items'
+                      style={{
+                        width: '90%',
+                        maxHeight: '30vh',
+                      }}
+                    />
+                  ) : (
+                    <Stack
+                      sx={{
+                        width: '90%',
+                        maxHeight: '30vh',
+                        position: 'relative',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                      key={i}
+                    >
+                      <video
+                        style={{ maxHeight: '30vh' }}
+                        src={item.url}
+                        id={`video${i}`}
+                      />
+                      <Button
+                        sx={{
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)',
+                        }}
+                        onClick={() => handleClick(`video${i}`)}
+                      >
+                        <PlayArrowIcon color='gold' sx={{ fontSize: '4rem' }} />
+                      </Button>
+                    </Stack>
+                  )
+                })}
               </Carousel>
             </Box>
           </Stack>
@@ -96,5 +146,4 @@ const RecentModal = ({ modal, setModal, event }) => {
     </Modal>
   )
 }
-
 export default RecentModal

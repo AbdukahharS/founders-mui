@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import { Link as ReactLink } from 'react-router-dom'
 import logo from './../images/logo.png'
 import logoDark from './../images/logo-dark.png'
 import {
@@ -20,15 +21,12 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
 import PublicIcon from '@mui/icons-material/Public'
 import CancelIcon from '@mui/icons-material/Cancel'
-
 const Intro = ({ intro, device }) => {
   const filter = useRef(null)
-
   const [isPlay, setIsPlay] = useState(false)
   const [isEnd, setIsEnd] = useState(
     window.localStorage.getItem('isEnd') ? true : false
   )
-
   const skip = () => {
     window.localStorage.setItem('isEnd', true)
     setIsPlay(true)
@@ -53,7 +51,6 @@ const Intro = ({ intro, device }) => {
   window.addEventListener('load', () => {
     const box = intro.current
     const video = box.querySelector('div video')
-
     video.style.animation = 'attract 0.8s infinite'
     video.style.width = device === 'xs' ? '40vw' : '20vw'
   })
@@ -136,7 +133,6 @@ const Intro = ({ intro, device }) => {
     </>
   )
 }
-
 const Navbar = ({
   setOpenMenu,
   theme,
@@ -158,7 +154,6 @@ const Navbar = ({
     changeLang(lang)
     setOpenLan(false)
   }
-
   const intro = useRef(null)
   return (
     <>
@@ -229,8 +224,8 @@ const Navbar = ({
                     href='#courses'
                     style={
                       language.lang === 'ru'
-                        ? { fontSize: '1.2rem' }
-                        : { fontSize: '1.4rem' }
+                        ? { fontSize: '1rem' }
+                        : { fontSize: '1.2rem' }
                     }
                     color='inherit'
                     underline='hover'
@@ -241,8 +236,8 @@ const Navbar = ({
                     href='#features'
                     style={
                       language.lang === 'ru'
-                        ? { fontSize: '1.2rem' }
-                        : { fontSize: '1.4rem' }
+                        ? { fontSize: '1rem' }
+                        : { fontSize: '1.2rem' }
                     }
                     color='inherit'
                     underline='hover'
@@ -253,8 +248,8 @@ const Navbar = ({
                     href='#instructors'
                     style={
                       language.lang === 'ru'
-                        ? { fontSize: '1.2rem' }
-                        : { fontSize: '1.4rem' }
+                        ? { fontSize: '1rem' }
+                        : { fontSize: '1.2rem' }
                     }
                     color='inherit'
                     underline='hover'
@@ -265,14 +260,26 @@ const Navbar = ({
                     href='#contacts'
                     style={
                       language.lang === 'ru'
-                        ? { fontSize: '1.2rem' }
-                        : { fontSize: '1.4rem' }
+                        ? { fontSize: '1rem' }
+                        : { fontSize: '1.2rem' }
                     }
                     color='inherit'
                     underline='hover'
                   >
                     {language.navbar.contact}
                   </Link>
+                  <ReactLink
+                    style={
+                      language.lang === 'ru'
+                        ? { fontSize: '1rem' }
+                        : { fontSize: '1.2rem' }
+                    }
+                    color='inherit'
+                    underline='hover'
+                    to='/library'
+                  >
+                    {language.navbar.library}
+                  </ReactLink>
                 </>
               )}
             </Stack>
@@ -307,7 +314,7 @@ const Navbar = ({
                       display: 'flex',
                       alignItems: 'center',
                       color: 'inherit',
-                      fontSize: '1.2rem',
+                      fontSize: '1rem',
                     }}
                   >
                     <Stack
@@ -415,5 +422,4 @@ const Navbar = ({
     </>
   )
 }
-
 export default Navbar

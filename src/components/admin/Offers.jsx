@@ -9,7 +9,6 @@ import {
   GridOverlay,
 } from '@mui/x-data-grid'
 import { ReactComponent as Empty } from '../../images/empty.svg'
-
 function CustomLoadingOverlay() {
   return (
     <GridOverlay>
@@ -19,7 +18,6 @@ function CustomLoadingOverlay() {
     </GridOverlay>
   )
 }
-
 function CustomToolbar() {
   return (
     <GridToolbarContainer className={gridClasses.toolbarContainer}>
@@ -27,7 +25,6 @@ function CustomToolbar() {
     </GridToolbarContainer>
   )
 }
-
 function CustomNoRowsOverlay() {
   return (
     <GridOverlay>
@@ -52,7 +49,6 @@ function CustomNoRowsOverlay() {
     </GridOverlay>
   )
 }
-
 const columns = [
   { field: 'id', headerName: 'ID', minWidth: 110 },
   {
@@ -63,17 +59,15 @@ const columns = [
   },
   { field: 'phone', headerName: 'Phone' },
 ]
-
 const Offers = () => {
   const navigate = useNavigate()
   const [data, setData] = useState([])
   const [type, setType] = useState('suggestion')
   const [offers, setOffers] = useState([])
-
   useEffect(() => {
     const pathname = window.location.pathname
     const fetchData = () => {
-      fetch('https://founders-backend.shakhzodbekkakh.repl.co/api/offers', {
+      fetch('https://founders.uz/backend/offers', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +92,6 @@ const Offers = () => {
       fetchData()
     }
   }, [navigate])
-
   const handleClick = (newType) => {
     setType(newType)
     const newOffers = data.filter((offer) => offer.type === newType)
@@ -143,5 +136,4 @@ const Offers = () => {
     </Box>
   )
 }
-
 export default Offers

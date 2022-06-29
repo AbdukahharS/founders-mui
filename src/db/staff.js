@@ -19,7 +19,7 @@ const staff = [
     name: 'Ms. Diyora',
     subname: 'SMM Manager',
     description:
-      'Creative and enthusiastic author of all colorful, artistic and inspired posts that you follow. Moreover, Ms. Diyora says "I will marry someone who will support me in passing IELTS exam with 8.0+ band.',
+      'Creative and enthusiastic author of all colorful, artistic and inspired posts that you follow. Moreover, Ms. Diyora says "I will marry someone who will support me in passing IELTS exam with 8.0+ band."',
     banner: 'ms.diyora.jpeg',
     role: 'admin',
   },

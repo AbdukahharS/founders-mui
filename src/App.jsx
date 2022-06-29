@@ -5,16 +5,16 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Library from './pages/Library'
 import Events from './pages/Events'
+import FAQs from './pages/FAQs'
+import Admin from './pages/Admin'
+import Login from './pages/Login'
+import Register from './pages/Register'
 // MUI
 import { ThemeProvider } from '@mui/material/styles'
 // Config
 import { lightTheme, darkTheme } from './muiConfig'
 // DB
 import { uzbek, english, russian } from './db/languages'
-import FAQs from './pages/FAQs'
-import Admin from './pages/Admin'
-import Login from './pages/Login'
-
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token'))
   useEffect(() => {
@@ -26,7 +26,6 @@ function App() {
     }
     localStorage.setItem('token', token)
   }, [token])
-
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') === 'dark' ? darkTheme : lightTheme
   )
@@ -48,12 +47,10 @@ function App() {
       ? 'lg'
       : 'xl'
   )
-
   const changeLang = (lang) => {
     setLanguage(lang === 'eng' ? english : lang === 'uz' ? uzbek : russian)
     localStorage.setItem('language', lang)
   }
-
   window.addEventListener('resize', () => {
     setDevice(
       window.innerWidth <= 480
@@ -67,7 +64,6 @@ function App() {
         : 'xl'
     )
   })
-
   return (
     <>
       <Router>
@@ -106,7 +102,12 @@ function App() {
             <Route
               path='/login'
               exact
-              element={<Login token={token} setToken={setToken} />}
+              element={<Login setToken={setToken} />}
+            />
+            <Route
+              path='/register'
+              exact
+              element={<Register setToken={setToken} />}
             />
             <Route
               path='admin/*'
@@ -125,5 +126,4 @@ function App() {
     </>
   )
 }
-
 export default App

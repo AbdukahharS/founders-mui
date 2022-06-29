@@ -15,18 +15,15 @@ import CourseModal from '../components/modals/CourseModal'
 import { lightTheme, darkTheme } from '../muiConfig'
 // DB
 const courses = require('../db/courses')
-
 const Home = ({ theme, setTheme, device, language, changeLang }) => {
   const [currentCourse, setCurrentCourse] = useState(courses.default[0])
   const [openMenu, setOpenMenu] = useState(false)
   const [openModal, setOpenModal] = useState(false)
   const [openQA, setOpenQA] = useState(false)
-
   useEffect(() => {
     let themeColor = theme === darkTheme ? 'dark' : 'light'
     localStorage.setItem('theme', themeColor)
   }, [theme])
-
   return (
     <>
       <Navbar
@@ -76,5 +73,4 @@ const Home = ({ theme, setTheme, device, language, changeLang }) => {
     </>
   )
 }
-
 export default Home

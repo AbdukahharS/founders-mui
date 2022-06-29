@@ -16,7 +16,6 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DatePicker from '@mui/lab/DatePicker'
 import TimePicker from '@mui/lab/TimePicker'
-
 const style = {
   position: 'absolute',
   top: '50%',
@@ -28,11 +27,9 @@ const style = {
   p: 4,
   minWidth: '40rem',
 }
-
 const Input = styled('input')({
   display: 'none',
 })
-
 const CreateSundayEvent = ({
   modal,
   setModal,
@@ -49,7 +46,6 @@ const CreateSundayEvent = ({
   const [error, setError] = useState(null)
   const [load, setLoad] = useState(false)
   const [success, setSuccess] = useState(false)
-
   const handleSubmit = () => {
     if (name && description && size && date && time) {
       if (banner) {
@@ -77,7 +73,7 @@ const CreateSundayEvent = ({
           newEvent.append('time', timeForm)
           newEvent.append('banner', banner)
           newEvent.append('token', localStorage.getItem('token'))
-          fetch('https://founders-backend.shakhzodbekkakh.repl.co/api/events', {
+          fetch('https://founders.uz/backend/events', {
             headers: { 'x-access-token': localStorage.getItem('token') },
             method: 'POST',
             body: newEvent,
@@ -229,5 +225,4 @@ const CreateSundayEvent = ({
     </>
   )
 }
-
 export default CreateSundayEvent

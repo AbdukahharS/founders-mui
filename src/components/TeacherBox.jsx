@@ -1,6 +1,5 @@
 import React from 'react'
 import { Box, Stack, Typography } from '@mui/material'
-
 const TeacherBox = ({ teacher, setIsHover, theme, i, role }) => {
   return (
     <>
@@ -56,7 +55,11 @@ const TeacherBox = ({ teacher, setIsHover, theme, i, role }) => {
             }}
           >
             <Stack direction='column' align='center'>
-              <Typography color='#ffdf33' fontSize='2rem'>
+              <Typography
+                color='#ffdf33'
+                fontSize='2rem'
+                sx={{ lineHeight: '1' }}
+              >
                 {teacher.name}
               </Typography>
               <Typography color='#ffdf33' fontSize='1.1rem'>
@@ -70,6 +73,11 @@ const TeacherBox = ({ teacher, setIsHover, theme, i, role }) => {
             spacing={2}
             className='back-box'
             position='absolute'
+            onClick={(e) => {
+              e.target.parentElement.parentElement.style.transform =
+                'translateY(0)'
+              setIsHover(false)
+            }}
             sx={
               theme.palette.mode === 'dark'
                 ? {
@@ -96,5 +104,4 @@ const TeacherBox = ({ teacher, setIsHover, theme, i, role }) => {
     </>
   )
 }
-
 export default TeacherBox

@@ -30,11 +30,7 @@ const courses = [
   {
     name: 'IELTS courses',
     type: 'group',
-    description: {
-      eng: '',
-      ru: '',
-      uz: '',
-    },
+    description: { eng: '', ru: '', uz: '' },
     items: [
       {
         name: 'IELTS Turbo',
@@ -66,5 +62,4 @@ const courses = [
     banner: 'ielts.mp4',
   },
 ]
-
 export default courses

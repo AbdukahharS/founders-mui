@@ -18,7 +18,25 @@ import {
 } from '@mui/material'
 import RegForEvent from './forms/RegForEvent'
 import EventOffer from './forms/EventOffer'
-
+import { ReactComponent as Empty } from '../../images/empty.svg'
+function CustomNoRowsOverlay() {
+  return (
+    <Stack
+      sx={{
+        color: 'secondary.main',
+        direction: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+      spacing={4}
+    >
+      <Empty color='inherit' fill='currentColor' width='12vw' height='12vw' />
+      <Typography sx={{ fontSize: '1.4rem', fontWeight: '700' }}>
+        No Upcoming Events
+      </Typography>
+    </Stack>
+  )
+}
 const Upcoming = ({ device }) => {
   const [upcomings, setUpcomings] = useState([])
   const [load, setLoad] = useState(true)
@@ -29,27 +47,24 @@ const Upcoming = ({ device }) => {
   const [regs, setRegs] = useState(
     localStorage.getItem('regs') ? localStorage.getItem('regs').split(',') : []
   )
-
-  console.log(upcomings)
-
   useEffect(() => {
-    fetch(
-      'https://founders-backend.shakhzodbekkakh.repl.co/api/events/upcoming',
-      {
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/json',
-        },
-      }
-    )
+    fetch('https://founders.uz/backend/events/upcoming', {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+      },
+    })
       .then(async (res) => {
-        const data = await res.json()
-        setUpcomings(data)
-        setLoad(false)
+        if (res.status === 200) {
+          const data = await res.json()
+          setUpcomings(data)
+          setLoad(false)
+        } else {
+          setLoad(false)
+        }
       })
       .catch((err) => console.error(err))
   }, [])
-
   useEffect(() => {
     if (regs.length !== 0) localStorage.setItem('regs', regs.toString())
   }, [regs])
@@ -68,45 +83,48 @@ const Upcoming = ({ device }) => {
             <CircularProgress size='5rem' />
           </Box>
         ) : (
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 250 }} aria-label='simple table'>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Name of the event</TableCell>
-                  <TableCell>Date</TableCell>
-                  <TableCell align='right'>Register</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {upcomings.map((upcoming, i) => (
-                  <TableRow key={i}>
-                    <TableCell>{upcoming.name}</TableCell>
-                    <TableCell>{upcoming.date}</TableCell>
-                    <TableCell align='right'>
-                      {upcoming.isFull ? (
-                        <Typography>This event is already full</Typography>
-                      ) : regs.indexOf(upcoming.id) === -1 ? (
-                        <Button
-                          sx={{
-                            bgcolor: 'secondary.main',
-                            color: 'secondary.contrastText',
-                          }}
-                          onClick={() => {
-                            setModal(true)
-                            setId(upcoming.id)
-                          }}
-                        >
-                          Register
-                        </Button>
-                      ) : (
-                        <Typography>Registered</Typography>
-                      )}
-                    </TableCell>
+          <>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 250 }} aria-label='simple table'>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Name of the event</TableCell>
+                    <TableCell>Date</TableCell>
+                    <TableCell align='right'>Register</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {upcomings.map((upcoming, i) => (
+                    <TableRow key={i}>
+                      <TableCell>{upcoming.name}</TableCell>
+                      <TableCell>{upcoming.date}</TableCell>
+                      <TableCell align='right'>
+                        {upcoming.isFull ? (
+                          <Typography>This event is already full</Typography>
+                        ) : regs.indexOf(upcoming.id) === -1 ? (
+                          <Button
+                            sx={{
+                              bgcolor: 'secondary.main',
+                              color: 'secondary.contrastText',
+                            }}
+                            onClick={() => {
+                              setModal(true)
+                              setId(upcoming.id)
+                            }}
+                          >
+                            Register
+                          </Button>
+                        ) : (
+                          <Typography>Registered</Typography>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            {!upcomings.length && <CustomNoRowsOverlay />}
+          </>
         )}
         <Stack
           direction='row'
@@ -164,5 +182,4 @@ const Upcoming = ({ device }) => {
     </Container>
   )
 }
-
 export default Upcoming

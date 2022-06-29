@@ -1,10 +1,8 @@
 import React, { useRef } from 'react'
 import { Box, Typography } from '@mui/material'
-
 const Header = ({ device }) => {
   const text = useRef()
   const video = useRef()
-
   window.addEventListener('scroll', () => {
     if (text.current && video.current && device === 'xl') {
       if (
@@ -19,7 +17,6 @@ const Header = ({ device }) => {
       }
     }
   })
-
   return (
     <Box
       color='primary.contrastText'
@@ -55,5 +52,4 @@ const Header = ({ device }) => {
     </Box>
   )
 }
-
 export default Header

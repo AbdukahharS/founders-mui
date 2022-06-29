@@ -90,5 +90,4 @@ const CourseCard = ({
     </Grid>
   )
 }
-
 export default CourseCard

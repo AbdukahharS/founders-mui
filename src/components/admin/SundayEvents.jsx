@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Box, Button, LinearProgress, Stack, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  LinearProgress,
+  Stack,
+  Typography,
+  Alert,
+  Snackbar,
+} from '@mui/material'
 import {
   GridOverlay,
   DataGrid,
@@ -23,7 +31,6 @@ import SetIsDone from './forms/SetIsDone'
 import Gallery from './Gallery'
 import Banner from './Banner'
 import AskAgain from './AskAgain'
-
 function CustomLoadingOverlay() {
   return (
     <GridOverlay>
@@ -33,7 +40,6 @@ function CustomLoadingOverlay() {
     </GridOverlay>
   )
 }
-
 function CustomToolbar() {
   return (
     <GridToolbarContainer className={gridClasses.toolbarContainer}>
@@ -41,7 +47,6 @@ function CustomToolbar() {
     </GridToolbarContainer>
   )
 }
-
 function CustomNoRowsOverlay() {
   return (
     <GridOverlay>
@@ -66,7 +71,6 @@ function CustomNoRowsOverlay() {
     </GridOverlay>
   )
 }
-
 const SundayEvents = () => {
   const navigate = useNavigate()
   const [createModal, setCreateModal] = useState(false)
@@ -80,11 +84,12 @@ const SundayEvents = () => {
   const [rows, setRows] = useState([])
   const [load, setLoad] = useState(true)
   const [url, setUrl] = useState(null)
-
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState(false)
   useEffect(() => {
     const pathname = window.location.pathname
     const fetchData = () => {
-      fetch('https://founders-backend.shakhzodbekkakh.repl.co/api/events', {
+      fetch('https://founders.uz/backend/events', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -107,19 +112,15 @@ const SundayEvents = () => {
       fetchData()
     }
   }, [navigate])
-
   const deleteHandle = () => {
-    fetch(
-      `https://founders-backend.shakhzodbekkakh.repl.co/api/events/${deleteId}`,
-      {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-access-token': localStorage.getItem('token'),
-          'Access-Control-Allow-Origin': 'no-cors',
-        },
-      }
-    )
+    fetch(`https://founders.uz/backend/events/${deleteId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.getItem('token'),
+        'Access-Control-Allow-Origin': 'no-cors',
+      },
+    })
       .then(() => {
         const newData = rows.filter((row) => row.id !== deleteId)
         setRows(newData)
@@ -127,7 +128,6 @@ const SundayEvents = () => {
       })
       .catch((err) => console.error(err))
   }
-
   const columns = [
     { field: 'id', headerName: 'ID', minWidth: 110 },
     {
@@ -230,49 +230,80 @@ const SundayEvents = () => {
     },
   ]
   return (
-    <Box style={{ height: 600, width: '100%' }}>
-      <Button variant='contained' onClick={() => setCreateModal(true)}>
-        Add Event
-      </Button>
-      <DataGrid
-        columns={columns}
-        components={{
-          LoadingOverlay: CustomLoadingOverlay,
-          Toolbar: CustomToolbar,
-          NoRowsOverlay: CustomNoRowsOverlay,
+    <>
+      <Box style={{ height: 600, width: '100%' }}>
+        <Button variant='contained' onClick={() => setCreateModal(true)}>
+          Add Event
+        </Button>
+        <DataGrid
+          columns={columns}
+          components={{
+            LoadingOverlay: CustomLoadingOverlay,
+            Toolbar: CustomToolbar,
+            NoRowsOverlay: CustomNoRowsOverlay,
+          }}
+          loading={load}
+          rows={rows}
+          rowHeight={120}
+        />
+        <UpdateSundayEvent
+          modal={updateModal}
+          setModal={setUpdateModal}
+          id={editID}
+          setId={setEditID}
+        />
+        <CreateSundayEvent
+          modal={createModal}
+          setModal={setCreateModal}
+          rows={rows}
+          setRows={setRows}
+          setTableLoad={setLoad}
+        />
+        <SetIsDone
+          modal={isDoneModal}
+          setModal={setIsDoneModal}
+          id={editID}
+          setSuccess={setSuccess}
+          setError={setError}
+          setRows={setRows}
+          rows={rows}
+        />
+        <Gallery
+          modal={galleryModal}
+          setModal={setGalleryModal}
+          gallery={gallery}
+        />
+        <Banner url={url} setUrl={setUrl} />
+        <AskAgain
+          modal={deleteModal}
+          setModal={setDeleteModal}
+          id={deleteId}
+          deleteHandle={deleteHandle}
+        />
+      </Box>
+      <Snackbar
+        open={success || error ? true : false}
+        autoHideDuration={6000}
+        onClose={() => {
+          setSuccess(null)
+          setError(null)
         }}
-        loading={load}
-        rows={rows}
-        rowHeight={120}
-      />
-      <UpdateSundayEvent
-        modal={updateModal}
-        setModal={setUpdateModal}
-        id={editID}
-        setId={setEditID}
-      />
-      <CreateSundayEvent
-        modal={createModal}
-        setModal={setCreateModal}
-        rows={rows}
-        setRows={setRows}
-        setTableLoad={setLoad}
-      />
-      <SetIsDone modal={isDoneModal} setModal={setIsDoneModal} id={editID} />
-      <Gallery
-        modal={galleryModal}
-        setModal={setGalleryModal}
-        gallery={gallery}
-      />
-      <Banner url={url} setUrl={setUrl} />
-      <AskAgain
-        modal={deleteModal}
-        setModal={setDeleteModal}
-        id={deleteId}
-        deleteHandle={deleteHandle}
-      />
-    </Box>
+      >
+        <Alert
+          onClose={() => {
+            setSuccess(null)
+            setError(null)
+          }}
+          severity={success ? 'success' : 'error'}
+          sx={{
+            width: '100%',
+            fontSize: '1.2rem',
+          }}
+        >
+          {success || error}
+        </Alert>
+      </Snackbar>
+    </>
   )
 }
-
 export default SundayEvents

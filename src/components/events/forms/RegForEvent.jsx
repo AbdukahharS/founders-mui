@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Modal, Stack, TextField, Button } from '@mui/material'
 import CancelIcon from '@mui/icons-material/Cancel'
-
 const style = {
   position: 'absolute',
   top: '50%',
@@ -12,7 +11,6 @@ const style = {
   justifyContent: 'space-evenly',
   minWidth: '24rem',
 }
-
 const RegForEvent = ({ modal, setModal, id, d, setSuccess, regs, setRegs }) => {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
@@ -23,17 +21,14 @@ const RegForEvent = ({ modal, setModal, id, d, setSuccess, regs, setRegs }) => {
         phone,
         id,
       }
-      fetch(
-        'https://founders-backend.shakhzodbekkakh.repl.co/api/regsforevents',
-        {
-          method: 'POST',
-          headers: {
-            'Content-type': 'application/json',
-            'Access-Control-Allow-Origin': 'no-cors',
-          },
-          body: JSON.stringify(newReg),
-        }
-      )
+      fetch('https://founders.uz/backend/regsforevents', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          'Access-Control-Allow-Origin': 'no-cors',
+        },
+        body: JSON.stringify(newReg),
+      })
         .then(async (res) => {
           if (res.ok) {
             setModal(false)
@@ -89,5 +84,4 @@ const RegForEvent = ({ modal, setModal, id, d, setSuccess, regs, setRegs }) => {
     </Modal>
   )
 }
-
 export default RegForEvent

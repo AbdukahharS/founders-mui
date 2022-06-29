@@ -1,6 +1,5 @@
 import React from 'react'
 import { Button, Modal, Paper, Stack, Typography } from '@mui/material'
-
 const style = {
   top: '50%',
   left: '50%',
@@ -8,7 +7,6 @@ const style = {
   transform: 'translate(-50%, -50%)',
   p: 4,
 }
-
 const AskAgain = ({ modal, setModal, deleteHandle }) => {
   return (
     <Modal open={modal} onClose={() => setModal(false)}>
@@ -42,5 +40,4 @@ const AskAgain = ({ modal, setModal, deleteHandle }) => {
     </Modal>
   )
 }
-
 export default AskAgain

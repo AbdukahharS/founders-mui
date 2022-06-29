@@ -27,19 +27,43 @@ const Contacts = ({ language }) => {
         </Typography>
         <Grid container spacing={4}>
           <Grid item xs={12} lg={8}>
-            <iframe
-              src='https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d5994.225843719499!2d69.236315!3d41.306407!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x580ecc545cc25d07!2zNDHCsDE4JzIzLjEiTiA2OcKwMTQnMTAuNyJF!5e0!3m2!1sen!2s!4v1640899816452!5m2!1sen!2s'
-              width='100%'
-              height='400px'
-              style={{ border: '0' }}
-              allowFullScreen=''
-              loading='lazy'
-              title='Google Maps'
-            ></iframe>
+            <div style={{ position: 'relative', overflow: 'hidden' }}>
+              <a
+                href='https://yandex.com/maps/org/founders_language_school/210947970587/?utm_medium=mapframe&utm_source=maps'
+                style={{
+                  color: '#eee',
+                  fontSize: '12px',
+                  position: 'absolute',
+                  top: ' 0px',
+                }}
+              >
+                Founders Language School
+              </a>
+              <a
+                href='https://yandex.com/maps/10335/tashkent/category/foreign_language_courses/184106160/?utm_medium=mapframe&utm_source=maps'
+                style={{
+                  color: '#eee',
+                  fontSize: '12px',
+                  position: 'absolute',
+                  top: '14px',
+                }}
+              >
+                Foreign language courses in Tashkent
+              </a>
+              <iframe
+                title='Yandex Map'
+                src='https://yandex.com/map-widget/v1/-/CCU5qVvhkC'
+                width='100%'
+                frameBorder='1'
+                height='400px'
+                allowFullScreen={true}
+                style={{ position: 'relative' }}
+              ></iframe>
+            </div>
           </Grid>
           <Grid item xs={12} lg={4} fontFamily='Josefin Slab'>
             <Link
-              href='/'
+              href='https://yandex.com/maps/-/CCU5qZA5CB'
               underline='hover'
               color='secondary'
               sx={{ display: 'flex', alignItems: 'center' }}

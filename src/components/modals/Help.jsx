@@ -18,13 +18,11 @@ import {
   InputAdornment,
 } from '@mui/material'
 import CancelIcon from '@mui/icons-material/Cancel'
-
 const Modal = ({ openQA, theme }) => {
   const [type, setType] = useState('suggestion')
   const [body, setBody] = useState('')
   const [phone, setPhone] = useState(1111111)
   const [succes, setSucces] = useState(false)
-
   const handleClick = async () => {
     const requestOptions = {
       method: 'POST',
@@ -32,7 +30,7 @@ const Modal = ({ openQA, theme }) => {
       body: JSON.stringify({ type, body, phone: `+998 ${phone}` }),
     }
     const data = await fetch(
-      'https://founders-backend.shakhzodbekkakh.repl.co/api/offers',
+      'https://founders.uz/backend/offers',
       requestOptions
     )
     if (data.status === 200) {
@@ -195,7 +193,6 @@ const Modal = ({ openQA, theme }) => {
     </>
   )
 }
-
 const Help = ({ theme, openQA, setOpenQA, language }) => {
   return (
     <>
@@ -252,5 +249,4 @@ const Help = ({ theme, openQA, setOpenQA, language }) => {
     </>
   )
 }
-
 export default Help

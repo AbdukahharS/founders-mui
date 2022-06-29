@@ -1,5 +1,4 @@
 import { createTheme } from '@mui/material/styles'
-
 const lightTheme = createTheme({
   palette: {
     mode: 'light',
@@ -11,12 +10,12 @@ const lightTheme = createTheme({
       main: '#191919',
     },
     light: { main: '#fff' },
+    gold: { main: '#f4d40d' }
   },
   typography: {
-    fontFamily: `"Josefin Slab", "Raleway", "Roboto Slab", "Helvetica", "Arial", sans-serif`,
+    fontFamily: `Josefin Slab, Raleway, Roboto Slab, Helvetica, Arial, sans-serif`,
   },
 })
-
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -31,10 +30,10 @@ const darkTheme = createTheme({
       main: '#474747',
       contrastText: '#fff',
     },
+    gold: { main: '#f4d40d' }
   },
   typography: {
-    fontFamily: `"Josefin Slab", "Raleway", "Roboto Slab", "Helvetica", "Arial", serif`,
+    fontFamily: `Josefin Slab, Raleway, Roboto Slab, Helvetica, Arial, serif`,
   },
 })
-
 export { lightTheme, darkTheme }

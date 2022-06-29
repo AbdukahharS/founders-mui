@@ -18,7 +18,6 @@ import CancelIcon from '@mui/icons-material/Cancel'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
-
 const mStyle = {
   position: 'absolute',
   top: '0',
@@ -29,7 +28,6 @@ const mStyle = {
   color: 'primary.contrastText',
   overflowY: 'auto',
 }
-
 const notMStyle = {
   position: 'absolute',
   top: '50%',
@@ -42,7 +40,6 @@ const notMStyle = {
   p: 3,
   overflowY: 'auto',
 }
-
 const CourseModal = ({
   openModal,
   setOpenModal,
@@ -53,9 +50,7 @@ const CourseModal = ({
   const closeModal = () => {
     setOpenModal(false)
   }
-
   const [courseNum, setCourseNum] = React.useState(0)
-
   return (
     <ModalBox open={openModal} onClose={() => closeModal()}>
       <Box
@@ -129,7 +124,6 @@ const CourseModal = ({
                   {language.courseModal.enroll}:
                 </Typography>
               </Stack>
-
               <Stack direction='row' justifyContent='space-evenly'>
                 <Link
                   underline='hover'
@@ -268,7 +262,6 @@ const CourseModal = ({
                           {language.courseModal.enroll}:
                         </Typography>
                       </Stack>
-
                       <Stack direction='row' justifyContent='space-evenly'>
                         <Link
                           underline='hover'
@@ -340,5 +333,4 @@ const CourseModal = ({
     </ModalBox>
   )
 }
-
 export default CourseModal

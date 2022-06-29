@@ -1,5 +1,7 @@
+// Dependencies
 import React, { useState, useEffect } from 'react'
 import { useNavigate, Route, Routes } from 'react-router-dom'
+// Material-UI
 import {
   Box,
   Container,
@@ -12,16 +14,18 @@ import {
   CircularProgress,
   Button,
 } from '@mui/material'
+import { lightTheme, darkTheme } from '../muiConfig'
+// Pages
 import SundayEvents from '../components/admin/SundayEvents'
 import RegsForEvents from '../components/admin/RegsForEvents'
 import Offers from '../components/admin/Offers'
+import Users from '../components/admin/Users'
+import Library from '../components/admin/Library'
+// Icons
 import EventSuggestions from '../components/admin/EventSuggestions'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
-import { lightTheme, darkTheme } from '../muiConfig'
-
 const localStorage = window.localStorage
-
 const Admin = ({ setToken, theme, setTheme }) => {
   const navigate = useNavigate()
   const [isValid, setIsValid] = useState(false)
@@ -30,19 +34,16 @@ const Admin = ({ setToken, theme, setTheme }) => {
       ? localStorage.getItem('adminpath')
       : 'sundayevents'
   )
-
   useEffect(() => {
     let themeColor = theme === darkTheme ? 'dark' : 'light'
     localStorage.setItem('theme', themeColor)
   }, [theme])
-
   useEffect(() => {
     localStorage.setItem('adminpath', path)
   }, [path])
-
   useEffect(() => {
     const checkToken = () => {
-      fetch('https://founders-backend.shakhzodbekkakh.repl.co/api/welcome', {
+      fetch('https://founders.uz/backend/welcome', {
         method: 'POST',
         headers: {
           'x-access-token': localStorage.getItem('token'),
@@ -67,7 +68,6 @@ const Admin = ({ setToken, theme, setTheme }) => {
       checkToken()
     }
   }, [isValid, navigate, setToken, path])
-
   const clickHandler = () => {
     setTheme(theme === lightTheme ? darkTheme : lightTheme)
   }
@@ -193,6 +193,42 @@ const Admin = ({ setToken, theme, setTheme }) => {
               >
                 <ListItemText primary='Registrations for Sunday events' />
               </ListItem>
+              <Divider light />
+              <ListItem
+                sx={
+                  path === 'users'
+                    ? {
+                        bgcolor: 'secondary.light',
+                        color: 'secondary.contrastText',
+                      }
+                    : { bgcolor: 'primary.main' }
+                }
+                button
+                onClick={() => {
+                  setPath('users')
+                  navigate('/admin/users')
+                }}
+              >
+                <ListItemText primary='Users' />
+              </ListItem>
+              <Divider light />
+              <ListItem
+                sx={
+                  path === 'library'
+                    ? {
+                        bgcolor: 'secondary.light',
+                        color: 'secondary.contrastText',
+                      }
+                    : { bgcolor: 'primary.main' }
+                }
+                button
+                onClick={() => {
+                  setPath('library')
+                  navigate('/admin/library')
+                }}
+              >
+                <ListItemText primary='Library' />
+              </ListItem>
             </List>
             <Box width='100%'>
               <Routes>
@@ -200,6 +236,8 @@ const Admin = ({ setToken, theme, setTheme }) => {
                 <Route path='regsforevents' element={<RegsForEvents />} />
                 <Route path='offers' element={<Offers />} />
                 <Route path='eventsuggestions' element={<EventSuggestions />} />
+                <Route path='users' element={<Users />} />
+                <Route path='library' element={<Library />} />
               </Routes>
             </Box>
           </Stack>
@@ -212,5 +250,4 @@ const Admin = ({ setToken, theme, setTheme }) => {
     </main>
   )
 }
-
 export default Admin

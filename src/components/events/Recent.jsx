@@ -10,7 +10,6 @@ import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import RecentModal from '../modals/RecentModal'
 import { ReactComponent as Empty } from '../../images/empty.svg'
-
 const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },
@@ -29,27 +28,26 @@ const responsive = {
     items: 1,
   },
 }
-
 const Recent = () => {
   const [recents, setRecents] = useState([])
   const [modal, setModal] = useState(false)
   const [event, setEvent] = useState(null)
   const [load, setLoad] = useState(true)
   useEffect(() => {
-    fetch(
-      'https://founders-backend.shakhzodbekkakh.repl.co/api/events/recent',
-      {
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/json',
-          'x-access-token': localStorage.getItem('token'),
-        },
-      }
-    )
+    fetch('https://founders.uz/backend/events/recent', {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+      },
+    })
       .then(async (res) => {
-        const data = await res.json()
-        setRecents(data)
-        setLoad(false)
+        if (res.status === 200) {
+          const data = await res.json()
+          setRecents(data || [])
+          setLoad(false)
+        } else {
+          setLoad(false)
+        }
       })
       .catch((err) => console.error(err))
   }, [])
@@ -143,5 +141,4 @@ const Recent = () => {
     </Container>
   )
 }
-
 export default Recent

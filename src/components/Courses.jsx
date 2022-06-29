@@ -65,5 +65,4 @@ const Courses = ({ setCurrentCourse, setOpenModal, device, language }) => {
     </Box>
   )
 }
-
 export default Courses

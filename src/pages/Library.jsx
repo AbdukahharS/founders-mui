@@ -7,13 +7,9 @@ import { lightTheme, darkTheme } from '../muiConfig'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import DownloadIcon from '@mui/icons-material/Download'
-// DB Books
-import books from '../db/books'
-
 const disable = {
   color: 'primary.contrastText',
 }
-
 const enable = {
   color: 'secondary.main',
   borderBottomWidth: '4px',
@@ -22,20 +18,46 @@ const enable = {
   borderBottomLeftRadius: '0',
   borderBottomRightRadius: '0',
 }
-
 const Library = ({ theme, setTheme, device }) => {
   const clickHandler = () => {
     setTheme(theme === lightTheme ? darkTheme : lightTheme)
   }
-  const [curCategory, setCurCategory] = useState('all')
+  const [books, setBooks] = useState([])
+  const [curCategory, setCurCategory] = useState('All')
   const [curBooks, setCurBooks] = useState([])
+  const [categories, setCategories] = useState([])
   useEffect(() => {
-    if (curCategory === 'all') {
+    const fetchBooks = async () => {
+      const res = await fetch('https://founders.uz/backend/books', {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+        },
+      })
+      const data = await res.json()
+      setBooks(await data.body)
+    }
+    const fetchCategories = async () => {
+      const res = await fetch('https://founders.uz/backend/categories', {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+        },
+      })
+      const data = await res.json()
+      data.body.unshift('All')
+      setCategories(await data.body)
+    }
+    fetchBooks()
+    fetchCategories()
+  }, [])
+  useEffect(() => {
+    if (curCategory === 'All') {
       setCurBooks(books)
     } else {
       setCurBooks(books.filter((book) => book.category === curCategory))
     }
-  }, [curCategory])
+  }, [curCategory, books])
   return (
     <Stack
       direction='column'
@@ -72,30 +94,17 @@ const Library = ({ theme, setTheme, device }) => {
             </Stack>
           </Container>
         </Box>
-        <Box
-          // bgcolor='primary.main'
-          color='primary.contrastText'
-          className='categories'
-        >
+        <Box color='primary.contrastText' className='categories'>
           <Container>
-            <Button
-              onClick={() => setCurCategory('all')}
-              sx={curCategory !== 'all' ? disable : enable}
-            >
-              All
-            </Button>
-            <Button
-              onClick={() => setCurCategory('Kids English')}
-              sx={curCategory !== 'Kids English' ? disable : enable}
-            >
-              Kids English
-            </Button>
-            <Button
-              onClick={() => setCurCategory('Literature')}
-              sx={curCategory !== 'Literature' ? disable : enable}
-            >
-              Literature
-            </Button>
+            {categories.map((category, i) => (
+              <Button
+                key={i}
+                onClick={() => setCurCategory(category)}
+                sx={curCategory !== category ? disable : enable}
+              >
+                {category}
+              </Button>
+            ))}
           </Container>
         </Box>
       </Box>
@@ -115,16 +124,27 @@ const Library = ({ theme, setTheme, device }) => {
                 <Stack direction='row' alignItems='center' spacing={2}>
                   <img
                     style={{ height: '8rem' }}
-                    src={require(`../images/books/${book.banner}`).default}
+                    src={book.banner}
                     alt='blah'
                   />
                   <Stack>
                     <Typography fontSize='1.4rem' color='secondary'>
                       {book.name}
                     </Typography>
+                    {book.audio && (
+                      <a href={book.audio} download>
+                        <Typography
+                          fontSize='1.2rem'
+                          color='secondary'
+                          sx={{ textDecoration: 'underline' }}
+                        >
+                          Download Audio
+                        </Typography>
+                      </a>
+                    )}
                   </Stack>
                 </Stack>
-                <a href={require(`../books/${book.file}`).default} download>
+                <a href={book.file} download>
                   <DownloadIcon sx={{ color: 'secondary.main' }} />
                 </a>
               </Stack>
@@ -135,5 +155,4 @@ const Library = ({ theme, setTheme, device }) => {
     </Stack>
   )
 }
-
 export default Library

@@ -9,7 +9,6 @@ import {
   GridOverlay,
 } from '@mui/x-data-grid'
 import { ReactComponent as Empty } from '../../images/empty.svg'
-
 function CustomLoadingOverlay() {
   return (
     <GridOverlay>
@@ -19,7 +18,6 @@ function CustomLoadingOverlay() {
     </GridOverlay>
   )
 }
-
 function CustomToolbar() {
   return (
     <GridToolbarContainer className={gridClasses.toolbarContainer}>
@@ -27,7 +25,6 @@ function CustomToolbar() {
     </GridToolbarContainer>
   )
 }
-
 function CustomNoRowsOverlay() {
   return (
     <GridOverlay>
@@ -52,7 +49,6 @@ function CustomNoRowsOverlay() {
     </GridOverlay>
   )
 }
-
 const columns = [
   { field: 'id', headerName: 'ID', minWidth: 110 },
   {
@@ -65,24 +61,19 @@ const columns = [
   { field: 'size', headerName: 'Size' },
   { field: 'phone', headerName: 'Phone', minWidth: 130 },
 ]
-
 const EventSuggestions = () => {
   const navigate = useNavigate()
   const [offers, setOffers] = useState([])
-
   useEffect(() => {
     const pathname = window.location.pathname
     const fetchData = () => {
-      fetch(
-        'https://founders-backend.shakhzodbekkakh.repl.co/api/eventsuggestions',
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-access-token': localStorage.getItem('token'),
-          },
-        }
-      )
+      fetch('https://founders.uz/backend/eventsuggestions', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': localStorage.getItem('token'),
+        },
+      })
         .then(async (res) => {
           if (res.statusCode === 401) {
             navigate('/login')
@@ -113,5 +104,4 @@ const EventSuggestions = () => {
     </Box>
   )
 }
-
 export default EventSuggestions

@@ -3,8 +3,10 @@ const english = {
   navbar: {
     courses: 'Courses',
     features: 'Features',
-    instructors: 'Staff',
+    instructors: 'Our team',
     contact: 'Contact Us',
+    library: 'Library',
+    events: 'Events',
     button: {
       otherBtns: [{ lang: 'uz' }, { lang: 'ru' }],
     },
@@ -39,21 +41,24 @@ const english = {
   },
   help: 'Help Center',
 }
-
 const uzbek = {
   lang: 'uz',
   navbar: {
     courses: 'Kurslar',
     features: 'Qulayliklar',
-    instructors: 'Xodimlar',
+    instructors: 'Jamoamiz',
     contact: "Biz bilan bog'laning",
+    library: 'Kutubxona',
+    events: 'Events',
     button: {
       otherBtns: [{ lang: 'eng' }, { lang: 'ru' }],
     },
   },
   courses: {
     heading: 'Kurslar',
-    btn: { expand: "Barcha kurslarni ko'rish", collapse: 'Kamaytirish' },
+    btn: {
+      expand: "Barcha kurslarni ko'rish", collapse: 'Kamaytirish'
+    },
     card: {
       learn: 'Batafsil',
     },
@@ -84,14 +89,15 @@ const uzbek = {
   },
   help: 'Yordam markazi',
 }
-
 const russian = {
   lang: 'ru',
   navbar: {
     courses: 'Курсы',
     features: 'Функции',
-    instructors: 'Персонал',
+    instructors: 'Наша команда',
     contact: 'Свяжитесь с нами',
+    library: 'Библиотека',
+    events: 'Events',
     button: {
       otherBtns: [{ lang: 'uz' }, { lang: 'eng' }],
     },
@@ -129,5 +135,4 @@ const russian = {
   },
   help: 'Центр помощи',
 }
-
 export { english, uzbek, russian }

@@ -9,7 +9,6 @@ import {
   gridClasses,
 } from '@mui/x-data-grid'
 import { ReactComponent as Empty } from '../../images/empty.svg'
-
 function CustomLoadingOverlay() {
   return (
     <GridOverlay>
@@ -19,7 +18,6 @@ function CustomLoadingOverlay() {
     </GridOverlay>
   )
 }
-
 function CustomToolbar() {
   return (
     <GridToolbarContainer className={gridClasses.toolbarContainer}>
@@ -27,7 +25,6 @@ function CustomToolbar() {
     </GridToolbarContainer>
   )
 }
-
 function CustomNoRowsOverlay() {
   return (
     <GridOverlay>
@@ -52,7 +49,6 @@ function CustomNoRowsOverlay() {
     </GridOverlay>
   )
 }
-
 const RegsForEvents = () => {
   const navigate = useNavigate()
   const [data, setData] = useState([])
@@ -60,7 +56,6 @@ const RegsForEvents = () => {
   const [events, setEvents] = useState([])
   const [rows, setRows] = useState([])
   const [load, setLoad] = useState(true)
-
   const columns = [
     { field: 'id', headerName: 'ID', minWidth: 110 },
     {
@@ -75,20 +70,16 @@ const RegsForEvents = () => {
       minWidth: 150,
     },
   ]
-
   useEffect(() => {
     const pathname = window.location.pathname
     const fetchData = () => {
-      fetch(
-        'https://founders-backend.shakhzodbekkakh.repl.co/api/regsforevents',
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-access-token': localStorage.getItem('token'),
-          },
-        }
-      )
+      fetch('https://founders.uz/backend/regsforevents', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': localStorage.getItem('token'),
+        },
+      })
         .then(async (res) => {
           if (res.status === 401) {
             navigate('/login')
@@ -155,5 +146,4 @@ const RegsForEvents = () => {
     </Box>
   )
 }
-
 export default RegsForEvents

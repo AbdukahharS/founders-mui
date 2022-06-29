@@ -1,3 +1,5 @@
+import React from 'react'
+import { Link as ReactLink } from 'react-router-dom'
 import {
   Slide,
   Box,
@@ -8,14 +10,12 @@ import {
   Divider,
   Grow,
 } from '@mui/material'
-import React from 'react'
 import CancelIcon from '@mui/icons-material/Cancel'
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import PublicIcon from '@mui/icons-material/Public'
-
 const style = {
   position: 'fixed',
   top: '0',
@@ -26,7 +26,6 @@ const style = {
   color: 'primary.contrastText',
   p: 4,
 }
-
 const MenuModal = ({
   openMenu,
   setOpenMenu,
@@ -40,7 +39,6 @@ const MenuModal = ({
   const clickHandler = () => {
     setTheme(theme === lightTheme ? darkTheme : lightTheme)
   }
-
   const [openLan, setOpenLan] = React.useState(false)
   const handleChange = async (lang) => {
     changeLang(lang)
@@ -161,6 +159,20 @@ const MenuModal = ({
             >
               {language.navbar.contact}
             </Link>
+            <ReactLink
+              to='/library'
+              style={{ fontSize: '1.6rem' }}
+              color='inherit'
+            >
+              {language.navbar.library}
+            </ReactLink>
+            <ReactLink
+              to='/events'
+              style={{ fontSize: '1.6rem' }}
+              color='inherit'
+            >
+              {language.navbar.events}
+            </ReactLink>
           </Stack>
           <Divider
             sx={{ backgroundColor: 'secondary.main', marginY: '1rem' }}
@@ -194,5 +206,4 @@ const MenuModal = ({
     </Slide>
   )
 }
-
 export default MenuModal

@@ -8,7 +8,6 @@ import EventIcon from '@mui/icons-material/Event'
 import SchoolIcon from '@mui/icons-material/School'
 import OfflineBoltIcon from '@mui/icons-material/OfflineBolt'
 import CastForEducationIcon from '@mui/icons-material/CastForEducation'
-
 const features = [
   {
     icon: AccessTimeIcon,
@@ -119,7 +118,9 @@ const features = [
   },
   {
     icon: CastForEducationIcon,
-    name: { eng: 'More lessons', ru: 'Больше уроков', uz: "Ko'proq darslar" },
+    name: {
+      eng: 'More lessons', ru: 'Больше уроков', uz: "Ko'proq darslar"
+    },
     description: {
       eng: 'Unlike others, our courses include 20 lessons per month.',
       ru: 'В отличие от других, наши курсы включают 20 уроков в месяц.',
@@ -127,5 +128,4 @@ const features = [
     },
   },
 ]
-
 export default features

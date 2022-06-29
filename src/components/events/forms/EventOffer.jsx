@@ -9,7 +9,6 @@ import {
   Alert,
 } from '@mui/material'
 import CancelIcon from '@mui/icons-material/Cancel'
-
 const style = {
   position: 'absolute',
   top: '50%',
@@ -20,7 +19,6 @@ const style = {
   justifyContent: 'space-evenly',
   minWidth: '24rem',
 }
-
 const EventOffer = ({ modal, setModal, device }) => {
   const [fullname, setFullname] = useState('')
   const [name, setName] = useState('')
@@ -29,13 +27,12 @@ const EventOffer = ({ modal, setModal, device }) => {
   const [phone, setPhone] = useState(1111111)
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(false)
-
   const handleSubmit = async () => {
     if (fullname && name && purpose && size && phone) {
       if (size >= 5) {
         if (phone.toString().length === 7) {
           const res = await fetch(
-            'https://founders-backend.shakhzodbekkakh.repl.co/api/eventsuggestions',
+            'https://founders.uz/backend/eventsuggestions',
             {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -120,7 +117,6 @@ const EventOffer = ({ modal, setModal, device }) => {
                 }}
                 color='secondary'
               />
-
               <Button
                 sx={{ bgcolor: 'secondary.main' }}
                 onClick={() => handleSubmit()}
@@ -176,5 +172,4 @@ const EventOffer = ({ modal, setModal, device }) => {
     </>
   )
 }
-
 export default EventOffer

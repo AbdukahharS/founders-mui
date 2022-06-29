@@ -13,7 +13,6 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DatePicker from '@mui/lab/DatePicker'
 import TimePicker from '@mui/lab/TimePicker'
-
 const style = {
   position: 'absolute',
   top: '50%',
@@ -25,11 +24,9 @@ const style = {
   boxShadow: 24,
   p: 4,
 }
-
 const Input = styled('input')({
   display: 'none',
 })
-
 const UpdateSundayEvent = ({ modal, setModal, id }) => {
   const [name, setName] = useState('')
   const [desc, setDesc] = useState('')
@@ -40,20 +37,16 @@ const UpdateSundayEvent = ({ modal, setModal, id }) => {
   const [isFull, setIsFull] = useState(false)
   const [time, setTime] = useState(new Date())
   const [load, setLoad] = useState(true)
-
   useEffect(() => {
     id &&
-      fetch(
-        `https://founders-backend.shakhzodbekkakh.repl.co/api/events/${id}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-access-token': localStorage.getItem('token'),
-            'Access-Control-Allow-Origin': 'no-cors',
-          },
-        }
-      )
+      fetch(`https://founders.uz/backend/events/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': localStorage.getItem('token'),
+          'Access-Control-Allow-Origin': 'no-cors',
+        },
+      })
         .then(async (res) => {
           const data = await res.json()
           setName(data.name)
@@ -74,13 +67,12 @@ const UpdateSundayEvent = ({ modal, setModal, id }) => {
         })
         .catch((err) => console.error(err))
   }, [id])
-
   return (
     <Modal open={modal} onClose={() => setModal(false)}>
       <Box>
         <form
           method='post'
-          action={`https://founders-backend.shakhzodbekkakh.repl.co/api/events/${id}`}
+          action={`https://founders.uz/backend/events/${id}`}
           encType='multipart/form-data'
         >
           {load ? (
@@ -115,6 +107,7 @@ const UpdateSundayEvent = ({ modal, setModal, id }) => {
                 label='Description of event'
                 variant='outlined'
                 name='description'
+                multiline
                 value={desc}
                 onChange={(e) => setDesc(e.target.value)}
                 required
@@ -241,5 +234,4 @@ const UpdateSundayEvent = ({ modal, setModal, id }) => {
     </Modal>
   )
 }
-
 export default UpdateSundayEvent

@@ -18,12 +18,10 @@ import Brightness4Icon from '@mui/icons-material/Brightness4'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 // DB FAQs
 import faqs from '../db/faqs'
-
 const FAQs = ({ theme, setTheme, device }) => {
   const clickHandler = () => {
     setTheme(theme === lightTheme ? darkTheme : lightTheme)
   }
-
   return (
     <Stack
       direction='column'
@@ -100,5 +98,4 @@ const FAQs = ({ theme, setTheme, device }) => {
     </Stack>
   )
 }
-
 export default FAQs
