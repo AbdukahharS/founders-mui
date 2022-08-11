@@ -8,7 +8,7 @@ const TeacherBox = ({ teacher, setIsHover, theme, i, role }) => {
           fontSize: '1.6rem',
           ml: 1,
           color:
-            i === 0 || i === 3 || i === 8
+            i === 0 || i === 3 || i === 9
               ? 'primary.contrastText'
               : 'light.main',
         }}
@@ -48,7 +48,7 @@ const TeacherBox = ({ teacher, setIsHover, theme, i, role }) => {
             sx={{
               background:
                 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.8)), url(' +
-                require(`../images/${teacher.banner}`).default +
+                require(`../../../images/${teacher.banner}`).default +
                 ')',
               backgroundPosition: 'center',
               backgroundSize: 'cover',

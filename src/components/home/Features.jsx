@@ -2,7 +2,7 @@ import { Box, Container, Stack, Typography, Button } from '@mui/material'
 import { Link } from 'react-router-dom'
 import React from 'react'
 // DB
-import features from '../db/features'
+import features from '../../db/features'
 
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'

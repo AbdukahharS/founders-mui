@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Library from './pages/Library'
 import Events from './pages/Events'
-import FAQs from './pages/FAQs'
+// import FAQs from './pages/FAQs'
 import Admin from './pages/Admin'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -15,6 +15,8 @@ import { ThemeProvider } from '@mui/material/styles'
 import { lightTheme, darkTheme } from './muiConfig'
 // DB
 import { uzbek, english, russian } from './db/languages'
+import NotFound from './pages/NotFound'
+
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token'))
   useEffect(() => {
@@ -69,6 +71,7 @@ function App() {
       <Router>
         <ThemeProvider theme={theme}>
           <Routes>
+            <Route path='*' exact={true} element={<NotFound />} />
             <Route
               path='/'
               element={
@@ -87,12 +90,12 @@ function App() {
                 <Library theme={theme} setTheme={setTheme} device={device} />
               }
             />
-            <Route
+            {/* <Route
               path='/faqs'
               element={
                 <FAQs theme={theme} setTheme={setTheme} device={device} />
               }
-            />
+            /> */}
             <Route
               path='events/*'
               element={

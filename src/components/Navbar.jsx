@@ -21,7 +21,9 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
 import PublicIcon from '@mui/icons-material/Public'
 import CancelIcon from '@mui/icons-material/Cancel'
+
 const Intro = ({ intro, device }) => {
+  const introImage = useRef(null)
   const filter = useRef(null)
   const [isPlay, setIsPlay] = useState(false)
   const [isEnd, setIsEnd] = useState(
@@ -49,10 +51,8 @@ const Intro = ({ intro, device }) => {
     }
   }
   window.addEventListener('load', () => {
-    const box = intro.current
-    const video = box.querySelector('div video')
-    video.style.animation = 'attract 0.8s infinite'
-    video.style.width = device === 'xs' ? '40vw' : '20vw'
+    const img = introImage.current
+    if (img) img.style.width = device === 'xs' ? '40vw' : '20vw'
   })
   return (
     <>
@@ -87,11 +87,22 @@ const Intro = ({ intro, device }) => {
             width='100%'
             src={require('../videos/intro.mp4').default}
             style={{
-              display: isEnd ? 'none' : '',
+              display: isPlay ? 'block' : 'none',
               borderRadius: '50%',
               width: device === 'xs' ? '30vw' : '20vw',
             }}
           ></video>
+          <img
+            ref={introImage}
+            src={require('../images/intro.png').default}
+            alt='Intro img'
+            style={{
+              display: isPlay ? 'none' : '',
+              borderRadius: '50%',
+              width: device === 'xs' ? '30vw' : '20vw',
+              animation: 'attract 0.8s infinite',
+            }}
+          />
           <Button
             display={isPlay ? 'none' : ''}
             onClick={playVideo}

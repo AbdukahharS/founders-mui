@@ -10,6 +10,7 @@ import logoDark from './../images/logo-dark.png'
 import { lightTheme, darkTheme } from '../muiConfig'
 import Recent from '../components/events/Recent'
 import Upcoming from '../components/events/Upcoming'
+
 const Events = ({ theme, setTheme, device }) => {
   const [path, setPath] = useState(localStorage.getItem('path') || 'recent')
   const clickHandler = () => {

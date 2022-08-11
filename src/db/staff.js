@@ -24,10 +24,10 @@ const staff = [
     role: 'admin',
   },
   {
-    name: 'Ms. Zhaniya',
-    subname: '8.0 band holder, all courses',
+    name: 'Ms. Robiya',
+    subname: '7.0 , General English, Kids English',
     description:
-      'One of our adorable and amiable IELTS instructor Ms. Zhaniya persuades you to progress with higher band scores like herself by giving all tips and tricks.',
+      'One of our adorable and amiable IELTS instructor Ms. Robiya persuades you to progress with higher band scores like herself by giving all tips and tricks.',
     banner: 'ms.zhaniya.jpeg',
     role: 'instructor',
   },

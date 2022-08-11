@@ -4,7 +4,7 @@ import { Button, Container, Grid, Typography, Box, Stack } from '@mui/material'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 // DB
-import courses from '../db/courses'
+import courses from '../../../db/courses'
 
 const Courses = ({ setCurrentCourse, setOpenModal, device, language }) => {
   const [isExpanded, setIsExpanded] = useState(false)

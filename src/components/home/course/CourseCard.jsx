@@ -44,7 +44,7 @@ const CourseCard = ({
             }}
           >
             <source
-              src={require(`../videos/${course.banner}`).default}
+              src={require(`../../../videos/${course.banner}`).default}
               type='video/webm'
             />
           </video>

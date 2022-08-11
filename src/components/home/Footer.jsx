@@ -1,7 +1,8 @@
 import { Box, Container, Grid, Stack, Typography, Link } from '@mui/material'
 import React from 'react'
-import logo from './../images/logo.png'
-import logoDark from './../images/logo-dark.png'
+import logo from '../../images/logo.png'
+import logoDark from '../../images/logo-dark.png'
+
 const Footer = ({ theme, lightTheme }) => {
   return (
     <Box bgcolor='primary.main' color='primary.contrastText' pt={4} pb={6}>
