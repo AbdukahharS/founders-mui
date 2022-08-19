@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { getDocs, collection, doc, updateDoc } from 'firebase/firestore'
 import {
   Stack,
   Typography,
@@ -15,7 +16,9 @@ import {
   gridClasses,
   DataGrid,
 } from '@mui/x-data-grid'
+import { db } from '../../config/firebase'
 import { ReactComponent as Empty } from '../../images/empty.svg'
+
 function CustomLoadingOverlay() {
   return (
     <GridOverlay>
@@ -58,14 +61,17 @@ function CustomNoRowsOverlay() {
 }
 const columns = [
   { field: 'id', headerName: 'ID', minWidth: 110 },
-  { field: 'name', headerName: 'Name', minWidth: 220, editable: true },
+  { field: 'displayName', headerName: 'Name', minWidth: 220, editable: true },
   { field: 'email', headerName: 'Email', flex: 1 },
   {
-    field: 'status',
+    field: 'admin',
     headerName: 'Status',
     type: 'singleSelect',
     valueOptions: ['admin', 'user'],
     editable: true,
+    valueGetter: (params) => {
+      return params.row.admin === true ? 'admin' : 'user'
+    },
   },
 ]
 const Users = () => {
@@ -74,49 +80,38 @@ const Users = () => {
   const [rows, setRows] = useState([])
   const [success, setSuccess] = useState(false)
   useEffect(() => {
+    setLoad(true)
     const pathname = window.location.pathname
-    const fetchData = () => {
-      fetch('https://founders.uz/backend/users', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-access-token': localStorage.getItem('token'),
-        },
-      })
-        .then(async (res) => {
-          if (res.statusCode === 401) {
-            navigate('/login')
-          } else if (res.ok) {
-            const data = await res.json()
-            setRows(data)
-            setLoad(false)
-          }
+    const fetchData = async () => {
+      getDocs(collection(db, 'profiles'), {})
+        .then((snap) => {
+          snap.forEach((doc) => {
+            setRows((r) => [{ id: doc.id, ...doc.data() }, ...r])
+          })
+          setLoad(false)
         })
-        .catch((err) => console.error(err))
+        .catch((err) => {
+          console.error(err)
+          alert(err.message)
+        })
     }
     if (pathname === '/admin/users') {
       fetchData()
     }
   }, [navigate])
   const handleEdit = async (params, event) => {
-    const { id, value } = params
-    let body
-    if (params.field === 'name') {
-      body = JSON.stringify({ name: value })
+    const { id, value, field } = params
+    const docRef = doc(db, 'profiles', id)
+    if (field === 'displayName') {
+      await updateDoc(docRef, { displayName: value })
     } else {
-      body = JSON.stringify({ status: value })
+      await updateDoc(docRef, {
+        admin: value === 'admin',
+      })
     }
-    const res = await fetch(`https://founders.uz/backend/user/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-access-token': localStorage.getItem('token'),
-      },
-      body: body,
-    })
-    const data = await res.json()
-    setSuccess(data.message)
+    setSuccess('Updated successfully!')
   }
+
   return (
     <>
       <Box style={{ height: 600, width: '100%' }}>

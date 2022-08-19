@@ -21,6 +21,8 @@ const Login = () => {
           if (!snap.exists()) {
             const newProfile = {
               admin: false,
+              displayName: result.user.displayName,
+              email: result.user.email,
             }
             setDoc(doc(db, 'profiles', result.user.uid), newProfile)
               .then(() => {
@@ -46,19 +48,23 @@ const Login = () => {
     const checkValid = () => {
       const docRef = doc(db, 'profiles', user.uid)
       getDoc(docRef).then((snap) => {
-        const data = snap.data()
-        if (data.admin === true) {
-          navigate(`/admin/${localStorage.getItem('adminpath')}`)
+        if (snap.exists()) {
+          const data = snap.data()
+          if (data.admin === true) {
+            navigate(`/admin/${localStorage.getItem('adminpath')}`)
+          } else {
+            navigate('/login')
+            setError('You have no permission to admin panel!')
+          }
         } else {
-          navigate('/login')
-          setError('You have no permission to admin panel!')
+          dispatch({ type: 'DELETE_USER' })
         }
       })
     }
     if (pathname === '/login' && user) {
       checkValid()
     }
-  }, [user, navigate])
+  }, [user, navigate, dispatch])
 
   return (
     <>
