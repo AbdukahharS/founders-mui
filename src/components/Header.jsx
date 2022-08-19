@@ -31,7 +31,7 @@ const Header = ({ device }) => {
         zindex={-1}
         style={{ height: '100%', width: '100%' }}
       >
-        <source src={require('./../videos/bg.mp4').default} type='video/mp4' />
+        <source src={require('./../videos/bg.mp4')} type='video/mp4' />
       </video>
       <Typography
         ref={text}

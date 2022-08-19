@@ -70,7 +70,7 @@ const CourseModal = ({
               loop
             >
               <source
-                src={require(`../../videos/${currentCourse.banner}`).default}
+                src={require(`../../videos/${currentCourse.banner}`)}
                 type='video/webm'
               />
             </video>
@@ -183,7 +183,7 @@ const CourseModal = ({
                       loop
                     >
                       <source
-                        src={require(`../../videos/${item.banner}`).default}
+                        src={require(`../../videos/${item.banner}`)}
                         type='video/webm'
                       />
                     </video>

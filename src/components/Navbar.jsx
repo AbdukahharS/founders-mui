@@ -54,6 +54,7 @@ const Intro = ({ intro, device }) => {
     const img = introImage.current
     if (img) img.style.width = device === 'xs' ? '40vw' : '20vw'
   })
+
   return (
     <>
       <Box
@@ -85,7 +86,7 @@ const Intro = ({ intro, device }) => {
         <Box position='relative'>
           <video
             width='100%'
-            src={require('../videos/intro.mp4').default}
+            src={require('../videos/intro.mp4')}
             style={{
               display: isPlay ? 'block' : 'none',
               borderRadius: '50%',
@@ -94,7 +95,7 @@ const Intro = ({ intro, device }) => {
           ></video>
           <img
             ref={introImage}
-            src={require('../images/intro.png').default}
+            src={require('../images/intro.png')}
             alt='Intro img'
             style={{
               display: isPlay ? 'none' : '',

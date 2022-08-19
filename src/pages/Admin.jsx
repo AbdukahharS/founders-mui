@@ -1,6 +1,8 @@
 // Dependencies
 import React, { useState, useEffect } from 'react'
 import { useNavigate, Route, Routes } from 'react-router-dom'
+import { useUserContext } from '../hooks/useUserContext'
+import { doc, getDoc } from 'firebase/firestore'
 // Material-UI
 import {
   Box,
@@ -25,8 +27,13 @@ import Library from '../components/admin/Library'
 import EventSuggestions from '../components/admin/EventSuggestions'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
+// Conf
+import { db } from '../config/firebase'
+
 const localStorage = window.localStorage
-const Admin = ({ setToken, theme, setTheme }) => {
+
+const Admin = ({ theme, setTheme }) => {
+  const { user } = useUserContext()
   const navigate = useNavigate()
   const [isValid, setIsValid] = useState(false)
   const [path, setPath] = useState(
@@ -38,36 +45,32 @@ const Admin = ({ setToken, theme, setTheme }) => {
     let themeColor = theme === darkTheme ? 'dark' : 'light'
     localStorage.setItem('theme', themeColor)
   }, [theme])
+
   useEffect(() => {
     localStorage.setItem('adminpath', path)
   }, [path])
+
   useEffect(() => {
-    const checkToken = () => {
-      fetch('https://founders.uz/backend/welcome', {
-        method: 'POST',
-        headers: {
-          'x-access-token': localStorage.getItem('token'),
-          'Access-Control-Allow-Origin': 'no-cors',
-        },
+    const checkValid = () => {
+      const docRef = doc(db, 'profiles', user.uid)
+      getDoc(docRef).then((snap) => {
+        const data = snap.data()
+        if (data.admin) {
+          navigate(`/admin/${localStorage.getItem('adminpath')}`)
+          setIsValid(true)
+        } else {
+          navigate('/login')
+          setIsValid(false)
+        }
       })
-        .then(async (res) => {
-          const data = await res.json()
-          if (data.message !== 'valid') {
-            setToken(null)
-            navigate('/login')
-          } else {
-            setIsValid(true)
-            navigate(`/admin/${path}`)
-          }
-        })
-        .catch((err) => {
-          console.error(err)
-        })
     }
-    if (!isValid) {
-      checkToken()
+    if (!isValid && user) {
+      checkValid()
+    } else if (!user) {
+      navigate('/login')
     }
-  }, [isValid, navigate, setToken, path])
+  }, [isValid, navigate, user, path])
+
   const clickHandler = () => {
     setTheme(theme === lightTheme ? darkTheme : lightTheme)
   }
@@ -84,7 +87,7 @@ const Admin = ({ setToken, theme, setTheme }) => {
               >
                 <Stack direction='row' alignItems='center' spacing={1}>
                   <img
-                    src={require('../images/logo.png').default}
+                    src={require('../images/logo.png')}
                     alt='Logo'
                     style={{ width: '4rem' }}
                   />
@@ -237,7 +240,7 @@ const Admin = ({ setToken, theme, setTheme }) => {
                 <Route path='offers' element={<Offers />} />
                 <Route path='eventsuggestions' element={<EventSuggestions />} />
                 <Route path='users' element={<Users />} />
-                <Route path='library' element={<Library />} />
+                <Route path='library' element={<Library db={db} />} />
               </Routes>
             </Box>
           </Stack>

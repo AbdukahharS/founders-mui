@@ -1,67 +1,65 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { GoogleLogin } from 'react-google-login'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Snackbar, Alert, Stack } from '@mui/material'
-const Login = ({ setToken }) => {
+import { getDoc, doc, setDoc } from 'firebase/firestore'
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import { auth, provider, db } from '../config/firebase'
+import { useUserContext } from '../hooks/useUserContext'
+
+const Login = () => {
+  const { dispatch, user } = useUserContext()
   const navigate = useNavigate()
   const [error, setError] = useState(null)
-  const [allow, setAllow] = useState(false)
+
+  const signIn = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        GoogleAuthProvider.credentialFromResult(result)
+        const docRef = doc(db, 'profiles', result.user.uid)
+        dispatch({ type: 'SET_USER', payload: result.user })
+        getDoc(docRef).then((snap) => {
+          if (!snap.exists()) {
+            const newProfile = {
+              admin: false,
+            }
+            setDoc(doc(db, 'profiles', result.user.uid), newProfile)
+              .then(() => {
+                setError(
+                  'You have registered successfully. But you have no access for admin panel. Wait for admin to give it!'
+                )
+              })
+              .catch((err) => {
+                console.error(err)
+                setError(err.message)
+              })
+          }
+        })
+      })
+      .catch((error) => {
+        GoogleAuthProvider.credentialFromError(error)
+        console.error(error)
+        setError(error.message)
+      })
+  }
   useEffect(() => {
     const pathname = window.location.pathname
     const checkValid = () => {
-      fetch('https://founders.uz/backend/welcome', {
-        method: 'POST',
-        headers: {
-          'x-access-token': localStorage.getItem('token'),
-          'Access-Control-Allow-Origin': 'no-cors',
-        },
+      const docRef = doc(db, 'profiles', user.uid)
+      getDoc(docRef).then((snap) => {
+        const data = snap.data()
+        if (data.admin === true) {
+          navigate(`/admin/${localStorage.getItem('adminpath')}`)
+        } else {
+          navigate('/login')
+          setError('You have no permission to admin panel!')
+        }
       })
-        .then(async (res) => {
-          const data = await res.json()
-          if (data.message !== 'valid') {
-            setToken(null)
-            navigate('/login')
-          } else {
-            navigate(`/admin/${localStorage.getItem('adminpath')}`)
-          }
-        })
-        .catch((err) => {
-          console.error(err)
-        })
     }
-    if (pathname === '/login') {
+    if (pathname === '/login' && user) {
       checkValid()
     }
-  }, [navigate, setToken])
-  const responseGoogle = async (gRes) => {
-    const email = gRes.profileObj.email
-    const id = gRes.googleId
-    //Validate inputs
-    if (!(email && id)) {
-      return alert('All inputs must be filled!')
-    }
-    const user = JSON.stringify({ email, id })
-    const res = await fetch('https://founders.uz/backend/login', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: user,
-    })
-    if (res.status === 405) {
-      setError('You are not allowed to enter this pages!')
-    } else if (res.status === 401) {
-      setError('You have to register to get in!')
-      setAllow(true)
-    } else if (res.ok) {
-      const data = await res.json()
-      if (data) {
-        await setToken(data.token)
-        navigate('/admin')
-      }
-    }
-  }
+  }, [user, navigate])
+
   return (
     <>
       <Stack
@@ -74,19 +72,7 @@ const Login = ({ setToken }) => {
         direction='column'
         spacing={2}
       >
-        <>
-          <GoogleLogin
-            clientId={
-              window.location.hostname === 'localhost'
-                ? '1010777994659-c0e9tob38lbmohe1abp966ik9v44h76o.apps.googleusercontent.com'
-                : '1010777994659-vrdecvqdg01rl2ojo3qkqabd1rr7jgkt.apps.googleusercontent.com'
-            }
-            buttonText='Login with Google'
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-          />
-          {allow && <Link to='/register'>Get access to Admin Panel</Link>}
-        </>
+        <button onClick={signIn}>Sign in with Google</button>
       </Stack>
       <Snackbar
         open={error ? true : false}
@@ -98,6 +84,7 @@ const Login = ({ setToken }) => {
           severity='error'
           sx={{
             width: '100%',
+            fontSize: '1.4rem',
           }}
         >
           {error}

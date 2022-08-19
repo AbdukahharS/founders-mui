@@ -12,8 +12,12 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
+import { collection, addDoc, doc } from 'firebase/firestore'
+import { ref, uploadBytes } from 'firebase/storage'
 import { styled } from '@mui/material/styles'
 import React, { useState } from 'react'
+import { db, storage } from '../../../config/firebase'
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -31,8 +35,8 @@ const Input = styled('input')({
 const CreateBook = ({
   modal,
   setModal,
-  rows,
   setRows,
+  rows,
   setTableLoad,
   setSuccess,
   setError,
@@ -44,47 +48,51 @@ const CreateBook = ({
   const [audio, setAudio] = useState()
   const [load, setLoad] = useState(false)
   const [category, setCategory] = useState('')
+
   const handleSubmit = async () => {
     if (name && category) {
       if (banner && file) {
-        setLoad(true)
-        const newEvent = new FormData()
-        newEvent.append('name', name)
-        newEvent.append('category', category)
-        newEvent.append('banner', banner)
-        newEvent.append('file', file)
-        if (audio) {
-          newEvent.append('audio', audio)
-        }
-        newEvent.append('token', localStorage.getItem('token'))
-        const res = await fetch('https://founders.uz/backend/books', {
-          headers: { 'x-access-token': localStorage.getItem('token') },
-          method: 'POST',
-          body: newEvent,
-        })
+        const bannerRef = ref(storage, `/library/banner/${banner.name}`)
+        const fileRef = ref(storage, `/library/file/${file.name}`)
+        const audioRef = audio && ref(storage, `/library/audio/${audio.name}`)
         try {
-          const data = await res.json()
-          if (!res.ok) {
-            throw new Error(data.message)
-          } else {
+          uploadBytes(bannerRef, banner).then((snapshot) => {
+            setSuccess('Banner uploaded successfully!')
+          })
+          uploadBytes(fileRef, file).then((snapshot) => {
+            setSuccess('File uploaded successfully!')
+          })
+          if (audio) {
+            uploadBytes(audioRef, audio).then((snapshot) => {
+              setSuccess('Audio uploaded successfully!')
+            })
+          }
+          const book = {
+            name,
+            banner: banner.name,
+            file: file.name,
+            category: doc(db, 'categories', category),
+            audio: audio ? audio.name : null,
+          }
+          addDoc(collection(db, 'library'), book).then((snap) => {
             setLoad(false)
-            setSuccess(data.message)
-            setModal(false)
             setTableLoad(true)
-            const newRows = [...rows, data.body]
-            setRows(newRows)
+            setSuccess('Book added successfully!')
+            setModal(false)
+            setRows([{ id: snap.id, ...book }, ...rows])
             setTableLoad(false)
             setName('')
             setCategory('')
             setBanner(undefined)
             setFile(undefined)
             setAudio(undefined)
-          }
+          })
         } catch (err) {
           setLoad(false)
           setError(err.message)
           console.error(err)
         }
+        setLoad(true)
       } else {
         setError('Banner and file must be selected!')
       }
@@ -119,8 +127,8 @@ const CreateBook = ({
                   onChange={(e) => setCategory(e.target.value)}
                 >
                   {categories.map((category, i) => (
-                    <MenuItem key={i} value={category}>
-                      {category}
+                    <MenuItem key={i} value={category.id}>
+                      {category.name}
                     </MenuItem>
                   ))}
                 </Select>

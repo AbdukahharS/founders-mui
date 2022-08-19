@@ -1,6 +1,8 @@
 // Dependencies
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { useUserContext } from './hooks/useUserContext'
+import { onAuthStateChanged } from 'firebase/auth'
 // Pages
 import Home from './pages/Home'
 import Library from './pages/Library'
@@ -13,12 +15,26 @@ import Register from './pages/Register'
 import { ThemeProvider } from '@mui/material/styles'
 // Config
 import { lightTheme, darkTheme } from './muiConfig'
+import { auth } from './config/firebase'
 // DB
 import { uzbek, english, russian } from './db/languages'
 import NotFound from './pages/NotFound'
 
 function App() {
+  const { dispatch } = useUserContext()
   const [token, setToken] = useState(localStorage.getItem('token'))
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch({ type: 'SET_USER', payload: auth.currentUser })
+      }
+    })
+    return () => {
+      unsubscribe()
+    }
+  }, [dispatch])
+
   useEffect(() => {
     if (!localStorage.getItem('language')) {
       localStorage.setItem('language', 'eng')

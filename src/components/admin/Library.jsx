@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
+  collection,
+  getDocs,
+  orderBy,
+  query,
+  doc,
+  updateDoc,
+  deleteDoc,
+  addDoc,
+} from 'firebase/firestore'
+import { ref, deleteObject } from 'firebase/storage'
+import {
   Box,
   LinearProgress,
   Stack,
@@ -29,6 +40,9 @@ import { ReactComponent as Empty } from '../../images/empty.svg'
 import Banner from './Banner'
 import CreateBook from './forms/CreateBook'
 import UpdateBook from './forms/UpdateBook'
+// Conf
+import { db, storage } from '../../config/firebase'
+
 function CustomLoadingOverlay() {
   return (
     <GridOverlay>
@@ -69,18 +83,16 @@ function CustomNoRowsOverlay() {
     </GridOverlay>
   )
 }
+
 const Library = () => {
   const navigate = useNavigate()
   const [load, setLoad] = useState(true)
   const [url, setUrl] = useState(null)
   const [catForm, setCatForm] = useState(false)
   const [books, setBooks] = useState([])
-  const [curCategory, setCurCategory] = useState('All')
+  const [curCategory, setCurCategory] = useState({ name: 'All' })
   const [curBooks, setCurBooks] = useState([])
   const [categories, setCategories] = useState([])
-  const [actCat, setActCat] = useState(
-    categories.filter((cat) => cat !== 'All')
-  )
   const [name, setName] = useState('')
   const [success, setSuccess] = useState(null)
   const [error, setError] = useState(null)
@@ -88,38 +100,49 @@ const Library = () => {
   const [updateModal, setUpdateModal] = useState(false)
   const [field, setField] = useState('')
   const [image, setImage] = useState('')
-  const [id, setId] = useState('')
+  const [book, setBook] = useState('')
+
   useEffect(() => {
-    if (curCategory === 'All') {
+    if (curCategory.name === 'All') {
       setCurBooks(books)
     } else {
-      setCurBooks(books.filter((book) => book.category === curCategory))
+      setCurBooks(books.filter((book) => book.category.id === curCategory.id))
     }
   }, [curCategory, books])
+
   useEffect(() => {
     setLoad(true)
     const pathname = window.location.pathname
     const fetchBooks = async () => {
-      const res = await fetch('https://founders.uz/backend/books', {
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/json',
-        },
+      const querySnapshot = await getDocs(
+        query(collection(db, 'library'), orderBy('name', 'asc'))
+      )
+      querySnapshot.forEach((doc) => {
+        setBooks((books) => {
+          const is = books.filter((b) => b.id === doc.id)
+          if (!is.length) {
+            return [...books, { id: doc.id, ...doc.data() }]
+          } else {
+            return books
+          }
+        })
       })
-      const data = await res.json()
-      setBooks(await data.body)
     }
     const fetchCategories = async () => {
-      const res = await fetch('https://founders.uz/backend/categories', {
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/json',
-        },
+      const querySnapshot = await getDocs(
+        query(collection(db, 'categories'), orderBy('name', 'asc'))
+      )
+      querySnapshot.forEach((doc) => {
+        setCategories((categories) => {
+          const is = categories.filter((c) => c.id === doc.id)
+          if (!is.length) {
+            return [...categories, { id: doc.id, ...doc.data() }]
+          } else {
+            return categories
+          }
+        })
       })
-      const data = await res.json()
-      data.body.unshift('All')
-      setCategories(data.body)
-      setActCat(data.body.filter((cat) => cat !== 'All'))
+      setCategories((c) => [{ name: 'All' }, ...c])
     }
     if (pathname === '/admin/library') {
       fetchBooks()
@@ -127,22 +150,37 @@ const Library = () => {
       setLoad(false)
     }
   }, [navigate])
+
   const deleteBook = async (id) => {
     setLoad(true)
-    const res = await fetch(`https://founders.uz/backend/books/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-type': 'application/json',
-        'x-access-token': localStorage.getItem('token'),
-      },
-    })
+    let book = books.filter((b) => b.id === id)
+    book = book[0]
+    if (!book) {
+      setLoad(false)
+      console.log(id)
+      return setError('Unknown error')
+    }
     try {
-      const data = await res.json()
-      if (!res.ok) {
-        throw new Error(data.message)
+      const bannerRef = ref(storage, `/library/banner/${book.banner}`)
+      const fileRef = ref(storage, `/library/file/${book.file}`)
+      const audioRef = book.audio
+        ? ref(storage, `/library/audio/${book.audio}`)
+        : null
+
+      deleteObject(bannerRef).then(() => {
+        setSuccess('Banner deleted successfully')
+      })
+      deleteObject(fileRef).then(() => {
+        setSuccess('File deleted successfully')
+      })
+      if (audioRef) {
+        deleteObject(audioRef).then(() => {
+          setSuccess('Audio deleted successfully')
+        })
       }
+      await deleteDoc(doc(db, 'library', id))
       setBooks(books.filter((book) => book.id !== id))
-      setSuccess(data.message)
+      setSuccess('Book removed succesfully!')
       setLoad(false)
     } catch (err) {
       setError(err.message)
@@ -150,8 +188,9 @@ const Library = () => {
       setLoad(false)
     }
   }
+
   const columns = [
-    { field: 'id', headerName: 'ID', minWidth: 110 },
+    { field: 'id', headerName: 'ID', minWidth: 200 },
     {
       field: 'name',
       headerName: 'Name',
@@ -163,8 +202,14 @@ const Library = () => {
       field: 'category',
       headerName: 'Category',
       type: 'singleSelect',
-      valueOptions: actCat,
+      valueOptions: categories.map((c) => c.name !== 'All' && c.name),
       editable: true,
+      valueGetter: (params) => {
+        const cat =
+          categories &&
+          categories.filter((c) => c.id === params.row.category.id)
+        return cat.length && cat[0].name
+      },
     },
     {
       field: 'banner',
@@ -185,7 +230,7 @@ const Library = () => {
             setUpdateModal(true)
             setField('banner')
             setImage(params.row.banner)
-            setId(params.row.id)
+            setBook(params.row)
           }}
           label='See'
         />,
@@ -211,7 +256,7 @@ const Library = () => {
             setUpdateModal(true)
             setField('file')
             setImage(params.row.file)
-            setId(params.row.id)
+            setBook(params.row)
           }}
           label='See'
         />,
@@ -258,79 +303,64 @@ const Library = () => {
     },
   ]
   const handleDelete = async (category) => {
-    const res = await fetch('https://founders.uz/backend/categories', {
-      method: 'DELETE',
-      headers: {
-        'Content-type': 'application/json',
-        'x-access-token': localStorage.getItem('token'),
-      },
-      body: JSON.stringify({ name: category }),
-    })
+    const catRef = doc(db, 'categories', category.id)
     try {
-      const data = await res.json()
-      if (!res.ok) {
-        throw new Error(data.message)
-      } else {
-        const newCategories = categories.filter((cat) => cat !== category)
-        setCategories(newCategories)
-        setActCat(newCategories.filter((cat) => cat !== 'All'))
-        setSuccess(data.message)
-      }
+      books.forEach(async (b) => {
+        if (b.category.id === category.id) {
+          const bookRef = doc(db, 'library', b.id)
+          const newCategory = categories[categories.length - 2]
+          const newCatRef = doc(db, 'categories', newCategory.id)
+          await updateDoc(bookRef, {
+            category: newCatRef,
+          })
+          b.category = newCategory
+        }
+      })
+      await deleteDoc(catRef)
+      setCategories((categories) =>
+        categories.filter((c) => c.id !== category.id)
+      )
+      setSuccess('Succesfully deleted')
     } catch (err) {
       setError(err.message)
       console.error(err)
     }
   }
   const addCategory = async () => {
-    const res = await fetch('https://founders.uz/backend/categories', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-        'x-access-token': localStorage.getItem('token'),
-      },
-      body: JSON.stringify({ name }),
-    })
     try {
-      const data = await res.json()
-      if (!res.ok) {
-        throw new Error(data.message)
-      } else {
-        categories.push(name)
-        setCategories(categories)
-        setActCat(categories.filter((cat) => cat !== 'All'))
-        setSuccess(data.message)
-        setName('')
-        setCatForm(false)
-      }
+      const snap = await addDoc(collection(db, 'categories'), { name })
+      const category = { id: snap.id, name }
+      setCategories([...categories, category])
+      setSuccess('Successfilly added!')
+      setName('')
+      setCatForm(false)
     } catch (err) {
       setError(err.message)
       console.error(err)
     }
   }
+
   const handleEdit = async (params) => {
     const { id, value, field } = params
     setLoad(true)
-    const body = new FormData()
-    body.append(field, value)
-    body.append('token', localStorage.getItem('token'))
-    const res = await fetch(`https://founders.uz/backend/books/${id}`, {
-      headers: { 'x-access-token': localStorage.getItem('token') },
-      method: 'PUT',
-      body: body,
-    })
+    const docRef = doc(db, 'library', id)
+    const change = {}
+    if (field === 'category') {
+      const cat = categories.filter((c) => c.name === value)
+      const catRef = doc(db, 'categories', cat[0].id)
+      change[field] = catRef
+    } else {
+      change[field] = value
+    }
+
     try {
-      const data = await res.json()
-      if (!res.ok) {
-        throw new Error(data.message)
-      }
-      setSuccess(data.message)
+      await updateDoc(docRef, change)
+      setSuccess('Succesfully updated!')
       setBooks(
         books.map((book) => {
-          return book.id === id ? data.body : book
+          return book.id === id ? { ...book, ...change } : book
         })
       )
-      setUpdateModal(false)
-      setLoad(false)
     } catch (err) {
       setError(err.message)
       console.error(err)
@@ -357,18 +387,23 @@ const Library = () => {
               direction='row'
               spacing={2}
             >
-              {categories.map((category, i) => (
-                <Chip
-                  key={i}
-                  label={category}
-                  sx={{ fontSize: '1rem' }}
-                  onClick={() => setCurCategory(category)}
-                  onDelete={
-                    category !== 'All' ? () => handleDelete(category) : null
-                  }
-                  variant={curCategory === category ? 'filled' : 'outlined'}
-                />
-              ))}
+              {categories.length &&
+                categories.map((category, i) => (
+                  <Chip
+                    key={i}
+                    label={category.name}
+                    sx={{ fontSize: '1rem' }}
+                    onClick={() => setCurCategory(category)}
+                    onDelete={
+                      category.name !== 'All'
+                        ? () => handleDelete(category)
+                        : null
+                    }
+                    variant={
+                      curCategory.name === category.name ? 'filled' : 'outlined'
+                    }
+                  />
+                ))}
               <Chip
                 label='Add category'
                 sx={{ fontSize: '1rem' }}
@@ -425,7 +460,7 @@ const Library = () => {
         setTableLoad={setLoad}
         setSuccess={setSuccess}
         setError={setError}
-        categories={actCat}
+        categories={categories.filter((c) => c.name !== 'All')}
       />
       <UpdateBook
         modal={updateModal}
@@ -433,7 +468,7 @@ const Library = () => {
         load={load}
         field={field}
         image={image}
-        id={id}
+        book={book}
         handleEdit={handleEdit}
       />
       <Snackbar

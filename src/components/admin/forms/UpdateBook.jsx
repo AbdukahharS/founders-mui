@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import { doc, updateDoc } from 'firebase/firestore'
+import { ref, uploadBytes, deleteObject } from 'firebase/storage'
 import {
   Modal,
   Box,
@@ -8,6 +10,8 @@ import {
   Typography,
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
+import { db, storage } from '../../../config/firebase'
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -19,19 +23,36 @@ const style = {
   boxShadow: 24,
   p: 4,
 }
+
 const Input = styled('input')({
   display: 'none',
 })
-const UpdateBook = ({
-  modal,
-  setModal,
-  field,
-  image,
-  id,
-  load,
-  handleEdit,
-}) => {
+
+const UpdateBook = ({ modal, setModal, field, image, book, load }) => {
   const [file, setFile] = useState('')
+
+  const handleEdit = async () => {
+    if (file) {
+      const docRef = ref(storage, `/library/${field}/${book[field]}`)
+      await deleteObject(docRef).then((snap) => {
+        console.log(`Old ${field} deleted successfully!`)
+      })
+      const newDocRef = ref(storage, `/library/${field}/${file.name}`)
+      await uploadBytes(newDocRef, file).then(() =>
+        console.log(`New ${field} uploaded successfully!`)
+      )
+      const bookRef = doc(db, 'library', book.id)
+      const change = {}
+      change[field] = file.name
+      await updateDoc(bookRef, change).then(() => {
+        console.log('Updated successfully!')
+        setModal(false)
+      })
+    } else {
+      return alert(`Select ${field}`)
+    }
+  }
+
   return (
     <Modal open={modal} onClose={() => setModal(false)}>
       <Box>
@@ -52,7 +73,7 @@ const UpdateBook = ({
             align='flex-start'
           >
             <Typography color='secondary.main'>
-              Upload new {field} for #{id}
+              Upload new {field} for #{book.id}
             </Typography>
             {image && field === 'banner' && (
               <Box>
@@ -85,7 +106,7 @@ const UpdateBook = ({
             <Button
               type='submit'
               variant='contained'
-              onClick={() => handleEdit({ id, value: file, field })}
+              onClick={() => handleEdit()}
             >
               Submit
             </Button>
