@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { collection, getDocs } from 'firebase/firestore'
 import {
   Box,
   Button,
@@ -23,14 +24,16 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { ReactComponent as Empty } from '../../images/empty.svg'
-// Form Modals
+// Modals
 import CreateSundayEvent from './forms/CreateSundayEvent'
 import UpdateSundayEvent from './forms/UpdateSundayEvent'
 import SetIsDone from './forms/SetIsDone'
-// Another Modal
 import Gallery from './Gallery'
 import Banner from './Banner'
 import AskAgain from './AskAgain'
+// Conf
+import { db } from '../../config/firebase'
+
 function CustomLoadingOverlay() {
   return (
     <GridOverlay>
@@ -86,27 +89,24 @@ const SundayEvents = () => {
   const [url, setUrl] = useState(null)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState(false)
+
   useEffect(() => {
+    setLoad(true)
     const pathname = window.location.pathname
     const fetchData = () => {
-      fetch('https://founders.uz/backend/events', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-access-token': localStorage.getItem('token'),
-          'Access-Control-Allow-Origin': 'no-cors',
-        },
-      })
-        .then(async (res) => {
-          if (res.statusCode === 401) {
-            navigate('/login')
-          } else if (res.ok) {
-            const data = await res.json()
-            setRows(data)
-            setLoad(false)
-          }
+      getDocs(collection(db, 'sundayEvents'))
+        .then((snap) => {
+          snap.forEach((doc) => {
+            setRows((r) => [{ id: doc.id, ...doc.data() }, ...r])
+          })
         })
-        .catch((err) => console.error(err))
+        .then(() => {
+          setLoad(false)
+        })
+        .catch((err) => {
+          console.error(err)
+          setError(err.message)
+        })
     }
     if (pathname === '/admin/sundayevents') {
       fetchData()

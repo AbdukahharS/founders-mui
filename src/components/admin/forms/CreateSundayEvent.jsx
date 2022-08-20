@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import { addDoc, collection } from 'firebase/firestore'
+import { ref, uploadBytes } from 'firebase/storage'
 import {
   Alert,
   Backdrop,
@@ -16,6 +18,8 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DatePicker from '@mui/lab/DatePicker'
 import TimePicker from '@mui/lab/TimePicker'
+import { db, storage } from '../../../config/firebase'
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -46,54 +50,88 @@ const CreateSundayEvent = ({
   const [error, setError] = useState(null)
   const [load, setLoad] = useState(false)
   const [success, setSuccess] = useState(false)
+
   const handleSubmit = () => {
     if (name && description && size && date && time) {
       if (banner) {
         if (Number(size) > 1) {
           setLoad(true)
-          const newEvent = new FormData()
-          const dateForm =
-            date.getFullYear() +
-            '-' +
-            (date.getMonth() > 8
-              ? date.getMonth() + 1
-              : '0' + (date.getMonth() + 1)) +
-            '-' +
-            (date.getDate() > 9 ? date.getDate() : '0' + date.getDate())
-          const timeForm =
-            (time.getHours() < 10 ? '0' + time.getHours() : time.getHours()) +
-            ':' +
-            (time.getMinutes() < 10
-              ? '0' + time.getMinutes()
-              : time.getMinutes())
-          newEvent.append('name', name)
-          newEvent.append('description', description)
-          newEvent.append('size', size)
-          newEvent.append('date', dateForm)
-          newEvent.append('time', timeForm)
-          newEvent.append('banner', banner)
-          newEvent.append('token', localStorage.getItem('token'))
-          fetch('https://founders.uz/backend/events', {
-            headers: { 'x-access-token': localStorage.getItem('token') },
-            method: 'POST',
-            body: newEvent,
-          })
-            .then(async (res) => {
-              if (res.ok) {
-                const data = await res.json()
+          const bannerRef = ref(storage, `/sundayEvents/banner/${banner.name}`)
+          uploadBytes(bannerRef, banner)
+            .then((snap) => {
+              setSuccess('Banner uploaded successfully!')
+            })
+            .then(() => {
+              const dateForm =
+                date.getFullYear() +
+                '-' +
+                (date.getMonth() > 8
+                  ? date.getMonth() + 1
+                  : '0' + (date.getMonth() + 1)) +
+                '-' +
+                (date.getDate() > 9 ? date.getDate() : '0' + date.getDate())
+              const timeForm =
+                (time.getHours() < 10
+                  ? '0' + time.getHours()
+                  : time.getHours()) +
+                ':' +
+                (time.getMinutes() < 10
+                  ? '0' + time.getMinutes()
+                  : time.getMinutes())
+              const newEvent = {
+                name,
+                description,
+                size,
+                date: dateForm,
+                time: timeForm,
+                banner: banner.name,
+                isDone: false,
+                isFull: false,
+                gallery: [],
+              }
+              addDoc(collection(db, 'sundayEvents'), newEvent).then((snap) => {
                 setLoad(false)
                 setSuccess(true)
                 setModal(false)
                 setTableLoad(true)
-                const newRows = [...rows, data.newEvent]
-                setRows(newRows)
+                setRows((r) => [{ id: snap.id, ...newEvent }, ...r])
                 setTableLoad(false)
-              }
+              })
             })
             .catch((err) => {
               setLoad(false)
-              console.error(err)
+              setError(err.message)
             })
+
+          // const newEvent = new FormData()
+          // newEvent.append('name', name)
+          // newEvent.append('description', description)
+          // newEvent.append('size', size)
+          // newEvent.append('date', dateForm)
+          // newEvent.append('time', timeForm)
+          // newEvent.append('banner', banner)
+          // newEvent.append('token', localStorage.getItem('token'))
+          // fetch('https://founders.uz/backend/events', {
+          //   headers: { 'x-access-token': localStorage.getItem('token') },
+          //   method: 'POST',
+          //   body: newEvent,
+          // })
+          //   .then(async (res) => {
+          //     if (res.ok) {
+          //       const data = await res.json()
+          //       setLoad(false)
+          //       setSuccess(true)
+          //       setModal(false)
+          //       setTableLoad(true)
+          //       const newRows = [...rows, data.newEvent]
+          //       setRows(newRows)
+          //       setTableLoad(false)
+          //     }
+          //   })
+          //   .catch((err) => {
+          //     setLoad(false)
+          //     console.error(err)
+          //   })
         } else {
           setError('Size must be bigger than 1')
         }
@@ -137,7 +175,7 @@ const CreateSundayEvent = ({
                   variant='outlined'
                   type='number'
                   value={size}
-                  onChange={(e) => setSize(e.target.value)}
+                  onChange={(e) => setSize(Number(e.target.value))}
                   required
                   color='secondary'
                 />
@@ -208,7 +246,7 @@ const CreateSundayEvent = ({
         </>
       </Modal>
       <Snackbar
-        open={success}
+        open={success ? true : false}
         autoHideDuration={6000}
         onClose={() => setSuccess(false)}
       >
