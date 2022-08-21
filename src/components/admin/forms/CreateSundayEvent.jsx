@@ -34,6 +34,7 @@ const style = {
 const Input = styled('input')({
   display: 'none',
 })
+
 const CreateSundayEvent = ({
   modal,
   setModal,
@@ -56,7 +57,10 @@ const CreateSundayEvent = ({
       if (banner) {
         if (Number(size) > 1) {
           setLoad(true)
-          const bannerRef = ref(storage, `/sundayEvents/banner/${banner.name}`)
+          const bannerName = `banner_${
+            Date.now() + '.' + banner.name.split('.').reverse()[0]
+          }`
+          const bannerRef = ref(storage, `/sundayEvents/banner/${bannerName}`)
           uploadBytes(bannerRef, banner)
             .then((snap) => {
               setSuccess('Banner uploaded successfully!')
@@ -84,54 +88,29 @@ const CreateSundayEvent = ({
                 size,
                 date: dateForm,
                 time: timeForm,
-                banner: banner.name,
+                banner: bannerName,
                 isDone: false,
                 isFull: false,
                 gallery: [],
               }
-              addDoc(collection(db, 'sundayEvents'), newEvent).then((snap) => {
-                setLoad(false)
-                setSuccess(true)
-                setModal(false)
-                setTableLoad(true)
-                setRows((r) => [{ id: snap.id, ...newEvent }, ...r])
-                setTableLoad(false)
-              })
+              addDoc(collection(db, 'sundayEvents'), newEvent)
+                .then((snap) => {
+                  setLoad(false)
+                  setSuccess(true)
+                  setModal(false)
+                  setTableLoad(true)
+                  setRows((r) => [{ id: snap.id, ...newEvent }, ...r])
+                  setTableLoad(false)
+                })
+                .catch((err) => {
+                  setError(err.message)
+                  setLoad(false)
+                })
             })
             .catch((err) => {
               setLoad(false)
               setError(err.message)
             })
-
-          // const newEvent = new FormData()
-          // newEvent.append('name', name)
-          // newEvent.append('description', description)
-          // newEvent.append('size', size)
-          // newEvent.append('date', dateForm)
-          // newEvent.append('time', timeForm)
-          // newEvent.append('banner', banner)
-          // newEvent.append('token', localStorage.getItem('token'))
-          // fetch('https://founders.uz/backend/events', {
-          //   headers: { 'x-access-token': localStorage.getItem('token') },
-          //   method: 'POST',
-          //   body: newEvent,
-          // })
-          //   .then(async (res) => {
-          //     if (res.ok) {
-          //       const data = await res.json()
-          //       setLoad(false)
-          //       setSuccess(true)
-          //       setModal(false)
-          //       setTableLoad(true)
-          //       const newRows = [...rows, data.newEvent]
-          //       setRows(newRows)
-          //       setTableLoad(false)
-          //     }
-          //   })
-          //   .catch((err) => {
-          //     setLoad(false)
-          //     console.error(err)
-          //   })
         } else {
           setError('Size must be bigger than 1')
         }

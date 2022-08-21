@@ -37,7 +37,12 @@ const UpdateBook = ({ modal, setModal, field, image, book, load }) => {
       await deleteObject(docRef).then((snap) => {
         console.log(`Old ${field} deleted successfully!`)
       })
-      const newDocRef = ref(storage, `/library/${field}/${file.name}`)
+      const newDocRef = ref(
+        storage,
+        `/library/${field}/${field}_${
+          Date.now() + '.' + file.name.split('.').reverse()[0]
+        }`
+      )
       await uploadBytes(newDocRef, file).then(() =>
         console.log(`New ${field} uploaded successfully!`)
       )

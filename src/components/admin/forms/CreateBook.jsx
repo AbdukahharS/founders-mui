@@ -15,7 +15,7 @@ import {
 import { collection, addDoc, doc } from 'firebase/firestore'
 import { ref, uploadBytes } from 'firebase/storage'
 import { styled } from '@mui/material/styles'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { db, storage } from '../../../config/firebase'
 
 const style = {
@@ -52,9 +52,18 @@ const CreateBook = ({
   const handleSubmit = async () => {
     if (name && category) {
       if (banner && file) {
-        const bannerRef = ref(storage, `/library/banner/${banner.name}`)
-        const fileRef = ref(storage, `/library/file/${file.name}`)
-        const audioRef = audio && ref(storage, `/library/audio/${audio.name}`)
+        const bannerName = `banner_${
+          Date.now() + '.' + banner.name.split('.').reverse()[0]
+        }`
+        const fileName = `file${
+          Date.now() + '.' + file.name.split('.').reverse()[0]
+        }`
+        const audioName =
+          audio &&
+          `audio_${Date.now() + '.' + audio.name.split('.').reverse()[0]}`
+        const bannerRef = ref(storage, `/library/banner/${bannerName}`)
+        const fileRef = ref(storage, `/library/file/${fileName}`)
+        const audioRef = audio && ref(storage, `/library/audio/${audioName}`)
         try {
           uploadBytes(bannerRef, banner).then((snapshot) => {
             setSuccess('Banner uploaded successfully!')
@@ -69,10 +78,10 @@ const CreateBook = ({
           }
           const book = {
             name,
-            banner: banner.name,
-            file: file.name,
+            banner: bannerName,
+            file: fileName,
             category: doc(db, 'categories', category),
-            audio: audio ? audio.name : null,
+            audio: audio ? audioName : null,
           }
           addDoc(collection(db, 'library'), book).then((snap) => {
             setLoad(false)

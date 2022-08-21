@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, doc, deleteDoc } from 'firebase/firestore'
+import { ref, deleteObject } from 'firebase/storage'
 import {
   Box,
   Button,
@@ -32,7 +33,7 @@ import Gallery from './Gallery'
 import Banner from './Banner'
 import AskAgain from './AskAgain'
 // Conf
-import { db } from '../../config/firebase'
+import { db, storage } from '../../config/firebase'
 
 function CustomLoadingOverlay() {
   return (
@@ -113,20 +114,51 @@ const SundayEvents = () => {
     }
   }, [navigate])
   const deleteHandle = () => {
-    fetch(`https://founders.uz/backend/events/${deleteId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-access-token': localStorage.getItem('token'),
-        'Access-Control-Allow-Origin': 'no-cors',
-      },
+    setLoad(true)
+    const docRef = doc(db, 'sundayEvents', deleteId)
+    const event = rows.find((ev) => {
+      return ev.id === deleteId
     })
+    const bannerRef = ref(storage, `/sundayEvents/banner/${event.banner}`)
+    deleteObject(bannerRef)
       .then(() => {
-        const newData = rows.filter((row) => row.id !== deleteId)
-        setRows(newData)
-        setDeleteModal(false)
+        setSuccess('Banner deleted successfully!')
+        if (event.gallery.length) {
+          event.gallery.forEach((item) => {
+            const itemRef = ref(storage, `/sundayEvents/gallery/${item.url}`)
+            deleteObject(itemRef)
+          })
+          setSuccess('Gallery items deleted successfully!')
+        }
       })
-      .catch((err) => console.error(err))
+      .then(() => {
+        deleteDoc(docRef)
+      })
+      .then(() => {
+        setSuccess('Event deleted successfully!')
+        setRows((rows) => rows.filter((row) => row.id !== deleteId))
+        setDeleteModal(false)
+        setLoad(false)
+      })
+      .catch((err) => {
+        setError(err.message)
+        console.error(err)
+        setLoad(false)
+      })
+    // fetch(`https://founders.uz/backend/events/${deleteId}`, {
+    //   method: 'DELETE',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'x-access-token': localStorage.getItem('token'),
+    //     'Access-Control-Allow-Origin': 'no-cors',
+    //   },
+    // })
+    //   .then(() => {
+    //     const newData = rows.filter((row) => row.id !== deleteId)
+    //     setRows(newData)
+    //     setDeleteModal(false)
+    //   })
+    //   .catch((err) => console.error(err))
   }
   const columns = [
     { field: 'id', headerName: 'ID', minWidth: 110 },
