@@ -113,13 +113,14 @@ const SundayEvents = () => {
       fetchData()
     }
   }, [navigate])
+
   const deleteHandle = () => {
     setLoad(true)
     const docRef = doc(db, 'sundayEvents', deleteId)
     const event = rows.find((ev) => {
       return ev.id === deleteId
     })
-    const bannerRef = ref(storage, `/sundayEvents/banner/${event.banner}`)
+    const bannerRef = ref(storage, event.banner)
     deleteObject(bannerRef)
       .then(() => {
         setSuccess('Banner deleted successfully!')

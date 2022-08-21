@@ -57,10 +57,10 @@ const CreateSundayEvent = ({
       if (banner) {
         if (Number(size) > 1) {
           setLoad(true)
-          const bannerName = `banner_${
+          const bannerURL = `/sundayEvents/banner/banner_${
             Date.now() + '.' + banner.name.split('.').reverse()[0]
           }`
-          const bannerRef = ref(storage, `/sundayEvents/banner/${bannerName}`)
+          const bannerRef = ref(storage, bannerURL)
           uploadBytes(bannerRef, banner)
             .then((snap) => {
               setSuccess('Banner uploaded successfully!')
@@ -88,7 +88,7 @@ const CreateSundayEvent = ({
                 size,
                 date: dateForm,
                 time: timeForm,
-                banner: bannerName,
+                banner: bannerURL,
                 isDone: false,
                 isFull: false,
                 gallery: [],
