@@ -33,22 +33,20 @@ const UpdateBook = ({ modal, setModal, field, image, book, load }) => {
 
   const handleEdit = async () => {
     if (file) {
-      const docRef = ref(storage, `/library/${field}/${book[field]}`)
+      const docRef = ref(storage, book[field])
       await deleteObject(docRef).then((snap) => {
         console.log(`Old ${field} deleted successfully!`)
       })
-      const newDocRef = ref(
-        storage,
-        `/library/${field}/${field}_${
-          Date.now() + '.' + file.name.split('.').reverse()[0]
-        }`
-      )
+      const newDocURL = `/library/${field}/${field}_${
+        Date.now() + '.' + file.name.split('.').reverse()[0]
+      }`
+      const newDocRef = ref(storage, newDocURL)
       await uploadBytes(newDocRef, file).then(() =>
         console.log(`New ${field} uploaded successfully!`)
       )
       const bookRef = doc(db, 'library', book.id)
       const change = {}
-      change[field] = file.name
+      change[field] = newDocURL
       await updateDoc(bookRef, change).then(() => {
         console.log('Updated successfully!')
         setModal(false)

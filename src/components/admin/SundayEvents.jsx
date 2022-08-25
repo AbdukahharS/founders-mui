@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { collection, getDocs, doc, deleteDoc } from 'firebase/firestore'
 import { ref, deleteObject } from 'firebase/storage'
@@ -29,7 +29,7 @@ import { ReactComponent as Empty } from '../../images/empty.svg'
 import CreateSundayEvent from './forms/CreateSundayEvent'
 import UpdateSundayEvent from './forms/UpdateSundayEvent'
 import SetIsDone from './forms/SetIsDone'
-import Gallery from './Gallery'
+import Gallery from './Gallery/Gallery'
 import Banner from './Banner'
 import AskAgain from './AskAgain'
 // Conf
@@ -82,7 +82,7 @@ const SundayEvents = () => {
   const [isDoneModal, setIsDoneModal] = useState(false)
   const [galleryModal, setGalleryModal] = useState(false)
   const [deleteModal, setDeleteModal] = useState(false)
-  const [editID, setEditID] = useState(null)
+  const [editEvent, setEditEvent] = useState(null)
   const [deleteId, setDeleteId] = useState(null)
   const [gallery, setGallery] = useState(null)
   const [rows, setRows] = useState([])
@@ -126,7 +126,7 @@ const SundayEvents = () => {
         setSuccess('Banner deleted successfully!')
         if (event.gallery.length) {
           event.gallery.forEach((item) => {
-            const itemRef = ref(storage, `/sundayEvents/gallery/${item.url}`)
+            const itemRef = ref(storage, item.url)
             deleteObject(itemRef)
           })
           setSuccess('Gallery items deleted successfully!')
@@ -146,20 +146,6 @@ const SundayEvents = () => {
         console.error(err)
         setLoad(false)
       })
-    // fetch(`https://founders.uz/backend/events/${deleteId}`, {
-    //   method: 'DELETE',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'x-access-token': localStorage.getItem('token'),
-    //     'Access-Control-Allow-Origin': 'no-cors',
-    //   },
-    // })
-    //   .then(() => {
-    //     const newData = rows.filter((row) => row.id !== deleteId)
-    //     setRows(newData)
-    //     setDeleteModal(false)
-    //   })
-    //   .catch((err) => console.error(err))
   }
   const columns = [
     { field: 'id', headerName: 'ID', minWidth: 110 },
@@ -238,7 +224,7 @@ const SundayEvents = () => {
           icon={<EditIcon />}
           onClick={() => {
             setUpdateModal(true)
-            setEditID(params.id)
+            setEditEvent(params.row)
           }}
           label='Edit'
         />,
@@ -246,7 +232,7 @@ const SundayEvents = () => {
           icon={<DeleteIcon />}
           onClick={() => {
             setDeleteModal(true)
-            setDeleteId(params.id)
+            setDeleteId(params.row)
           }}
           label='Delete'
         />,
@@ -255,7 +241,7 @@ const SundayEvents = () => {
           icon={<CheckCircleIcon />}
           onClick={() => {
             setIsDoneModal(true)
-            setEditID(params.id)
+            setEditEvent(params.row)
           }}
           label='SetIsDone'
         />,
@@ -282,8 +268,8 @@ const SundayEvents = () => {
         <UpdateSundayEvent
           modal={updateModal}
           setModal={setUpdateModal}
-          id={editID}
-          setId={setEditID}
+          event={editEvent}
+          setEvent={setEditEvent}
         />
         <CreateSundayEvent
           modal={createModal}
@@ -295,7 +281,7 @@ const SundayEvents = () => {
         <SetIsDone
           modal={isDoneModal}
           setModal={setIsDoneModal}
-          id={editID}
+          event={editEvent}
           setSuccess={setSuccess}
           setError={setError}
           setRows={setRows}

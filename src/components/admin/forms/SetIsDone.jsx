@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import { useState } from 'react'
+import { doc, updateDoc } from 'firebase/firestore'
+import { ref, uploadBytes } from 'firebase/storage'
 import { Modal, Stack, Button, Backdrop, CircularProgress } from '@mui/material'
 import { styled } from '@mui/material/styles'
+import { storage, db } from '../../../config/firebase'
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -19,129 +22,93 @@ const Input = styled('input')({
 const SetIsDone = ({
   modal,
   setModal,
-  id,
+  event,
   setSuccess,
   setError,
-  rows,
   setRows,
+  rows,
 }) => {
-  const [images, setImages] = useState('')
-  const [videos, setVideos] = useState('')
+  const [files, setFiles] = useState('')
   const [load, setLoad] = useState(false)
+
   const handleClick = async () => {
-    const imgExt = ['png', 'jpg', 'jpeg', 'webp']
-    const vidExt = ['mp4', 'mkv', 'mov', 'avi']
-    if (typeof videos === 'object' ? videos.length : true) {
-      if (typeof videos === 'object' ? videos.length : true) {
-        if (images.length <= 5) {
-          if (videos.length <= 5) {
-            setLoad(true)
-            const galleryForm = new FormData()
-            Array.from(images).forEach((image) => {
-              if (imgExt.indexOf(image.type.replace('image/', '')) === -1) {
-                setError(
-                  'Please, upload PNG, JPG, JPEG or WEBP file for images'
-                )
-              } else {
-                galleryForm.append('images', image)
-              }
-            })
-            Array.from(videos).forEach((video) => {
-              if (vidExt.indexOf(video.type.replace('video/', '')) === -1) {
-                setError('Please, upload MP4, MKV, MOV or AVI file for videos')
-              } else {
-                galleryForm.append('videos', video)
-              }
-            })
-            galleryForm.append('token', localStorage.getItem('token'))
-            Array.from(galleryForm).forEach((video) => console.log(video))
-            const res = await axios.put(
-              `https://founders.uz/backend/events/${id}`,
-              galleryForm,
-              {
-                headers: {
-                  'x-access-token': localStorage.getItem('token'),
-                },
-                onUploadProgress: (p) => console.log(p),
-              }
-            )
-            try {
-              console.log(res)
-              const { data } = res
-              if (res.status !== 200) {
-                throw new Error(data.message)
-              } else {
-                setRows(rows.map((row) => (id === row.id ? data.body : row)))
-                setLoad(false)
-                setSuccess(data.message)
-                setModal(false)
-              }
-            } catch (err) {
-              setLoad(false)
-              setError(err.message)
-              console.error(err.message)
+    if (typeof files === 'object' ? files.length : true) {
+      if (files.length <= 10) {
+        setLoad(true)
+        const docRef = doc(db, 'sundayEvents', event.id)
+        Array.from(files).forEach((file) => {
+          const fileType = file.type.split('/')[0]
+          if (fileType === 'video' || fileType === 'image') {
+            const fileUrl = `/sundayEvents/gallery/gallery-item_${
+              Date.now() + '.' + file.name.split('.').reverse()[0]
+            }`
+            const fileRef = ref(storage, fileUrl)
+            const change = {
+              isDone: true,
+              gallery: [{ type: fileType, url: fileUrl }, ...event.gallery],
             }
+            uploadBytes(fileRef, file)
+              .then(() => {
+                updateDoc(docRef, change).catch((err) => {
+                  setLoad(false)
+                  return setError(err.message)
+                })
+              })
+              .then(() => {
+                setRows(
+                  rows.map((row) => {
+                    console.log(
+                      row.id === event.id ? { ...row, ...change } : row
+                    )
+                    return row.id === event.id ? { ...row, ...change } : row
+                  })
+                )
+              })
+              .then(() => {
+                setLoad(false)
+                setSuccess('Success!')
+              })
+              .catch((err) => {
+                setLoad(false)
+                return setError(err.message)
+              })
           } else {
-            setError('You can not upload more than 5 videos')
+            setLoad(false)
+            return setError('You need to choose image(s) and/or video(s)!')
           }
-        } else {
-          setError('You can not upload more than 5 images')
-        }
+        })
       } else {
-        setError('You should choose at least one file for videos')
+        setError('You can not upload more than 10 files!')
       }
     } else {
-      setError('You should choose at least one file for images')
+      setError('You have to choose at least one file!')
     }
   }
+
   return (
     <>
       <Modal open={modal} onClose={() => setModal(false)}>
         <Stack sx={style}>
-          <Stack direction='row' justifyContent='space-between' mb={2}>
-            <label htmlFor='contained-button-images'>
+          <Stack direction='row' justifyContent='center' mb={2}>
+            <label htmlFor='contained-button-files'>
               <Input
-                accept='image/*'
                 multiple
-                id='contained-button-images'
+                id='contained-button-files'
                 type='file'
-                onChange={(e) => setImages(e.target.files)}
+                onChange={(e) => setFiles(e.target.files)}
               />
               <Button
                 variant='raised'
                 component='span'
                 sx={{ color: 'secondary.main' }}
               >
-                Upload Images
-              </Button>
-            </label>
-            <label htmlFor='contained-button-videos'>
-              <Input
-                accept='video/*'
-                multiple
-                id='contained-button-videos'
-                type='file'
-                onChange={(e) => setVideos(e.target.files)}
-              />
-              <Button
-                variant='raised'
-                component='span'
-                sx={{ color: 'secondary.main' }}
-              >
-                Upload Videos
+                Select Files
               </Button>
             </label>
           </Stack>
           <Button type='button' variant='contained' onClick={handleClick}>
             Submit
           </Button>
-          <input
-            type='text'
-            style={{ display: 'none' }}
-            name='token'
-            value={localStorage.getItem('token')}
-            readOnly
-          />
         </Stack>
       </Modal>
       <Backdrop

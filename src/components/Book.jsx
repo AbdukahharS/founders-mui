@@ -11,9 +11,9 @@ const Book = ({ book, device }) => {
   const [audio, setAudio] = useState(null)
 
   useEffect(() => {
-    const bannerRef = ref(storage, `/library/banner/${book.banner}`)
-    const fileRef = ref(storage, `/library/file/${book.file}`)
-    const audioRef = book.audio && ref(storage, `/library/audio/${book.audio}`)
+    const bannerRef = ref(storage, book.banner)
+    const fileRef = ref(storage, book.file)
+    const audioRef = book.audio && ref(storage, book.audio)
 
     getDownloadURL(bannerRef)
       .then((url) => {

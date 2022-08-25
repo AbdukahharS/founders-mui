@@ -22,7 +22,6 @@ import NotFound from './pages/NotFound'
 
 function App() {
   const { dispatch } = useUserContext()
-  const [token, setToken] = useState(localStorage.getItem('token'))
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -35,15 +34,6 @@ function App() {
     }
   }, [dispatch])
 
-  useEffect(() => {
-    if (!localStorage.getItem('language')) {
-      localStorage.setItem('language', 'eng')
-    }
-    if (localStorage.getItem('token')) {
-      localStorage.removeItem('token')
-    }
-    localStorage.setItem('token', token)
-  }, [token])
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') === 'dark' ? darkTheme : lightTheme
   )
@@ -118,26 +108,11 @@ function App() {
                 <Events theme={theme} setTheme={setTheme} device={device} />
               }
             />
-            <Route
-              path='/login'
-              exact
-              element={<Login setToken={setToken} />}
-            />
-            <Route
-              path='/register'
-              exact
-              element={<Register setToken={setToken} />}
-            />
+            <Route path='/login' exact element={<Login />} />
+            <Route path='/register' exact element={<Register />} />
             <Route
               path='admin/*'
-              element={
-                <Admin
-                  token={token}
-                  setToken={setToken}
-                  theme={theme}
-                  setTheme={setTheme}
-                />
-              }
+              element={<Admin theme={theme} setTheme={setTheme} />}
             />
           </Routes>
         </ThemeProvider>

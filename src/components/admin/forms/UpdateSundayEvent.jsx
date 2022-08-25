@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Box,
   Button,
@@ -13,6 +13,8 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DatePicker from '@mui/lab/DatePicker'
 import TimePicker from '@mui/lab/TimePicker'
+import { doc, updateDoc } from 'firebase/firestore'
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -27,6 +29,7 @@ const style = {
 const Input = styled('input')({
   display: 'none',
 })
+
 const UpdateSundayEvent = ({ modal, setModal, id }) => {
   const [name, setName] = useState('')
   const [desc, setDesc] = useState('')
@@ -172,13 +175,6 @@ const UpdateSundayEvent = ({ modal, setModal, id }) => {
               <Button type='submit' variant='contained'>
                 Submit
               </Button>
-              <input
-                type='text'
-                style={{ display: 'none' }}
-                name='token'
-                value={localStorage.getItem('token')}
-                readOnly
-              />
               <input
                 type='date'
                 style={{ display: 'none' }}

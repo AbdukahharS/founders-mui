@@ -9,25 +9,25 @@ const Register = () => {
   useEffect(() => {
     const pathname = window.location.pathname
     const checkValid = () => {
-      fetch('https://founders.uz/backend/welcome', {
-        method: 'POST',
-        headers: {
-          'x-access-token': localStorage.getItem('token'),
-          'Access-Control-Allow-Origin': 'no-cors',
-        },
-      })
-        .then(async (res) => {
-          const data = await res.json()
-          if (data.message === 'valid') {
-            navigate(`/admin/${localStorage.getItem('adminpath')}`)
-          }
-        })
-        .catch((err) => {
-          console.error(err)
-        })
-    }
-    if (pathname === '/register') {
-      checkValid()
+      //   fetch('https://founders.uz/backend/welcome', {
+      //     method: 'POST',
+      //     headers: {
+      //       'x-access-token': localStorage.getItem('token'),
+      //       'Access-Control-Allow-Origin': 'no-cors',
+      //     },
+      //   })
+      //     .then(async (res) => {
+      //       const data = await res.json()
+      //       if (data.message === 'valid') {
+      //         navigate(`/admin/${localStorage.getItem('adminpath')}`)
+      //       }
+      //     })
+      //     .catch((err) => {
+      //       console.error(err)
+      //     })
+      // }
+      // if (pathname === '/register') {
+      //   checkValid()
     }
   }, [navigate])
   const responseGoogle = async (gRes) => {

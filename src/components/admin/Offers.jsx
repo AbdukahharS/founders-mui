@@ -67,29 +67,29 @@ const Offers = () => {
   useEffect(() => {
     const pathname = window.location.pathname
     const fetchData = () => {
-      fetch('https://founders.uz/backend/offers', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-access-token': localStorage.getItem('token'),
-        },
-      })
-        .then(async (res) => {
-          if (res.statusCode === 401) {
-            navigate('/login')
-          } else if (res.ok) {
-            const newData = await res.json()
-            setData(newData)
-            const newOffers = await newData.filter(
-              (offer) => offer.type === 'suggestion'
-            )
-            setOffers(newOffers)
-          }
-        })
-        .catch((err) => console.error(err))
-    }
-    if (pathname === '/admin/offers') {
-      fetchData()
+      //   fetch('https://founders.uz/backend/offers', {
+      //     method: 'GET',
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //       'x-access-token': localStorage.getItem('token'),
+      //     },
+      //   })
+      //     .then(async (res) => {
+      //       if (res.statusCode === 401) {
+      //         navigate('/login')
+      //       } else if (res.ok) {
+      //         const newData = await res.json()
+      //         setData(newData)
+      //         const newOffers = await newData.filter(
+      //           (offer) => offer.type === 'suggestion'
+      //         )
+      //         setOffers(newOffers)
+      //       }
+      //     })
+      //     .catch((err) => console.error(err))
+      // }
+      // if (pathname === '/admin/offers') {
+      //   fetchData()
     }
   }, [navigate])
   const handleClick = (newType) => {

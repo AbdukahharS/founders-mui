@@ -52,18 +52,20 @@ const CreateBook = ({
   const handleSubmit = async () => {
     if (name && category) {
       if (banner && file) {
-        const bannerName = `banner_${
+        const bannerURL = `/library/banner/banner_${
           Date.now() + '.' + banner.name.split('.').reverse()[0]
         }`
-        const fileName = `file${
+        const fileURL = `/library/file/file${
           Date.now() + '.' + file.name.split('.').reverse()[0]
         }`
-        const audioName =
+        const audioURL =
           audio &&
-          `audio_${Date.now() + '.' + audio.name.split('.').reverse()[0]}`
-        const bannerRef = ref(storage, `/library/banner/${bannerName}`)
-        const fileRef = ref(storage, `/library/file/${fileName}`)
-        const audioRef = audio && ref(storage, `/library/audio/${audioName}`)
+          `/library/audio/audio_${
+            Date.now() + '.' + audio.name.split('.').reverse()[0]
+          }`
+        const bannerRef = ref(storage, bannerURL)
+        const fileRef = ref(storage, fileURL)
+        const audioRef = audio && ref(storage, audioURL)
         try {
           uploadBytes(bannerRef, banner).then((snapshot) => {
             setSuccess('Banner uploaded successfully!')
@@ -78,17 +80,17 @@ const CreateBook = ({
           }
           const book = {
             name,
-            banner: bannerName,
-            file: fileName,
+            banner: bannerURL,
+            file: fileURL,
             category: doc(db, 'categories', category),
-            audio: audio ? audioName : null,
+            audio: audio ? audioURL : null,
           }
           addDoc(collection(db, 'library'), book).then((snap) => {
             setLoad(false)
             setTableLoad(true)
             setSuccess('Book added successfully!')
             setModal(false)
-            setRows([{ id: snap.id, ...book }, ...rows])
+            setRows((r) => [{ id: snap.id, ...book }, ...r])
             setTableLoad(false)
             setName('')
             setCategory('')

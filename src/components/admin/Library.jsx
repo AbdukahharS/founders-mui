@@ -161,11 +161,9 @@ const Library = () => {
       return setError('Unknown error')
     }
     try {
-      const bannerRef = ref(storage, `/library/banner/${book.banner}`)
-      const fileRef = ref(storage, `/library/file/${book.file}`)
-      const audioRef = book.audio
-        ? ref(storage, `/library/audio/${book.audio}`)
-        : null
+      const bannerRef = ref(storage, book.banner)
+      const fileRef = ref(storage, book.file)
+      const audioRef = book.audio ? ref(storage, book.audio) : null
 
       deleteObject(bannerRef).then(() => {
         setSuccess('Banner deleted successfully')
