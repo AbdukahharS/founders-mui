@@ -116,36 +116,42 @@ const SundayEvents = () => {
 
   const deleteHandle = () => {
     setLoad(true)
-    const docRef = doc(db, 'sundayEvents', deleteId)
+
+    const docRef = doc(db, 'sundayEvents', deleteId.id)
     const event = rows.find((ev) => {
-      return ev.id === deleteId
+      return ev.id === deleteId.id
     })
-    const bannerRef = ref(storage, event.banner)
-    deleteObject(bannerRef)
-      .then(() => {
-        setSuccess('Banner deleted successfully!')
-        if (event.gallery.length) {
-          event.gallery.forEach((item) => {
-            const itemRef = ref(storage, item.url)
-            deleteObject(itemRef)
-          })
-          setSuccess('Gallery items deleted successfully!')
-        }
-      })
-      .then(() => {
-        deleteDoc(docRef)
-      })
-      .then(() => {
-        setSuccess('Event deleted successfully!')
-        setRows((rows) => rows.filter((row) => row.id !== deleteId))
-        setDeleteModal(false)
-        setLoad(false)
-      })
-      .catch((err) => {
-        setError(err.message)
-        console.error(err)
-        setLoad(false)
-      })
+    try {
+      const bannerRef = ref(storage, event.banner)
+      deleteObject(bannerRef)
+        .then(() => {
+          setSuccess('Banner deleted successfully!')
+          if (event.gallery.length) {
+            event.gallery.forEach((item) => {
+              const itemRef = ref(storage, item.url)
+              deleteObject(itemRef)
+            })
+            setSuccess('Gallery items deleted successfully!')
+          }
+        })
+        .then(() => {
+          deleteDoc(docRef)
+        })
+        .then(() => {
+          setSuccess('Event deleted successfully!')
+          setRows((rows) => rows.filter((row) => row.id !== deleteId.id))
+          setDeleteModal(false)
+          setLoad(false)
+        })
+        .catch((err) => {
+          setError(err.message)
+          console.error(err)
+          setLoad(false)
+        })
+    } catch (err) {
+      setLoad(false)
+      setError(err.message)
+    }
   }
   const columns = [
     { field: 'id', headerName: 'ID', minWidth: 110 },
@@ -269,7 +275,9 @@ const SundayEvents = () => {
           modal={updateModal}
           setModal={setUpdateModal}
           event={editEvent}
-          setEvent={setEditEvent}
+          setError={setError}
+          setSuccess={setSuccess}
+          setRows={setRows}
         />
         <CreateSundayEvent
           modal={createModal}

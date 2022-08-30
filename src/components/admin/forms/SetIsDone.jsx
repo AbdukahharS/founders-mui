@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { doc, updateDoc } from 'firebase/firestore'
+import { doc, updateDoc, getDoc } from 'firebase/firestore'
 import { ref, uploadBytes } from 'firebase/storage'
 import { Modal, Stack, Button, Backdrop, CircularProgress } from '@mui/material'
 import { styled } from '@mui/material/styles'
@@ -36,6 +36,7 @@ const SetIsDone = ({
       if (files.length <= 10) {
         setLoad(true)
         const docRef = doc(db, 'sundayEvents', event.id)
+        const gallery = []
         Array.from(files).forEach((file) => {
           const fileType = file.type.split('/')[0]
           if (fileType === 'video' || fileType === 'image') {
@@ -43,34 +44,33 @@ const SetIsDone = ({
               Date.now() + '.' + file.name.split('.').reverse()[0]
             }`
             const fileRef = ref(storage, fileUrl)
+            gallery.push({ type: fileType, url: fileUrl })
             const change = {
               isDone: true,
-              gallery: [{ type: fileType, url: fileUrl }, ...event.gallery],
+              gallery,
             }
             uploadBytes(fileRef, file)
               .then(() => {
                 updateDoc(docRef, change).catch((err) => {
                   setLoad(false)
-                  return setError(err.message)
+                  setError(err.message)
                 })
               })
               .then(() => {
                 setRows(
-                  rows.map((row) => {
-                    console.log(
-                      row.id === event.id ? { ...row, ...change } : row
-                    )
-                    return row.id === event.id ? { ...row, ...change } : row
-                  })
+                  rows.map((row) =>
+                    row.id === event.id ? { ...row, ...change } : row
+                  )
                 )
               })
               .then(() => {
                 setLoad(false)
+                setModal(false)
                 setSuccess('Success!')
               })
               .catch((err) => {
                 setLoad(false)
-                return setError(err.message)
+                setError(err.message)
               })
           } else {
             setLoad(false)
