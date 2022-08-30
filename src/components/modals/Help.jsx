@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { collection, addDoc } from 'firebase/firestore'
 // MUI
 import { darkTheme } from '../../muiConfig'
 import {
@@ -18,24 +19,24 @@ import {
   InputAdornment,
 } from '@mui/material'
 import CancelIcon from '@mui/icons-material/Cancel'
+import { db } from '../../config/firebase'
+
 const Modal = ({ openQA, theme }) => {
   const [type, setType] = useState('suggestion')
   const [body, setBody] = useState('')
   const [phone, setPhone] = useState(1111111)
   const [succes, setSucces] = useState(false)
+
   const handleClick = async () => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ type, body, phone: `+998 ${phone}` }),
-    }
-    const data = await fetch(
-      'https://founders.uz/backend/offers',
-      requestOptions
-    )
-    if (data.status === 200) {
-      setSucces(true)
-    }
+    const collectionRef = collection(db, 'messages')
+    addDoc(collectionRef, { type, body, phone: `+998 ${phone}` })
+      .then(() => {
+        setSucces(true)
+      })
+      .catch((err) => {
+        console.error(err)
+        alert(err.message)
+      })
   }
   return (
     <>
