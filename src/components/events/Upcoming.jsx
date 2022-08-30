@@ -136,7 +136,7 @@ const Upcoming = ({ device }) => {
         >
           <Stack direction='column'>
             <Typography fontSize={device !== 'xs' ? '2rem' : '1.4rem'}>
-              Panning an event?
+              Planning an event?
             </Typography>
             <Typography>Submit your own...</Typography>
           </Stack>

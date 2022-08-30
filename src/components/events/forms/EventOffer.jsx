@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import { collection, addDoc } from 'firebase/firestore'
 import {
   Modal,
   Stack,
@@ -8,7 +9,9 @@ import {
   Snackbar,
   Alert,
 } from '@mui/material'
+import { db } from '../../../config/firebase'
 import CancelIcon from '@mui/icons-material/Cancel'
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -19,6 +22,7 @@ const style = {
   justifyContent: 'space-evenly',
   minWidth: '24rem',
 }
+
 const EventOffer = ({ modal, setModal, device }) => {
   const [fullname, setFullname] = useState('')
   const [name, setName] = useState('')
@@ -27,31 +31,26 @@ const EventOffer = ({ modal, setModal, device }) => {
   const [phone, setPhone] = useState(1111111)
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(false)
+
   const handleSubmit = async () => {
     if (fullname && name && purpose && size && phone) {
       if (size >= 5) {
         if (phone.toString().length === 7) {
-          const res = await fetch(
-            'https://founders.uz/backend/eventsuggestions',
-            {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                fullname,
-                name,
-                purpose,
-                size,
-                phone: `+998 ${phone}`,
-              }),
-            }
-          )
-          if (res.ok) {
-            setModal(false)
-            setSuccess(true)
-          } else {
-            const data = await res.json()
-            setError(data.message)
-          }
+          const colRef = collection(db, 'offers')
+          addDoc(colRef, {
+            fullname,
+            name,
+            purpose,
+            size,
+            phone: `+998 ${phone}`,
+          })
+            .then(() => {
+              setModal(false)
+              setSuccess(true)
+            })
+            .catch((err) => {
+              setError(err.message)
+            })
         } else {
           setError('Phone number must contain 7 numbers!')
         }
