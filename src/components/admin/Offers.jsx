@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import { getDocs, collection } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
 import { Box, Button, Stack, LinearProgress, Typography } from '@mui/material'
 import {
@@ -9,6 +10,8 @@ import {
   GridOverlay,
 } from '@mui/x-data-grid'
 import { ReactComponent as Empty } from '../../images/empty.svg'
+import { db } from '../../config/firebase'
+
 function CustomLoadingOverlay() {
   return (
     <GridOverlay>
@@ -59,39 +62,40 @@ const columns = [
   },
   { field: 'phone', headerName: 'Phone' },
 ]
+
 const Offers = () => {
   const navigate = useNavigate()
   const [data, setData] = useState([])
   const [type, setType] = useState('suggestion')
   const [offers, setOffers] = useState([])
+
   useEffect(() => {
     const pathname = window.location.pathname
     const fetchData = () => {
-      //   fetch('https://founders.uz/backend/offers', {
-      //     method: 'GET',
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //       'x-access-token': localStorage.getItem('token'),
-      //     },
-      //   })
-      //     .then(async (res) => {
-      //       if (res.statusCode === 401) {
-      //         navigate('/login')
-      //       } else if (res.ok) {
-      //         const newData = await res.json()
-      //         setData(newData)
-      //         const newOffers = await newData.filter(
-      //           (offer) => offer.type === 'suggestion'
-      //         )
-      //         setOffers(newOffers)
-      //       }
-      //     })
-      //     .catch((err) => console.error(err))
-      // }
-      // if (pathname === '/admin/offers') {
-      //   fetchData()
+      const colRef = collection(db, 'messages')
+      getDocs(colRef)
+        .then((snap) => {
+          snap.forEach((docRef) => {
+            const c = data.map((d) => {
+              return d.id === docRef.id && d
+            })
+            if (!c.length) {
+              setData((data) => [{ id: docRef.id, ...docRef.data() }, ...data])
+            }
+          })
+        })
+        .then(() => {
+          setOffers(data.filter((offer) => offer.type === 'suggestion'))
+        })
+        .catch((err) => {
+          alert(err.message)
+          console.error(err)
+        })
     }
-  }, [navigate])
+    if (pathname === '/admin/offers') {
+      fetchData()
+    }
+  }, [navigate, data])
   const handleClick = (newType) => {
     setType(newType)
     const newOffers = data.filter((offer) => offer.type === newType)
