@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 import {
   Stack,
   Container,
@@ -18,7 +19,9 @@ import {
 } from '@mui/material'
 import RegForEvent from './forms/RegForEvent'
 import EventOffer from './forms/EventOffer'
+import { db } from '../../config/firebase'
 import { ReactComponent as Empty } from '../../images/empty.svg'
+
 function CustomNoRowsOverlay() {
   return (
     <Stack
@@ -42,29 +45,40 @@ const Upcoming = ({ device }) => {
   const [load, setLoad] = useState(true)
   const [modal, setModal] = useState(false)
   const [offerModal, setOfferModal] = useState(false)
-  const [id, setId] = useState('')
+  const [event, setEvent] = useState({})
   const [success, setSuccess] = useState(false)
   const [regs, setRegs] = useState(
     localStorage.getItem('regs') ? localStorage.getItem('regs').split(',') : []
   )
   useEffect(() => {
-    fetch('https://founders.uz/backend/events/upcoming', {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json',
-      },
-    })
-      .then(async (res) => {
-        if (res.status === 200) {
-          const data = await res.json()
-          setUpcomings(data)
-          setLoad(false)
-        } else {
-          setLoad(false)
-        }
+    setLoad(true)
+    const colRef = collection(db, 'sundayEvents')
+    const q = query(colRef, where('isDone', '==', false))
+    getDocs(q)
+      .then((snap) => {
+        snap.forEach((docRef) => {
+          setUpcomings((upcomings) => {
+            const c = upcomings.map((d) => {
+              return d.id === docRef.id && d
+            })
+            if (!c.length) {
+              return [{ id: docRef.id, ...docRef.data() }, ...upcomings]
+            } else {
+              return upcomings
+            }
+          })
+        })
       })
-      .catch((err) => console.error(err))
+      .then(() => {
+        setLoad(false)
+      })
+      .catch((err) => {
+        alert(err.message)
+        setLoad(false)
+        console.error(err)
+      })
   }, [])
+
   useEffect(() => {
     if (regs.length !== 0) localStorage.setItem('regs', regs.toString())
   }, [regs])
@@ -109,7 +123,7 @@ const Upcoming = ({ device }) => {
                             }}
                             onClick={() => {
                               setModal(true)
-                              setId(upcoming.id)
+                              setEvent(upcoming)
                             }}
                           >
                             Register
@@ -153,7 +167,7 @@ const Upcoming = ({ device }) => {
         <RegForEvent
           modal={modal}
           setModal={setModal}
-          id={id}
+          event={event}
           d={device}
           setSuccess={setSuccess}
           regs={regs}
