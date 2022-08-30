@@ -71,37 +71,37 @@ const RegsForEvents = () => {
     },
   ]
   useEffect(() => {
-    // const pathname = window.location.pathname
-    // const fetchData = () => {
-    //   fetch('https://founders.uz/backend/regsforevents', {
-    //     method: 'GET',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'x-access-token': localStorage.getItem('token'),
-    //     },
-    //   })
-    //     .then(async (res) => {
-    //       if (res.status === 401) {
-    //         navigate('/login')
-    //       } else if (res.status === 200) {
-    //         const newData = await res.json()
-    //         setData(newData)
-    //         const newEvents = await newData.map((event) => {
-    //           return event.name
-    //         })
-    //         setEvents(newEvents)
-    //         const newEvent = await newEvents[0]
-    //         setEvent(newEvent)
-    //         const newRows = (await newData[0]) ? newData[0].registrations : []
-    //         setRows(newRows)
-    //         setLoad(false)
-    //       }
-    //     })
-    //     .catch((err) => console.error(err))
-    // }
-    // if (pathname === '/admin/regsforevents') {
-    //   fetchData()
-    // }
+    const pathname = window.location.pathname
+    const fetchData = () => {
+      //   fetch('https://founders.uz/backend/regsforevents', {
+      //     method: 'GET',
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //       'x-access-token': localStorage.getItem('token'),
+      //     },
+      //   })
+      //     .then(async (res) => {
+      //       if (res.status === 401) {
+      //         navigate('/login')
+      //       } else if (res.status === 200) {
+      //         const newData = await res.json()
+      //         setData(newData)
+      //         const newEvents = await newData.map((event) => {
+      //           return event.name
+      //         })
+      //         setEvents(newEvents)
+      //         const newEvent = await newEvents[0]
+      //         setEvent(newEvent)
+      //         const newRows = (await newData[0]) ? newData[0].registrations : []
+      //         setRows(newRows)
+      //         setLoad(false)
+      //       }
+      //     })
+      //     .catch((err) => console.error(err))
+    }
+    if (pathname === '/admin/regsforevents') {
+      fetchData()
+    }
   }, [navigate])
   const handleClick = (eventName) => {
     const newRows = data.filter((ev) => ev.name === eventName)

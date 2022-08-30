@@ -1,4 +1,5 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
+import { ref, getDownloadURL } from 'firebase/storage'
 import {
   Box,
   Button,
@@ -10,6 +11,8 @@ import {
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
+import { storage } from '../../config/firebase'
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -42,6 +45,33 @@ const responsive = {
   },
 }
 const RecentModal = ({ modal, setModal, event }) => {
+  const [banner, setBanner] = useState('')
+  const [gallery, setGallery] = useState([])
+
+  useEffect(() => {
+    if (event) {
+      const bannerRef = ref(storage, event.banner)
+      getDownloadURL(bannerRef)
+        .then((url) => {
+          setBanner(url)
+        })
+        .then(() => {
+          event.gallery.forEach((item) => {
+            const itemRef = ref(storage, item.url)
+            getDownloadURL(itemRef).then((url) => {
+              setGallery((gallery) => {
+                return [{ type: item.type, url }, ...gallery]
+              })
+            })
+          })
+        })
+        .catch((err) => {
+          alert(err.message)
+          console.error(err)
+        })
+    }
+  }, [event])
+
   const handleClick = (id) => {
     const elem = document.querySelector(`#${id}`)
     if (elem.requestFullscreen) {
@@ -67,7 +97,7 @@ const RecentModal = ({ modal, setModal, event }) => {
           <Stack direction='column'>
             <Stack direction='row' spacing={4}>
               <img
-                src={event.banner}
+                src={banner}
                 alt={`Banner for event ${event.name}`}
                 style={{ maxWidth: '30vw', maxHeight: '40vh' }}
               />
@@ -95,7 +125,7 @@ const RecentModal = ({ modal, setModal, event }) => {
                 pauseOnHover
                 style={{ backgroundColor: '#fff' }}
               >
-                {event.gallery.map((item, i) => {
+                {gallery.map((item, i) => {
                   return item.type === 'image' ? (
                     <img
                       key={i}

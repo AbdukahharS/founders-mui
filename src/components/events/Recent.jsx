@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 import {
   Container,
   Typography,
@@ -9,7 +10,10 @@ import {
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import RecentModal from '../modals/RecentModal'
+import { db } from '../../config/firebase'
 import { ReactComponent as Empty } from '../../images/empty.svg'
+import RecentBox from './RecentBox'
+
 const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },
@@ -33,24 +37,34 @@ const Recent = () => {
   const [modal, setModal] = useState(false)
   const [event, setEvent] = useState(null)
   const [load, setLoad] = useState(true)
+
   useEffect(() => {
-    fetch('https://founders.uz/backend/events/recent', {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json',
-      },
-    })
-      .then(async (res) => {
-        if (res.status === 200) {
-          const data = await res.json()
-          setRecents(data || [])
-          setLoad(false)
-        } else {
-          setLoad(false)
-        }
+    setLoad(true)
+    const colRef = collection(db, 'sundayEvents')
+    const q = query(colRef, where('isDone', '==', true))
+    getDocs(q)
+      .then((snap) => {
+        snap.forEach((docRef) => {
+          const c = recents.map((d) => {
+            return d.id === docRef.id && d
+          })
+          if (!c.length) {
+            setRecents((recents) => [
+              { id: docRef.id, ...docRef.data() },
+              ...recents,
+            ])
+          }
+        })
       })
-      .catch((err) => console.error(err))
-  }, [])
+      .then(() => {
+        setLoad(false)
+      })
+      .catch((err) => {
+        alert(err.message)
+        setLoad(false)
+        console.error(err)
+      })
+  }, [recents])
   return (
     <Container>
       {load ? (
@@ -67,48 +81,13 @@ const Recent = () => {
       ) : recents.length ? (
         <Box pt={8}>
           <Carousel responsive={responsive}>
-            {recents.map((event, i) => (
-              <Box
-                onClick={() => {
-                  setEvent(event)
-                  setModal(true)
-                }}
-                key={i}
-                sx={{
-                  backgroundImage: `url(${event.banner})`,
-                  backgroundPosition: 'center',
-                  backgroundSize: 'cover',
-                  minHeight: '50vh',
-                  width: '90%',
-                  borderRadius: '1rem',
-                  position: 'relative',
-                  cursor: 'pointer',
-                }}
-              >
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    width: '100%',
-                    height: '100%',
-                    background:
-                      'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.8))',
-                    borderRadius: '1rem',
-                  }}
-                ></Box>
-                <Typography
-                  sx={{
-                    position: 'absolute',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    bottom: '2rem',
-                    color: '#f4d40d',
-                    fontSize: '1.8rem',
-                    fontWeight: 700,
-                  }}
-                >
-                  {event.name}
-                </Typography>
-              </Box>
+            {recents.map((event) => (
+              <RecentBox
+                event={event}
+                key={event.id}
+                setEvent={setEvent}
+                setModal={setModal}
+              />
             ))}
           </Carousel>
         </Box>
