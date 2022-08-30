@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import { collection, getDocs } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
 import { Box, LinearProgress, Stack, Typography } from '@mui/material'
 import {
@@ -8,7 +9,9 @@ import {
   gridClasses,
   GridOverlay,
 } from '@mui/x-data-grid'
+import { db } from '../../config/firebase'
 import { ReactComponent as Empty } from '../../images/empty.svg'
+
 function CustomLoadingOverlay() {
   return (
     <GridOverlay>
@@ -64,30 +67,35 @@ const columns = [
 const EventSuggestions = () => {
   const navigate = useNavigate()
   const [offers, setOffers] = useState([])
+
   useEffect(() => {
-    // const pathname = window.location.pathname
-    // const fetchData = () => {
-    //   fetch('https://founders.uz/backend/eventsuggestions', {
-    //     method: 'GET',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'x-access-token': localStorage.getItem('token'),
-    //     },
-    //   })
-    //     .then(async (res) => {
-    //       if (res.statusCode === 401) {
-    //         navigate('/login')
-    //       } else if (res.ok) {
-    //         const newData = await res.json()
-    //         setOffers(newData)
-    //       }
-    //     })
-    //     .catch((err) => console.error(err))
-    // }
-    // if (pathname === '/admin/eventsuggestions') {
-    //   fetchData()
-    // }
-  }, [navigate])
+    const pathname = window.location.pathname
+    const fetchData = () => {
+      const colRef = collection(db, 'offers')
+      getDocs(colRef)
+        .then((snap) => {
+          snap.forEach((docRef) => {
+            const c = offers.map((d) => {
+              return d.id === docRef.id && d
+            })
+            if (!c.length) {
+              setOffers((offers) => [
+                { id: docRef.id, ...docRef.data() },
+                ...offers,
+              ])
+            }
+          })
+        })
+        .catch((err) => {
+          alert(err.message)
+          console.error(err)
+        })
+    }
+    if (pathname === '/admin/eventsuggestions') {
+      fetchData()
+    }
+  }, [navigate, offers])
+
   return (
     <Box style={{ height: 600, width: '100%' }}>
       <DataGrid
