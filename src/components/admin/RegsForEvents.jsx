@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { collection, getDocs } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
 import { Box, Button, LinearProgress, Stack, Typography } from '@mui/material'
 import {
@@ -9,6 +10,8 @@ import {
   gridClasses,
 } from '@mui/x-data-grid'
 import { ReactComponent as Empty } from '../../images/empty.svg'
+import { db } from '../../config/firebase'
+
 function CustomLoadingOverlay() {
   return (
     <GridOverlay>
@@ -56,6 +59,7 @@ const RegsForEvents = () => {
   const [events, setEvents] = useState([])
   const [rows, setRows] = useState([])
   const [load, setLoad] = useState(true)
+
   const columns = [
     { field: 'id', headerName: 'ID', minWidth: 110 },
     {
@@ -63,6 +67,11 @@ const RegsForEvents = () => {
       headerName: 'Name',
       minWidth: 150,
       flex: 1,
+    },
+    {
+      field: 'event',
+      headerName: 'Event',
+      minWidth: 200,
     },
     {
       field: 'phone',
@@ -73,39 +82,43 @@ const RegsForEvents = () => {
   useEffect(() => {
     const pathname = window.location.pathname
     const fetchData = () => {
-      //   fetch('https://founders.uz/backend/regsforevents', {
-      //     method: 'GET',
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //       'x-access-token': localStorage.getItem('token'),
-      //     },
-      //   })
-      //     .then(async (res) => {
-      //       if (res.status === 401) {
-      //         navigate('/login')
-      //       } else if (res.status === 200) {
-      //         const newData = await res.json()
-      //         setData(newData)
-      //         const newEvents = await newData.map((event) => {
-      //           return event.name
-      //         })
-      //         setEvents(newEvents)
-      //         const newEvent = await newEvents[0]
-      //         setEvent(newEvent)
-      //         const newRows = (await newData[0]) ? newData[0].registrations : []
-      //         setRows(newRows)
-      //         setLoad(false)
-      //       }
-      //     })
-      //     .catch((err) => console.error(err))
+      setLoad(true)
+      const colRef = collection(db, 'registrations')
+      const newData = []
+      getDocs(colRef)
+        .then((snap) => {
+          snap.forEach((docRef) => {
+            newData.push({ id: docRef.id, ...docRef.data() })
+          })
+        })
+        .then(() => {
+          setData(newData)
+        })
+        .then(() => {
+          const newEvents = newData.map((reg) => {
+            return reg.event
+          })
+          console.log(newEvents)
+          setEvents(newEvents)
+        })
+        .then(() => {
+          console.log(newData)
+          setRows(newData)
+          setLoad(false)
+        })
+
+        .catch((err) => {
+          alert(err.message)
+          console.error(err)
+        })
     }
     if (pathname === '/admin/regsforevents') {
       fetchData()
     }
   }, [navigate])
   const handleClick = (eventName) => {
-    const newRows = data.filter((ev) => ev.name === eventName)
-    setRows(newRows[0].registrations)
+    const newRows = data.filter((ev) => ev.event === eventName)
+    setRows(newRows)
     setEvent(eventName)
   }
   return (

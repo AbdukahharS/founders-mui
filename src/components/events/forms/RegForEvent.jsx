@@ -38,7 +38,7 @@ const RegForEvent = ({
       const newReg = {
         name,
         phone,
-        id: event.id,
+        event: event.name,
       }
       addDoc(colRef, newReg)
         .then(() => {
@@ -69,24 +69,6 @@ const RegForEvent = ({
           console.error(err)
           alert(err.message)
         })
-      // fetch('https://founders.uz/backend/regsforevents', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-type': 'application/json',
-      //     'Access-Control-Allow-Origin': 'no-cors',
-      //   },
-      //   body: JSON.stringify(newReg),
-      // })
-      //   .then(async (res) => {
-      //     if (res.ok) {
-      //       setModal(false)
-      //       setSuccess(true)
-      //       setRegs([...regs, id])
-      //     }
-      //   })
-      //   .catch((err) => {
-      //     console.error(err)
-      //   })
     } else {
       alert('All inputs must be filled')
     }
