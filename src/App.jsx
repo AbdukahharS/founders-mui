@@ -10,7 +10,6 @@ import Events from './pages/Events'
 // import FAQs from './pages/FAQs'
 import Admin from './pages/Admin'
 import Login from './pages/Login'
-import Register from './pages/Register'
 // MUI
 import { ThemeProvider } from '@mui/material/styles'
 // Config
@@ -109,7 +108,6 @@ function App() {
               }
             />
             <Route path='/login' exact element={<Login />} />
-            <Route path='/register' exact element={<Register />} />
             <Route
               path='admin/*'
               element={<Admin theme={theme} setTheme={setTheme} />}
