@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { getDocs, collection, query, orderBy } from 'firebase/firestore'
 import TeacherBox from './TeacherBox'
 import { Box, Container, Typography } from '@mui/material'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
-import staff from '../../../db/staff'
+// import staff from '../../../db/staff'
+import { db } from '../../../config/firebase'
+
 const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },
@@ -24,6 +27,28 @@ const responsive = {
 }
 const Teachers = ({ theme, language }) => {
   const [isHover, setIsHover] = useState(false)
+  const [staff, setStaff] = useState([])
+
+  useEffect(() => {
+    const colRef = collection(db, 'staff')
+    const q = query(colRef, orderBy('role'))
+    getDocs(q)
+      .then((snap) => {
+        snap.forEach((docRef) => {
+          setStaff((staff) => {
+            const newDoc = { id: docRef.id, ...docRef.data() }
+            if (!staff.includes(newDoc)) {
+              return [...staff, newDoc]
+            }
+          })
+        })
+      })
+      .catch((err) => {
+        alert(err.message)
+        console.error(err)
+      })
+  }, [])
+
   return (
     <Box
       id='instructors'

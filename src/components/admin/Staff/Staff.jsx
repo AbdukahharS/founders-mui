@@ -147,13 +147,11 @@ const Staff = () => {
   }
 
   const columns = [
-    { field: 'id', headerName: 'ID', minWidth: 200 },
     {
       field: 'name',
       headerName: 'Name',
       editable: true,
       minWidth: 160,
-      flex: 1,
     },
     {
       field: 'subname',

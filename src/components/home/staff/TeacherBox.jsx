@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react'
+import { ref, getDownloadURL } from 'firebase/storage'
 import { Box, Stack, Typography } from '@mui/material'
+import { storage } from '../../../config/firebase'
+
 const TeacherBox = ({ teacher, setIsHover, theme, i, role, arr }) => {
   const [visible, setVisible] = useState(false)
+  const [url, setUrl] = useState('')
 
   useEffect(() => {
     if (teacher && arr) {
@@ -12,6 +16,19 @@ const TeacherBox = ({ teacher, setIsHover, theme, i, role, arr }) => {
       }
     }
   }, [teacher, arr, i])
+
+  useEffect(() => {
+    if (teacher) {
+      const itemRef = ref(storage, teacher.banner)
+      getDownloadURL(itemRef)
+        .then((url) => {
+          setUrl(url)
+        })
+        .catch((err) => {
+          alert(err.message)
+        })
+    }
+  }, [teacher])
 
   return (
     <>
@@ -58,7 +75,7 @@ const TeacherBox = ({ teacher, setIsHover, theme, i, role, arr }) => {
             sx={{
               background:
                 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.8)), url(' +
-                require(`../../../images/${teacher.banner}`) +
+                url +
                 ')',
               backgroundPosition: 'center',
               backgroundSize: 'cover',
