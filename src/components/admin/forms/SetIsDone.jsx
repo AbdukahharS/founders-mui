@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { doc, updateDoc, getDoc } from 'firebase/firestore'
+import { doc, updateDoc } from 'firebase/firestore'
 import { ref, uploadBytes } from 'firebase/storage'
 import { Modal, Stack, Button, Backdrop, CircularProgress } from '@mui/material'
 import { styled } from '@mui/material/styles'
