@@ -98,11 +98,9 @@ const RegsForEvents = () => {
           const newEvents = newData.map((reg) => {
             return reg.event
           })
-          console.log(newEvents)
           setEvents(newEvents)
         })
         .then(() => {
-          console.log(newData)
           setRows(newData)
           setLoad(false)
         })

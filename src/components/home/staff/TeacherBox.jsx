@@ -1,16 +1,26 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import { Box, Stack, Typography } from '@mui/material'
-const TeacherBox = ({ teacher, setIsHover, theme, i, role }) => {
+const TeacherBox = ({ teacher, setIsHover, theme, i, role, arr }) => {
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    if (teacher && arr) {
+      if (i === 0) {
+        setVisible(true)
+      } else if (arr[i - 1].role !== teacher.role) {
+        setVisible(true)
+      }
+    }
+  }, [teacher, arr, i])
+
   return (
     <>
       <Typography
         sx={{
           fontSize: '1.6rem',
           ml: 1,
-          color:
-            i === 0 || i === 3 || i === 9
-              ? 'primary.contrastText'
-              : 'light.main',
+          color: visible ? 'primary.contrastText' : 'light.main',
+          cursor: 'default',
         }}
       >
         {role}

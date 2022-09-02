@@ -46,13 +46,14 @@ const Teachers = ({ theme, language }) => {
           keyBoardControl={true}
           autoPlaySpeed={2000}
         >
-          {staff.map((teacher, ind) => (
+          {staff.map((teacher, ind, arr) => (
             <TeacherBox
               setIsHover={setIsHover}
               teacher={teacher}
               key={ind}
               theme={theme}
               i={ind}
+              arr={arr}
               role={language.instructors.roles[teacher.role]}
             />
           ))}

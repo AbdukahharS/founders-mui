@@ -23,6 +23,7 @@ import RegsForEvents from '../components/admin/RegsForEvents'
 import Offers from '../components/admin/Offers'
 import Users from '../components/admin/Users'
 import Library from '../components/admin/Library'
+import Staff from '../components/admin/Staff/Staff'
 // Icons
 import EventSuggestions from '../components/admin/EventSuggestions'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
@@ -232,7 +233,26 @@ const Admin = ({ theme, setTheme }) => {
               >
                 <ListItemText primary='Library' />
               </ListItem>
+              <Divider light />
+              <ListItem
+                sx={
+                  path === 'staff'
+                    ? {
+                        bgcolor: 'secondary.light',
+                        color: 'secondary.contrastText',
+                      }
+                    : { bgcolor: 'primary.main' }
+                }
+                button
+                onClick={() => {
+                  setPath('staff')
+                  navigate('/admin/staff')
+                }}
+              >
+                <ListItemText primary='Staff' />
+              </ListItem>
             </List>
+
             <Box width='100%'>
               <Routes>
                 <Route path='sundayevents' element={<SundayEvents />} />
@@ -240,7 +260,8 @@ const Admin = ({ theme, setTheme }) => {
                 <Route path='offers' element={<Offers />} />
                 <Route path='eventsuggestions' element={<EventSuggestions />} />
                 <Route path='users' element={<Users />} />
-                <Route path='library' element={<Library db={db} />} />
+                <Route path='library' element={<Library />} />
+                <Route path='staff' element={<Staff />} />
               </Routes>
             </Box>
           </Stack>
