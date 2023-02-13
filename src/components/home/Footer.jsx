@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Stack, Typography, Link } from '@mui/material'
+import { Box, Container, Grid, Stack, Typography } from '@mui/material'
 import React from 'react'
 import logo from '../../images/logo.png'
 import logoDark from '../../images/logo-dark.png'
