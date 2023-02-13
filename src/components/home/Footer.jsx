@@ -30,19 +30,6 @@ const Footer = ({ theme, lightTheme }) => {
             <Typography fontSize='2.4rem' fontWeight={600} textAlign='center'>
               Copyright © 2021 Founders Language School
             </Typography>
-            <Typography fontSize='1.4rem' textAlign='center'>
-              Developed by{' '}
-              <Link
-                href='https://abdukahhar.uz'
-                title='Shaxzodbek Qaxxorov'
-                color='primary.contrastText'
-                underline='hover'
-                sx={{ cursor: 'pointer' }}
-                target='_blank'
-              >
-                Shahzod Abdukahhar
-              </Link>
-            </Typography>
           </Grid>
         </Grid>
       </Container>
