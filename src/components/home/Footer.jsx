@@ -28,7 +28,7 @@ const Footer = ({ theme, lightTheme }) => {
           </Grid>
           <Grid item xs={12} md={9}>
             <Typography fontSize='2.4rem' fontWeight={600} textAlign='center'>
-              Copyright © 2021 Founders Language School
+              Copyright © 2025 Founders Language School
             </Typography>
           </Grid>
         </Grid>
